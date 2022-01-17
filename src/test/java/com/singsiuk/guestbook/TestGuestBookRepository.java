@@ -1,2 +1,4 @@
-package com.singsiuk.guestbook;public class TestGuestBookRepository {
+package com.singsiuk.guestbook;
+
+public class TestGuestBookRepository {
 }
