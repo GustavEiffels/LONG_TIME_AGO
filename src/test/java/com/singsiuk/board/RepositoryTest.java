@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Random;
 
@@ -72,8 +73,17 @@ public class RepositoryTest {
     }
 
     // 게시물 1 개를 가져오는 method 테스트
-    @Test
+//    @Test
     public void eagerLoading(){
+        Optional<Board> board = boardRepository.findById(100L);
+        if(board.isPresent()){
+            System.out.println(board.get());
+            System.out.println(board.get().getWriter());
+        }
+    }
+    @Test
+    @Transactional
+    public void lazyLoading(){
         Optional<Board> board = boardRepository.findById(100L);
         if(board.isPresent()){
             System.out.println(board.get());
