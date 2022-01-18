@@ -9,8 +9,14 @@ import com.singsiuk.board.repository.ReplyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -81,7 +87,7 @@ public class RepositoryTest {
             System.out.println(board.get().getWriter());
         }
     }
-    @Test
+//    @Test
     @Transactional
     public void lazyLoading(){
         Optional<Board> board = boardRepository.findById(100L);
@@ -89,5 +95,37 @@ public class RepositoryTest {
             System.out.println(board.get());
             System.out.println(board.get().getWriter());
         }
+    }
+
+    // Board 와Member 를 join 하는 method
+//    @Test
+    public void testJoin(){
+        Object result = boardRepository.getBoardWithWriter(100L);
+        // 배열로 Return 되기 때문
+        Object [] arr = (Object [])result;
+        System.out.println(Arrays.toString(arr));
+    }
+
+//    @Test
+    public void testJoin2(){
+        List<Object[]> result =boardRepository.getBoardWithReply(90L);
+                for(Object [] ar:result){
+                    System.out.println(Arrays.toString(ar));
+                }
+    }
+
+    @Test
+    public void testBoardList(){
+        // 페이징 조건 생성
+        // 0 page 에서 10개의 데이터를
+        // bon 의 내림차순으로 가져오기
+        Pageable pageable = PageRequest.of(0,10,
+                Sort.by("bon").descending());
+
+        Page<Object []> result = boardRepository.getBoardWithReplyCount(pageable);
+        result.get().forEach(row -> {
+            Object [] ar =(Object [])row;
+            System.out.println(Arrays.toString(ar));
+        });
     }
 }
