@@ -55,7 +55,7 @@ public class GuestBookController {
         return "redierct:/guestbook/list";
     }
 
-    @GetMapping("/guestbook/read")
+    @GetMapping({"/guestbook/read", "guestbook/modify"})
     // 파라미터 중 gno는 gno에 대입
     // 나머지는 requestDto 에 대입
     // 다음과 같은 페이지를 전송
@@ -65,5 +65,30 @@ public class GuestBookController {
                                                 Model model){
         GuestBookDto dto = service.read(gno);
         model.addAttribute("dto",dto);
+    }
+
+    @PostMapping("/guestbook/modify")
+    public String modify(GuestBookDto dto, @ModelAttribute("requestDto")
+            PageRequestDto requestDto,RedirectAttributes redirectAttributes){
+        //수정 method 수행
+        service.modify(dto);
+        //전달할 데이터 생성
+        redirectAttributes.addAttribute("page", requestDto.getPage());
+        redirectAttributes.addAttribute("gno",dto.getGno());
+        redirectAttributes.addAttribute("type",requestDto.getType());
+        redirectAttributes.addAttribute("keyword",requestDto.getKeyword());
+
+        //상세보기로 redirect
+        return "redirect:/guestbook/read";
+    }
+
+    @PostMapping("/guestbook/remove")
+    public String modify(Long gno, RedirectAttributes redirectAttributes){
+        //삭제 method 수행
+        service.remove(gno);
+        //전달할 데이터 생성
+        redirectAttributes.addFlashAttribute("msg", gno+"삭제");
+        //상세보기로 redirect
+        return "redirect:/guestbook/list";
     }
 }

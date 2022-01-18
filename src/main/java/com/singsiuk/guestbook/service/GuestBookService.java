@@ -40,4 +40,10 @@ public interface GuestBookService {
 
     // 상세보기를 위한 method
     public GuestBookDto read(Long gno);
+
+    // 데이터 수정을 위한 method
+    public void modify(GuestBookDto dto);
+
+    // 데이터 삭제를 위한 method
+    public void remove(Long gno);
 }

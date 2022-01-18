@@ -31,6 +31,8 @@ public class ServiceTest {
                 PageRequestDto.builder()
                         .page(1)
                         .size(10)
+                        .type("t")
+                        .keyword("할머니")
                         .build();
         PageResponseDto<GuestBookDto, GuestBook>
                 pageResponseDto=service.getList(pageRequestDto);
