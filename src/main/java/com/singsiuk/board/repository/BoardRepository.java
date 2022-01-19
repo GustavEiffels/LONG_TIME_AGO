@@ -37,6 +37,16 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "from Board b Left Join b.writer w Left Join Reply  r On r.board =b" +
             " group by b ",
             countQuery = "select count(b) from Board b")
-
     Page<Object []> getBoardWithReplyCount(Pageable pageable);
+
+
+    //게시글 상세보기를 위한 method
+    @Query("select b, w, count(r) from Board b left join b.writer w " +
+            "left  join  Reply r on r.board = b where b.bon = :bon")
+    // Object 라서 CountQuery 가 필요 없기 때문에
+    // Value를 생략해도 됨( 구분하려고 쓰는거라서 )
+    Object getBoardByBon(@Param("bon")Long bon);
+
+
+
 }

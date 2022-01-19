@@ -107,25 +107,32 @@ public class RepositoryTest {
     }
 
 //    @Test
-    public void testJoin2(){
-        List<Object[]> result =boardRepository.getBoardWithReply(90L);
-                for(Object [] ar:result){
-                    System.out.println(Arrays.toString(ar));
-                }
-    }
+//    public void testJoin2(){
+//        List<Object[]> result =boardRepository.getBoardWithReply(90L);
+//                for(Object [] ar:result){
+//                    System.out.println(Arrays.toString(ar));
+//                }
+//    }
 
-    @Test
-    public void testBoardList(){
+//    @Test
+//    public void testBoardList(){
         // 페이징 조건 생성
         // 0 page 에서 10개의 데이터를
         // bon 의 내림차순으로 가져오기
-        Pageable pageable = PageRequest.of(0,10,
-                Sort.by("bon").descending());
+//        Pageable pageable = PageRequest.of(0,10,
+//                Sort.by("bon").descending());
+//
+//        Page<Object []> result = boardRepository.getBoardWithReplyCount(pageable);
+//        result.get().forEach(row -> {
+//            Object [] ar =(Object [])row;
+//            System.out.println(Arrays.toString(ar));
+//        });
+//    }
 
-        Page<Object []> result = boardRepository.getBoardWithReplyCount(pageable);
-        result.get().forEach(row -> {
-            Object [] ar =(Object [])row;
-            System.out.println(Arrays.toString(ar));
-        });
-    }
+//    @Test
+//    public void testBoardList(){
+//        Object result = boardRepository.getBoardByBon(90L);
+//        Object [] ar = (Object[]) result;
+//        System.out.println(Arrays.toString())
+//    }
 }
