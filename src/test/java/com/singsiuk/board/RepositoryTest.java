@@ -61,7 +61,7 @@ public class RepositoryTest {
         }
     }
 
-    @Test
+//    @Test
     public void insertReplies(){
         Random r = new Random();
         for(long i =1 ; i<=300;i++){
@@ -135,4 +135,30 @@ public class RepositoryTest {
 //        Object [] ar = (Object[]) result;
 //        System.out.println(Arrays.toString())
 //    }
+
+
+//    @Test
+    public void testQuerydls(){
+//        boardRepository.search();
+        Pageable pageable = PageRequest.of(0,10,Sort.by("bon").descending()
+                .and(Sort.by("title").ascending()));
+
+        Page<Object []> result =
+                    boardRepository.searchPage("t","1",pageable);
+        System.out.println(result);
+    }
+//    @Test
+    public void testReplyList(){
+        List<Reply> list =
+                    replyRepository.getRepliesByBoardOrderByRno(
+                            Board.builder().bon(68L).build());
+        System.out.println(list);
+    }
+    @Test
+    public void testReplyList2(){
+        List<Reply> list =
+                replyRepository.getRepliesByBoardOrderByRno(
+                        Board.builder().bon(70L).build());
+        System.out.println(list);
+    }
 }

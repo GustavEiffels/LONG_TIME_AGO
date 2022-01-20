@@ -3,10 +3,14 @@ package com.singsiuk.board;
 import com.singsiuk.board.dto.BoardDTO;
 import com.singsiuk.board.dto.PageRequestDTO;
 import com.singsiuk.board.dto.PageResultDTO;
+import com.singsiuk.board.dto.ReplyDTO;
 import com.singsiuk.board.service.BoardService;
+import com.singsiuk.board.service.ReplyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class ServiceTest {
@@ -55,5 +59,14 @@ public class ServiceTest {
                 .content("Modified Contents")
                 .build();
         boardService.modify(dto);
+    }
+    @Autowired
+    private ReplyService replyService;
+
+    @Test
+    public void testGetReplies(){
+        List<ReplyDTO> list =
+                    replyService.getList(70L);
+        System.out.println(list);
     }
 }

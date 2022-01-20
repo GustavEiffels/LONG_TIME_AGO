@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long>,SearchBoardRepository {
     // Member 와 Board Entity 의 Join을 수행하는 method를 생성
     // Board Entity 에는 Member  Entit와 연관관계를 갖는 writer 가 존재
 
@@ -23,7 +23,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     // Board Entity 에는 Reply  Entity와 연관관계를 가지고 있지 않음
     // 양쪽에 공통된 속성을 찾아야한다
     // reply 가 Board 의 정보를 Board 라는 속성으로 가지고 있음
-
     // bon 에 해당하는 Board 를 가져올 때 Member에 대한 정보도 가져오기
     @Query("select b,r from Board b  left join Reply r on r.board = b  where b.bon=:bon")
     // 하나의 게시글에 댓글이 여러개 있을 수 있어서 Return Type 은 List
