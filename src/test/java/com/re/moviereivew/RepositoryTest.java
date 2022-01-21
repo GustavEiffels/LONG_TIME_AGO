@@ -18,6 +18,7 @@ import org.springframework.test.annotation.Commit;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -78,7 +79,7 @@ public class RepositoryTest {
     }
 
     //영화 목록 가져오는 method
-    @Test
+//    @Test
     public void testListPage(){
         PageRequest pageRequest = PageRequest.of(0,10,
                 Sort.by("mno").descending());
@@ -115,4 +116,29 @@ public class RepositoryTest {
         });
     }
 
+
+    @Test
+    public void testGetMovie(){
+        List<Object []> result = movieRepository.getMovieWithAll(79L);
+        for(Object[] r :result){
+            System.out.println(Arrays.toString(r));
+        }
+    }
+
+    // 특정 영화에 해당하는 모든 리뷰 가져오기
+    @Test
+    public void testGetReviews(){
+        List<Review> list =
+                    reviewRepository.findByMovie(
+                            Movie.builder()
+                                    .mno(63L)
+                                    .build());
+
+        for(Review r :list){
+            // 회원의 이메일을 출력
+            System.out.println(r.getMember().getEmail());
+        }
+
+        System.out.println(list);
+    }
 }
