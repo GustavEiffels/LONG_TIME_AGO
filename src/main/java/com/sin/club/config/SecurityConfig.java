@@ -21,15 +21,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    //
     // 설정하는 method
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         // in memory 에 유저 생성
         auth.inMemoryAuthentication()
                 .withUser("user1")
                 .password("$2a$10$EDfYFSUlswKwFiQF/0KXk.pm3TkiurL8kc148FLGgJ0TeCe6op6EK")
                 .roles("USER");
-    }
+    }*/
 
     // 인가 설정 Override
     @Override
@@ -42,10 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 권한이 없는 경우 로그인 page 로 이동
         // 로그인 요청 URL 은 Custmlogin 이고 URL 처리는 login
-        http.formLogin()
-                .loginPage("/customlogin")
-                .loginProcessingUrl("/login");
+//        http.formLogin()
+//                .loginPage("/customlogin")
+//                .loginProcessingUrl("/login");
 
+
+        http.formLogin();
 
         // csrf 토큰을 비교하는 작업을 수행하지 않음
         http.csrf().disable();
