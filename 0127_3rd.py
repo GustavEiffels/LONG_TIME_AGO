@@ -410,3 +410,56 @@ class Coffee:
 
 Coffee.staticmethod()
 Coffee.classmethod()
+
+
+# DTO Class 먼저 만들어보기
+class VO:
+    def __init__(self, num=0, name="이름이 없습니다", score=0):
+        self.num = num
+        self.name = name
+        self.score = score
+
+    # getter setter 만들기 ---> 6 개를 만들어야 함 생략
+
+    # 이러면 미리 설정한 의미가 없고 , 값이 달라짐 -- > 속성에 제한을 줘야한다.
+    __slots__ = ["num", "name", "score", "grade"]
+
+
+vo1 = VO()
+print(vo1.num, ":", vo1.name, ":", vo1.score, "점")
+
+# 기존 클래스에서 정의한 속성 이외의 속성 추가
+vo1.grade = 3
+print(f" 번호 : {vo1.num} \n", f"이름 : {vo1.name} \n", f"점수 : {vo1.score} \n", f"학년 : {vo1.grade} \n")
+
+
+# -----------------------------
+
+class Rich:
+    def __init__(self, name="singsiuk", budget="100 billion $"):
+        self.name = name
+        self.budget = budget
+
+    # Getter Setter 생성
+    def getName(self):
+        print("name 의 getter 호출 ")
+        return self.__name
+
+    def getBudget(self):
+        print("budget 의 getter 호출 ")
+        return self.__budget
+
+    def setName(self, name):
+        self.__name = name
+
+    def setBudget(self, budget):
+        self.__budget = budget
+
+    # name 속성을 외부에서 호출하면 getName 과 setName method 가 호출 된다
+    name = property(getName, setName)
+    budget = property(getBudget, setBudget)
+
+rich = Rich()
+rich.name = "sing"
+rich.budget = "1999999999999원"
+print(rich.getBudget(), rich.getName())
