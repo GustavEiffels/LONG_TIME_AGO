@@ -55,7 +55,7 @@ try:
     # file 을 쓰기 모드로 개방
     # 'a' --> 추가
     # 'w' --> 기록만
-    file = open('./test.txt', 'w')
+    file = open('test.txt', 'w')
     # file 에 기록
     file.write("Hello FileHandling")
     file.write("₩n")
@@ -73,7 +73,7 @@ import time
 
 try:
     # 파일을 읽기 모드로 개방
-    file = open('./test.txt', 'r')
+    file = open('test.txt', 'r')
 
     # 전체 읽어오기 --> 용량이 크면 메모리 부족으로 읽어오지 못함
     # print(file.read())
@@ -94,7 +94,7 @@ except Exception as e:
 print("CSV 파일 핸들링 -------------------")
 # 파일 읽기를 이용해서 csv 파일 읽기 ---> 모든 데이터를 분할해서 list 로 생성
 
-with open("./data/singer.csv", 'r') as f:
+with open("../data/singer.csv", 'r') as f:
     # 전체 읽기
     content = f.read()
 
@@ -112,7 +112,7 @@ with open("./data/singer.csv", 'r') as f:
 import csv
 
 # 한글이 깨지면 Encoding 옵션에 인코딩 방식을 설정
-with open("./data/singer.csv", 'r', encoding="utf-8") as f:
+with open("../data/singer.csv", 'r', encoding="utf-8") as f:
     # csv 로 읽기
     # 구분자가 , 가 아니면 delimiter 에 구분자를 설정해주면 된다.
 
@@ -130,16 +130,16 @@ import csv
 
 # newLine 옵션을이용해서 빈줄이 생기지 않도록 설정
 # 한글이 깨지면 Encoding option에 Encoding 방식을 서렂ㅇ
-with open("./data/singer.csv", 'a', newline='') as f:
+with open("../data/singer.csv", 'a', newline='') as f:
     # csv로 기록
     wr = csv.writer(f)
     wr.writerow([4, "karina", "2000-01-01", "aespa"])
 
 print("Byte 단위로 파일을 읽고 쓰기------------------------")
-with open('./data/test.bin', 'wb') as f:
+with open('../data/test.bin', 'wb') as f:
     f.write("Hello 커피".encode())
 
-with open('./data/test.bin', 'rb') as f:
+with open('../data/test.bin', 'rb') as f:
     # print(f.read())
     print(f.read().decode())
 
@@ -176,11 +176,11 @@ dto2.setName("SInde_Eru")
 li = [dto1, dto2]
 
 import pickle
-with open('./data/data.dat', 'wb')as f:
+with open('../data/data.dat', 'wb')as f:
     pickle.dump(li, f)
 
 import pickle
-with open('./data/data.dat', 'rb')as f:
+with open('../data/data.dat', 'rb')as f:
     result = pickle.load(f)
     for Vo in result:
         print(Vo.toString())
