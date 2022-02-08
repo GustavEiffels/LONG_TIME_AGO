@@ -19,14 +19,17 @@ try:
     cursor = con.cursor()
 
     cursor.execute("select * from usertbl")
+    for row in cursor:
+        print(row)
     # 데이터 1 개 가져오기 -----> tuple 로 생성
-    data = cursor.fetchone()
-    print(data)
+    # data = cursor.fetchone()
+    # print(data)
+    # print(data )
 
     print("horizon----------------------------")
     # 데이터 행 단위로 출력
-    for item in data:
-        print(item)
+    # for item in data:
+    #     print(item)
 
 except Exception as e:
     print(e)
