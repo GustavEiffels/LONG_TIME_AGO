@@ -1,5 +1,5 @@
 import pandas as pd
-from pandas import  Series, DataFrame
+from pandas import Series, DataFrame
 df = pd.read_csv('./item.csv')
 print("item.csv 사용")
 print(df)
