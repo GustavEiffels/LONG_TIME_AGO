@@ -1,6 +1,7 @@
 package com.team.team_project.controller;
 
 import com.team.team_project.service.edit.EditService;
+import com.team.team_project.service.unscribe.UnscribeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Controller
@@ -74,12 +76,19 @@ public class UserController {
         }
         return url;
     }
+    @Autowired
+    private UnscribeService unscribeService;
+
 
     @GetMapping("retire/UnscribingComplete")
-    public String unscribingComplete(HttpSession sessioin){
+    public void unscribingComplete(HttpSession sessioin){
         String userNick = (String) sessioin.getAttribute("nick");
-        String userStatus = "expiring";
-        return null;
+        String userStatus = "7day";
+        boolean userUnscribeComplete = unscribeService.userUnscribecomplete(userStatus, userNick);
+        if(userUnscribeComplete==true){
+            unscribeService.userModDateUpdate(userNick);
+            sessioin.invalidate();
+        }
     }
 
 }

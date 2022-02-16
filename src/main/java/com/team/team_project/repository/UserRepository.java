@@ -1,6 +1,7 @@
 package com.team.team_project.repository;
 
 import com.team.team_project.entity.User;
+import java.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,10 +16,10 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     public User findByCode(Long code);
 
 
-    @Query(value = "select u.id, u.pw, u.nick from User u where u.id =:id")
+    @Query(value = "select u.id, u.pw, u.nick, u.status from User u where u.id =:id")
     Object findById(@Param("id") String id);
 
-    @Query(value = "select email, pw, id from User")
+    @Query(value = "select email, pw, nick, status from User")
     List<Object[]> getalldata();
 
     @Query(value = "select u.id, u.email from User u where u.nick = :nick")
@@ -62,6 +63,8 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     @Query(value = "update User set status=:status where nick=:nick")
     int unSubscribe(@Param("status") String status, @Param("nick")String nick);
 
-
-
+    @Modifying
+    @Transactional
+    @Query(value = "update User set modDate=:modDate where nick=:nick")
+    int unScribeTime(@Param("modDate") LocalDateTime modDate, @Param("nick")String nick);
 }

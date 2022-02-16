@@ -46,20 +46,7 @@ public class User extends BaseEntity{
     private String status;
 
 
-//    private boolean fromSocial;
-//
-//    @ElementCollection(fetch = FetchType.LAZY)
-//    @Builder.Default
-//    private Set<UserRole> roleSet = new HashSet<>();
-//
-//    public User(String , String pw, Collection<? extends Gran> authorities) {
-//        super();
-//    }
-//
-//    public void addUserRole(UserRole userRole) {
-//        roleSet.add(userRole);
-//    }
-//}
+
 
 
     public void changePw(String user_pw){

@@ -39,11 +39,16 @@ public class loginServiceImpl implements loginService{
         }
 
         String nick = null;
+
+        String status = null;
         if(email.contains("@")) {
             List<Object[]> list = userRepository.getalldata();
             for (Object[] i : list) {
                 String reemail = (String) i[0];
                 String repw = (String) i[1];
+                status = (String)i[3];
+
+                if(status.equals("회원")||status.equals("7day")){
                 if (CryptoUtil.decryptAES256(reemail, "Email").equals(email)) {
                     System.out.println(CryptoUtil.decryptAES256(reemail, "Email"));
                     exists = true;
@@ -53,24 +58,33 @@ public class loginServiceImpl implements loginService{
                     }
                 }
             }
+            }
 
-        }else{
+        }else {
             Object user = userRepository.findById(email);
-            Object [] result = (Object[]) user;
+            Object[] result = (Object[]) user;
             String fid = (String) result[0];
             String fpw = (String) result[1];
-            if(fid!=null){
-                exists = true;
-                if(BCrypt.checkpw(pw,fpw)){
-                    pwcollect = true;
-                    nick = (String)result[2];
+            status = (String) result[3];
+            if (status.equals("회원")||status.equals("7day")) {
+                if (fid != null) {
+                    exists = true;
+                    if (BCrypt.checkpw(pw, fpw)) {
+                        pwcollect = true;
+                        nick = (String) result[2];
+                    }
                 }
             }
         }
+        System.out.println(status);
         Map<String, Object> map = new HashMap<>();
-        map.put("exists",exists);
-        map.put("pwcollect",pwcollect);
-        map.put("nick",nick);
+        if(status.equals("회원")||status.equals("7day")){
+            map.put("exists",exists);
+            map.put("pwcollect",pwcollect);
+            map.put("nick",nick);
+        }else{
+            throw new IllegalArgumentException("It is not valid UserAccount");
+        }
         return map;
     }
 }
