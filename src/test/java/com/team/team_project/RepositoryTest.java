@@ -24,6 +24,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -466,7 +467,7 @@ public class RepositoryTest {
 
     @Test
     public void codetest(){
-        Long code = 59L;
+        Long code = 1L;
         User userCode = User.builder()
                 .code(code)
                 .build();
@@ -498,5 +499,52 @@ public class RepositoryTest {
 //        String pw = "wrongPasswordTest";
 //        boolean result = editService.bringPwForRetire(pw,nick);
 //        System.out.println(result);
+//    }
+
+//    @Test
+//    public void ChangeUserInfoTest(){
+//        String nick = "싱시";
+//        String nickCh = "테스트1맨";
+//        String pw = "!234Qwe1r";
+//        String gender = "m";
+//        String birthday = "1099-09-09";
+//        boolean result = editService.changeUserInfo(nick, nickCh, pw, gender, birthday);
+//        System.out.println(result);
+//
+//        User result1 = userRepository.bringAllData();
+//        System.out.println(result1.getCode());
+//        System.out.println(result1.getBirthday());
+//        System.out.println(result1.getGender());
+//        System.out.println(result1.getNick());
+//        System.out.println(result1.getBirthday());
+//
+//        LocalDateTime atime = LocalDateTime.now();
+//        int a = userRepository.unScribeTime(atime, nick);
+//        System.out.println(atime);
+//    }
+
+//    @Test
+//    public void updatetest(){
+//        Long userCode = 4L;
+//        String answer = "비타민씨";
+//        User code = User.builder()
+//                .code(userCode)
+//                .build();
+//        String context ="QQ";
+//        // context 를 수정하기 위해서 AnswerRepository 를 사용해서 qno 를 return
+//        Question questionQno = answerRepository.getQnoForEditInfo(code);
+//        Long qno = questionQno.getQno();
+//
+//
+//        //answer 를 수정하기 위한 method
+//        int resultAnswer = answerRepository.updateUserAnswer(code, answer);
+//
+//        System.out.println(resultAnswer);
+//
+//
+//
+//        // context 를 수정하기 위해서 qno 와  context  를 입력받는 method
+//        int resultQuestion = questionRepository.updateUserContext(qno, context);
+//        System.out.println(resultQuestion);
 //    }
 }

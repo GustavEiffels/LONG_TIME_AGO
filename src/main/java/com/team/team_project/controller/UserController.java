@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -19,7 +20,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Map;
 
 @Controller
@@ -33,7 +33,27 @@ public class UserController {
     private EditService editService;
 
 
+    @PostMapping("editing")
+    public String editingUserInfo(HttpSession session ,
+                                String nick,
+                                String pw,
+                                String pwCheck,
+                                String gender,
+                                String birthday,
+                                String answer,
+                                String context){
+        String currentNick = (String)session.getAttribute("nick");
 
+        Map<String, Object> result = editService.changeUserInfo(currentNick,nick, pw, pwCheck, gender, birthday, answer, context);
+        boolean userResult = (boolean) result.get("user");
+        boolean answerResult = (boolean) result.get("answer");
+        boolean question = (boolean) result.get("question");
+
+        if(userResult==true&&answerResult==true&&question==true){
+            session.setAttribute("nick",nick);
+        }
+        return "checkplan/logincomplete";
+    }
 
     @GetMapping("editUser")
     public void editUser(Model model , HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
@@ -63,9 +83,14 @@ public class UserController {
         model.addAttribute("userContext",userContext);
 
     }
+
+
+
+
     @GetMapping("retire/retire")
     public void retire(){
     }
+
     @PostMapping("retire/UnscribingChecking")
     public String unscribingChecking(String pw, HttpSession session){
         String url = null;

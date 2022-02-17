@@ -1,12 +1,15 @@
 package com.team.team_project.repository;
 
 import com.team.team_project.entity.User;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -42,6 +45,9 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     @Query(value = "select pw from User where nick=:nick")
     String brinUserPw(@Param("nick")String nick);
 
+    @Query(value = "select u from User u")
+    User bringAllData();
+
 
 
 
@@ -67,4 +73,25 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     @Transactional
     @Query(value = "update User set modDate=:modDate where nick=:nick")
     int unScribeTime(@Param("modDate") LocalDateTime modDate, @Param("nick")String nick);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "update User set nick=:nickCh, pw=:pw, birthday=:birthday, gender=:gender where nick=:nick")
+    int changeUserInfo(@Param("nick")String nick,
+                       @Param("nickCh")String nickCh,
+                       @Param("pw")String pw,
+                       @Param("gender")String gender,
+                       @Param("birthday")LocalDate birthday);
+
+    // nick name 을 입력받으면 code 를 리턴
+    @Query(value = "select code from User where nick=:nick")
+    Long getUserCodeByNick(@Param("nick")String nick);
+
+
+    //Server 측에서 nick name 중복 있는지 확인하기 위해서
+    //모든 닉네임을 들고오는 method
+    @Query(value = "select nick from User")
+    List<String> nickNameDuplicateCheck();
+
 }

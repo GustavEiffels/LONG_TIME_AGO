@@ -26,5 +26,9 @@ public class Answer {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "qno")
     private Question qno;
+
+    public void changeAnswer(String answer){
+        this.answer=answer;
+    }
 }
 
