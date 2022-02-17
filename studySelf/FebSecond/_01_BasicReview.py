@@ -37,7 +37,7 @@ plt.figure(figsize=(10, 4))
 plt.plot(firstcnt, label="2022 년 이후 1일 백신 2차 접종자 수", color='black', marker='s', markersize=1)
 for i in range(len(day)):
     y = firstcnt[i]
-    plt.text(day[i], y+0.5, '%.0f' %y, ha='center', va='bottom', size=8)
+    plt.text(day[i], y+0.5, '%.0f' %y, ha='center', va='bottom', size=5)
 
 plt.bar(day, firstcnt)
 plt.xticks(range(len(day)), day, rotation='vertical')
