@@ -32,6 +32,14 @@ public class UserController {
     @Autowired
     private EditService editService;
 
+    @PostMapping("Logout")
+    public String logOutmethod(HttpSession session){
+        String userNick = (String)session.getAttribute("nick");
+        unscribeService.userModDateUpdate(userNick);
+        session.invalidate();
+        return "redirect:/checkplan/mainpage";
+    }
+
 
     @PostMapping("editing")
     public String editingUserInfo(HttpSession session ,
@@ -114,6 +122,16 @@ public class UserController {
             unscribeService.userModDateUpdate(userNick);
             sessioin.invalidate();
         }
+    }
+    @PostMapping("unScribeCancle")
+    public String unScribeCancle(HttpSession session, String pw , String pwCheck){
+        Long code = (Long) session.getAttribute("code");
+        String url = null;
+        int unScribeCancleResult = editService.unSubScribeCancle(pw, pwCheck, code);
+        if(unScribeCancleResult>0){
+            url = "redirect:/checkplan/mainpage";}
+        return url;
+
     }
 
 }

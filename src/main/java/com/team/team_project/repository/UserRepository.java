@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -19,10 +18,10 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     public User findByCode(Long code);
 
 
-    @Query(value = "select u.id, u.pw, u.nick, u.status from User u where u.id =:id")
+    @Query(value = "select u.id, u.pw, u.nick, u.status, u.code from User u where u.id =:id")
     Object findById(@Param("id") String id);
 
-    @Query(value = "select email, pw, nick, status from User")
+    @Query(value = "select email, pw, nick, status, code from User")
     List<Object[]> getalldata();
 
     @Query(value = "select u.id, u.email from User u where u.nick = :nick")
@@ -72,7 +71,7 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     @Modifying
     @Transactional
     @Query(value = "update User set modDate=:modDate where nick=:nick")
-    int unScribeTime(@Param("modDate") LocalDateTime modDate, @Param("nick")String nick);
+    int updateModate(@Param("modDate") LocalDateTime modDate, @Param("nick")String nick);
 
 
     @Modifying
@@ -93,5 +92,14 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     //모든 닉네임을 들고오는 method
     @Query(value = "select nick from User")
     List<String> nickNameDuplicateCheck();
+
+    // 계정 복구를 위한 method
+    @Modifying
+    @Transactional
+    @Query(value = "update User set status=:status, pw=:pw, modDate=:modDate where code=:code")
+    int unScribeCancle(@Param("status")String status,
+                       @Param("pw")String pw,
+                       @Param("modDate") LocalDateTime modDate,
+                       @Param("code")Long code);
 
 }

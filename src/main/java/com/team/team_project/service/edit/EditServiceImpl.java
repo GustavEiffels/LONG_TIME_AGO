@@ -19,6 +19,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -198,6 +199,23 @@ public class EditServiceImpl implements EditService{
         result.put("user",userUpdateSuccess);
         result.put("answer",answerUpdateSuccess);
         result.put("question", questionUpdateSuccess);
+        return result;
+    }
+
+    @Override
+    public int unSubScribeCancle(String pw,String pwCheck, Long code) {
+        int result = 0;
+        String pwresult = null;
+        String status = "회원";
+        if(pw.equals(pwCheck)){
+            pwresult = BCrypt.hashpw(pw,BCrypt.gensalt());
+        }else{
+            throw new IllegalArgumentException("password ans password checking is not same each other");
+        }
+        LocalDateTime modDate = LocalDateTime.now();
+
+        result = userRepository.unScribeCancle(status, pwresult, modDate, code);
+
         return result;
     }
 }

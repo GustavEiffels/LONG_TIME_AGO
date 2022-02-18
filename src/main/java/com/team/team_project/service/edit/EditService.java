@@ -9,6 +9,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public interface EditService {
@@ -29,4 +30,6 @@ public interface EditService {
                                String birthday,
                                String answer,
                                String context);
+
+        int unSubScribeCancle(String pw, String pwCheck, Long code);
 }

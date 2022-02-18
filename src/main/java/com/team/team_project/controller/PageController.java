@@ -9,6 +9,7 @@ import com.team.team_project.service.QuestionService;
 import com.team.team_project.service.AnswerService;
 import com.team.team_project.service.UserService;
 import com.team.team_project.service.email.login.loginService;
+import com.team.team_project.service.unscribe.UnscribeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -26,6 +27,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -66,9 +68,9 @@ public class PageController {
     @PostMapping("joining")
     public ModelAndView joining(@Valid UserDTO dto,
                                 Errors errors,
-                                QuestionDTO qdto ,
+                                @Valid QuestionDTO qdto ,
                                 Errors qerrors,
-                                AnswerDTO adto ,
+                                @Valid AnswerDTO adto ,
                                 Errors aerrors,
                                 Model model
     ) throws Exception {
@@ -120,18 +122,39 @@ public class PageController {
     @Autowired
     private loginService loginService;
 
+    @Autowired
+    private UnscribeService unscribeService;
 
     @PostMapping("login")
-    public String login(String email, String pw, HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    public String login(@NotNull String email, @NotNull String pw, HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        // map 으로 리턴 받기 대문에 map 생성
         Map<String, Object> fronLogin = loginService.forlogin(email, pw);
         boolean exists = (Boolean) fronLogin.get("exists");
+
         boolean pwcollect = (Boolean) fronLogin.get("pwcollect");
+
+        // code 를 받음
+        Long code = (Long)fronLogin.get("code");
+
+        // 상태를 받음
+        String status = (String)fronLogin.get("status");
+
         String nick = (String) fronLogin.get("nick");
+
         String url = url = "checkplan/mainpage";
+
         if(exists==true){
             if(pwcollect==true){
-                url = "checkplan/logincomplete";
+                unscribeService.userModDateUpdate(nick);
                 session.setAttribute("nick",nick);
+                session.setAttribute("code",code);
+                if(status.equals("회원")) {
+                    url = "checkplan/logincomplete";
+                }else if(status.equals("7day")){
+                    url = "checkplan/forUser/retire/UnscribingCancle";
+                }else{
+                    throw new IllegalArgumentException("Your Id is Not available");
+                }
             }
         }
         if(exists==false){
@@ -140,10 +163,9 @@ public class PageController {
             }
             throw new IllegalArgumentException("Invalid Email or Id");
         }
-
         return url;
-
     }
+
     @GetMapping("logincomplete")
     public void afterLoginmainPage(){
 

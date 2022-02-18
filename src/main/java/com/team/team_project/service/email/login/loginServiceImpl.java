@@ -40,21 +40,32 @@ public class loginServiceImpl implements loginService{
 
         String nick = null;
 
+        // user code 를 받을 variable 생성
+        Long code = null;
+
         String status = null;
+
         if(email.contains("@")) {
             List<Object[]> list = userRepository.getalldata();
             for (Object[] i : list) {
                 String reemail = (String) i[0];
                 String repw = (String) i[1];
                 status = (String)i[3];
-
                 if(status.equals("회원")||status.equals("7day")){
                 if (CryptoUtil.decryptAES256(reemail, "Email").equals(email)) {
                     System.out.println(CryptoUtil.decryptAES256(reemail, "Email"));
                     exists = true;
                     if (BCrypt.checkpw(pw, repw)) {
                         pwcollect = true;
+
+                        // 아이디와 비밀번호가 맞다면
+
+                        // 1. nick 에 entity 에서 가져온 nick
                         nick = (String)i[2];
+
+
+                        // 3. code 에 entity 에서 가져온 code 로 지정
+                        code = (Long)i[4];
                     }
                 }
             }
@@ -65,13 +76,22 @@ public class loginServiceImpl implements loginService{
             Object[] result = (Object[]) user;
             String fid = (String) result[0];
             String fpw = (String) result[1];
+            // status 변수에 entity의 status 값을 지정
             status = (String) result[3];
             if (status.equals("회원")||status.equals("7day")) {
                 if (fid != null) {
                     exists = true;
                     if (BCrypt.checkpw(pw, fpw)) {
                         pwcollect = true;
+
+                        // nick name 에서 아이디와 비밀번호가 맞을 경우
+
+                        // nick 에다가 entity 의 nick 값을
                         nick = (String) result[2];
+
+
+                        // code 변수에 entity 의 code 값을 지정 한다 .
+                        code = (Long)result[4];
                     }
                 }
             }
@@ -82,6 +102,10 @@ public class loginServiceImpl implements loginService{
             map.put("exists",exists);
             map.put("pwcollect",pwcollect);
             map.put("nick",nick);
+
+            // status 와 code 는 login 성공시에 사용할 거라서 map 에 key를 주고 저장
+            map.put("status", status);
+            map.put("code", code);
         }else{
             throw new IllegalArgumentException("It is not valid UserAccount");
         }

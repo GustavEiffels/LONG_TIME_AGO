@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 
 @Service
@@ -27,6 +26,6 @@ public class UnscribeServiceImpl implements UnscribeService{
     @Override
     public void userModDateUpdate(String nick) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        userRepository.unScribeTime(localDateTime, nick);
+        userRepository.updateModate(localDateTime, nick);
     }
 }

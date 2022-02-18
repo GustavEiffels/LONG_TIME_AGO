@@ -34,18 +34,14 @@
 
 
 <div class="btn-group" role="group" aria-label="Basic outlined example">
-
-    <button type="button" class="btn btn-outline-primary" onclick="location.href='checkplan/forUser/editUserInfo';">
-        Edit member information
-    </button></br>
-
     <button type="button" class="btn btn-outline-primary"onclick="location.href='/checkplan/forUser/editUserInfo';">
         About My Info
     </button></br>
 
-    <button type="button" onclick="location.href='/checkplan/logincomplete';" class="btn btn-outline-primary" >
-        LogOut
-    </button></br>
+<!--    LogOut-->
+<form th:action="@{/checkplan/forUser/Logout}" method="post">
+    <button type="submit"  class="btn btn-outline-primary" >LogOut</button></br>
+</form>
 
 </div>
 </body>
