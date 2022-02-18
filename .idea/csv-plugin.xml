@@ -101,6 +101,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/class/0218/stock-data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/data4/titanic.csv">
           <value>
             <Attribute>
