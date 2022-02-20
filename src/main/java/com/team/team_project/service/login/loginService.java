@@ -1,4 +1,4 @@
-package com.team.team_project.service.email.login;
+package com.team.team_project.service.login;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -11,4 +11,6 @@ import java.util.Map;
 
 public interface loginService {
     Map<String, Object> forlogin(String email, String pw) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException;
+
+
 }

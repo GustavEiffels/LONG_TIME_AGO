@@ -4,7 +4,6 @@ import com.team.team_project.dto.QuestionDTO;
 import com.team.team_project.entity.Question;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,13 +25,13 @@ public interface QuestionService {
     }
 
     public default Map<String, String> qvalidateHandling(Errors errors){
-        Map<String, String> qvalidatorResult = new HashMap<>();
+        Map<String, String> validatorResult = new HashMap<>();
 
         for (FieldError error : errors.getFieldErrors()) {
             String validKeyName = String.format("qvalid_%s", error.getField());
-            qvalidatorResult.put(validKeyName, error.getDefaultMessage());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
         }
-        return qvalidatorResult;
+        return validatorResult;
 
 
     }

@@ -1,6 +1,7 @@
 package com.team.team_project;
 
 
+import com.team.team_project.dto.loginDTO.loginDTO;
 import com.team.team_project.entity.*;
 import com.team.team_project.repository.*;
 import com.team.team_project.service.*;
@@ -9,22 +10,26 @@ import com.team.team_project.service.email.EmailSenderService;
 import com.team.team_project.service.email.serialNumberFactory.ForFindPw;
 import com.team.team_project.service.email.serialNumberFactory.ForJoin;
 import com.team.team_project.service.find.FindService;
+import com.team.team_project.service.login.TestLoginService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -543,8 +548,29 @@ public class RepositoryTest {
 //
 //
 //
-//        // context 를 수정하기 위해서 qno 와  context  를 입력받는 method
+//        // context 를 수정하기 위해서 qno 와  context  를 입력 받는 method
 //        int resultQuestion = questionRepository.updateUserContext(qno, context);
 //        System.out.println(resultQuestion);
 //    }
+
+    @Autowired
+    private TestLoginService testLoginService;
+
+    @Test
+    public void validTest() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        loginDTO dto = loginDTO.builder()
+                .email("singsiuk")
+                .pw("Qwer!234")
+                .build();
+        Map<String, Object> loginResult = testLoginService.forlogin(dto);
+        System.out.println(loginResult.get("accountValid"));
+        System.out.println(loginResult.get("userCode"));
+        System.out.println(loginResult.get("userNick"));
+        System.out.println(loginResult.get("userStatus"));
+        System.out.println(loginResult.get("validCheck"));
+
+    }
+
+
+
 }

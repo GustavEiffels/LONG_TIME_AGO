@@ -1,4 +1,4 @@
-package com.team.team_project.service.email.login;
+package com.team.team_project.service.login;
 
 import com.team.team_project.repository.UserRepository;
 import com.team.team_project.service.CryptoUtil;

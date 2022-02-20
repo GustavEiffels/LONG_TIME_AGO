@@ -131,7 +131,6 @@ public class UserController {
         if(unScribeCancleResult>0){
             url = "redirect:/checkplan/mainpage";}
         return url;
-
     }
 
 }

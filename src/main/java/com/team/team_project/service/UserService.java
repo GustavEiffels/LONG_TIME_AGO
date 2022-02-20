@@ -77,6 +77,9 @@ public interface UserService {
     }
 
 
+
+
+
     // 회원 가입을 위한 method 생성
     public User join(UserDTO dto) throws Exception;
 

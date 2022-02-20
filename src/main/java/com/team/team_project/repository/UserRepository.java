@@ -101,5 +101,4 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
                        @Param("pw")String pw,
                        @Param("modDate") LocalDateTime modDate,
                        @Param("code")Long code);
-
 }
