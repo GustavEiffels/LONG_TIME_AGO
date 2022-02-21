@@ -108,6 +108,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/class/0221/AirPassengers.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/class/0221/stock-data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/data4/titanic.csv">
           <value>
             <Attribute>
