@@ -1,7 +1,6 @@
 package com.team.team_project;
 
 
-import com.team.team_project.dto.loginDTO.loginDTO;
 import com.team.team_project.entity.*;
 import com.team.team_project.repository.*;
 import com.team.team_project.service.*;
@@ -15,16 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -556,20 +551,7 @@ public class RepositoryTest {
     @Autowired
     private TestLoginService testLoginService;
 
-    @Test
-    public void validTest() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        loginDTO dto = loginDTO.builder()
-                .email("singsiuk")
-                .pw("Qwer!234")
-                .build();
-        Map<String, Object> loginResult = testLoginService.forlogin(dto);
-        System.out.println(loginResult.get("accountValid"));
-        System.out.println(loginResult.get("userCode"));
-        System.out.println(loginResult.get("userNick"));
-        System.out.println(loginResult.get("userStatus"));
-        System.out.println(loginResult.get("validCheck"));
 
-    }
 
 
 

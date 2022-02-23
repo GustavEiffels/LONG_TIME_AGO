@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">>
+<head>
+    <title>mainpage</title>
+</head>
+<body style="text-align: center">
+
+<h1> Hello welcome to our Website Let's make a Plan</h1>
+<form action="login" method="post" modelAttribute="LoginDTO">
+    <div>
+        <label for="email"> please Insert Your ID or Email</label>
+        <input type="text" id="email" name="email"  placeholder="Please insert Your Email" /></br>
+
+    </div>
+
+
+    <div>
+        <label for="pw"> please Insert Your pw</label>
+        <input type="password" id="pw" name="pw"  placeholder="insert password" /></br>
+    </div>
+
+    <button type="submit"> login </button>
+</form>
+
+
+
+</body>
+</html>

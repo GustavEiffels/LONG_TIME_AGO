@@ -3,6 +3,7 @@ package com.team.team_project.controller;
 import com.team.team_project.dto.AnswerDTO;
 import com.team.team_project.dto.QuestionDTO;
 import com.team.team_project.dto.UserDTO;
+import com.team.team_project.dto.PasswordDTO.PasswordDTO;
 import com.team.team_project.service.QuestionService;
 import com.team.team_project.service.AnswerService;
 import com.team.team_project.service.UserService;
@@ -40,7 +41,7 @@ public class PageController {
 
 
     @GetMapping("mainpage")
-    public void mainpage(){
+    public void mainpage(PasswordDTO dto){
     }
 
     @GetMapping("join")
@@ -124,88 +125,43 @@ public class PageController {
     private TestLoginService testLoginService;
 
     @PostMapping("login")
-    public String login(String email, String pw, HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-//        // map 으로 리턴 받기 대문에 map 생성
-//        Map<String, Object> fronLogin = loginService.forlogin(email, pw);
-//        boolean exists = (Boolean) fronLogin.get("exists");
-//
-//        boolean pwcollect = (Boolean) fronLogin.get("pwcollect");
-//
-//        // code 를 받음
-//        Long code = (Long)fronLogin.get("code");
-//
-//        // 상태를 받음
-//        String status = (String)fronLogin.get("status");
-//
-//        String nick = (String) fronLogin.get("nick");
-//
-//        String url = url = "checkplan/mainpage";
-//
-//        if(exists==true){
-//            if(pwcollect==true){
-//                unscribeService.userModDateUpdate(nick);
-//                session.setAttribute("nick",nick);
-//                session.setAttribute("code",code);
-//                if(status.equals("회원")) {
-//                    url = "checkplan/logincomplete";
-//                }else if(status.equals("7day")){
-//                    url = "checkplan/forUser/retire/UnscribingCancle";
-//                }else{
-//                    throw new IllegalArgumentException("Your Id is Not available");
-//                }
-//            }
-//        }
-//        if(exists==false){
-//            if(pwcollect==false){
-//                url = "Redirect:/checkplan/mainpage";
-//                throw new IllegalArgumentException("Invalid Password");
-//
-//
-//            }
-//            throw new IllegalArgumentException("Invalid Email or Id");
-//        }
-//        return url;
+    public String login(String account,@Valid PasswordDTO dto, Errors errors, Model model, HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
 
-//        String url = "checkplan/mainpage";
-//
-//        if(aError.hasErrors()){
-//            model.addAttribute("email", email);
-//
-//            // 유효성 통과 못한 필드와 메시지를 핸들링
-//            Map<String, String> validatorResult = userService.validateHandling(aError);
-//            for (String key : validatorResult.keySet()) {
-//                model.addAttribute(key, validatorResult.get(key));
-//            }
-//        }
-//        if(pError.hasErrors()){
-//            model.addAttribute("pw",pw);
-//
-//            Map<String, String> qvalidatorResult = questionService.qvalidateHandling(pError);
-//            for(String key : qvalidatorResult.keySet()){
-//                model.addAttribute(key, qvalidatorResult.get(key));
-//            }
-//        }
-//
-//        // test
-//
-//
-//        Map<String, Object> loginResult = testLoginService.forlogin(email,pw);
-//        boolean accountValid = (boolean)loginResult.get("accountValid");
-//        Long code = (Long)loginResult.get("userCode");
-//        String nick = (String)loginResult.get("userNick");
-//        String status = (String)loginResult.get("userStatus");
-//
-//        if(accountValid==true){
-//                unscribeService.userModDateUpdate(nick);
-//                session.setAttribute("nick",nick);
-//                session.setAttribute("code",code);
-//                if(status.equals("회원")) {
-//                    url = "checkplan/logincomplete";
-//                }else if(status.equals("7day")){
-//                    url = "checkplan/forUser/retire/UnscribingCancle";
-//                }
-//            }
-//        return url;
+        if(errors.hasErrors()){
+            model.addAttribute("dto", dto);
+            Map<String, String> validatorResult = testLoginService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
+
+            return "checkplan/mainpage";
+        }
+
+        String url = null;
+
+        Map<String, Object> loginResult = testLoginService.forlogin(account,dto);
+
+        boolean complete = (boolean) loginResult.get("success");
+
+
+        if(complete==true){
+            session.setAttribute("code", (Long)loginResult.get("userCode"));
+            session.setAttribute("nick",(String)loginResult.get("userNick"));
+            if(loginResult.get("userStatus").equals("7day")){
+                url = "checkplan/forUser/retire/UnscribingCancle";
+            }else if(loginResult.get("userStatus").equals("회원")){
+                url =  "checkplan/logincomplete";
+            }
+        }else if(complete==false) {
+            if ((boolean) loginResult.get("account") == false) {
+                model.addAttribute("accountError", (String) loginResult.get("wrongAccount"));
+                return "checkplan/mainpage";
+            } else if ((boolean) loginResult.get("password") == false) {
+                model.addAttribute("passwordError", (String) loginResult.get("wrongPassword"));
+                return "checkplan/mainpage";
+            }
+        }
+        return url;
     }
 
     @GetMapping("logincomplete")

@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"   xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>mainpage</title>
 </head>
 <body style="text-align: center">
 
 <h1> Hello welcome to our Website Let's make a Plan</h1>
-<form action="login" method="post">
-<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+<form th:action="@{/checkplan/login}" method="post" modelAttribute="dto">
 <div>
-    <label for="email"> please Insert Your ID or Email</label>
-    <span th:text="${valid_email}"></span>
-    <input type="text" id="email" name="email"  placeholder="Please insert Your Email" /></br>
+    <label for="account"> please Insert Your ID or Email</label>
+    <input type="text" id="account" name="account"  placeholder="Please insert Your Email" /></br>
+    <span th:text="${accountError}"></span>
+
 </div>
+
+
 
 <div>
     <label for="pw"> please Insert Your pw</label>
     <input type="password" id="pw" name="pw"  placeholder="insert password" /></br>
+    <!--/*@thymesVar id="valid_pw" type="aj"*/-->
     <span th:text="${valid_pw}"></span>
+    <span th:text="${passwordError}"></span>
 </div>
+
     <button type="submit"> login </button>
     </form>
 
