@@ -1,15 +1,20 @@
 package com.team.team_project.service.edit;
 
+
+
+import com.team.team_project.dto.editInfoDTO.EditInfoDTO;
+import org.springframework.ui.Model;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpSession;
+
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.Map;
 
 public interface EditService {
@@ -22,7 +27,7 @@ public interface EditService {
         boolean bringPwForRetire(String pw, String nick);
 
         // 실제로 값을 바꾸는 method
-        Map<String, Object> changeUserInfo(String currentNick,
+        Map<String, Object> changeUserInfo(HttpSession session,String currentNick,
                                String nickCh,
                                String pw,
                                String pwCheck,
@@ -31,5 +36,15 @@ public interface EditService {
                                String answer,
                                String context);
 
-        int unSubScribeCancle(String pw, String pwCheck, Long code);
+        Map<String , String> parameterNullProcess(HttpSession session,
+                                                  String nick,
+                                                  String pw,
+                                                  String answer,
+                                                  String gender,
+                                                  String birthday,
+                                                  String context
+                                                 );
+
+
+    int unSubScribeCancle(String pw, String pwCheck, Long code);
 }

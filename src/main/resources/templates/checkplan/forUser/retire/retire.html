@@ -13,6 +13,8 @@
             <label for="pw"> please Insert Your pw</label>
             <input type="password" id="pw" name="pw"  placeholder="insert password" /></br>
         </div>
+        <span th:text="${valid_pw}"></span>
+        <span th:text="${errorMessage}"></span><br>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="submit"  class="btn btn-success">OKAY</button>
             <button type="button" onclick="location.href='/checkplan/forUser/editUserInfo';" class="btn btn-danger">NO</button>

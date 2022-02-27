@@ -3,7 +3,9 @@ package com.team.team_project.dto;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
+import javax.annotation.RegEx;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Builder
 @Data
@@ -17,5 +19,6 @@ public class AnswerDTO {
     private Long qno;
 
     @NotBlank(message ="please insert Answer by the context")
+    @Pattern(regexp = "^[가-힣a-zA-Z0-9]{2,20}$", message = "answer type is Korean, numeric, English 2~20 characters")
     private String answer;
 }

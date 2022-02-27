@@ -10,24 +10,29 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 
 public interface AnswerRepository extends JpaRepository<Answer,Long> {
 
     @Query(value="select a.qno from Answer a where a.answer = :answer")
-    Question getQnoByUseContext(@Param("answer") String answer);
+    List<Question> getQnoByUseContext(@Param("answer") String answer);
 
     @Query(value="select a.code from Answer a where a.qno = :qno")
     User getCodeByUseQno(@Param("qno") Question qno);
 
 
+
+    /***
+     *  code 를 입력을 받으면 answer return
+     * */
     @Query(value="select a.answer from Answer a where a.code = :code")
-    String getAnswerForEditInfo(@Param("code")User code);
+    String getAnswerByCode(@Param("code")User code);
 
 
-    // User Code 를 입력하면 qno 가 출력되도록 설정
+
     @Query(value="select a.qno from Answer a where a.code =:code")
-    Question getQnoForEditInfo(@Param("code")User code);
+    Question getQnoByCode(@Param("code")User code);
 
     // User Code 를 입력하면 ano 가 출력 되도록 설정
     @Query(value = "select ano from Answer where code=:code")

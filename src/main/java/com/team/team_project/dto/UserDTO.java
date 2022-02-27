@@ -20,8 +20,8 @@ public class UserDTO {
     private Long code;
 
     @NotBlank(message = "Id value is a necessary component")
-//    @Pattern(regexp = "(?=.*[a-zA-Z0-9])(?=\\\\S+$).{4,12}",
-//            message = "Id Must be 2 to 10 characters in lowercase letters and  number.")
+    @Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$",
+            message = "Id Must be 4 to 11 characters in lowercase letters and  number.")
     private String id;
 
     @NotBlank(message = "Password is a necessary component")
@@ -33,7 +33,8 @@ public class UserDTO {
     @NotBlank(message = "Email is a necessary component")
     private String email;
 
-    @NotBlank(message = "Nickname is necessary")
+    @Pattern(regexp = "^[가-힣a-zA-Z0-9]{2,20}$", message = "not type of nick , please insert nickname type")
+    @NotBlank(message = "nick name is necessary")
     private String nick;
 
     @NotBlank(message = "Gender is necessary")
@@ -41,6 +42,7 @@ public class UserDTO {
 
     @NotBlank(message = "Birthday is necessary")
     private String birthday;
+
     private String status;
     private LocalDateTime regDate;
 }

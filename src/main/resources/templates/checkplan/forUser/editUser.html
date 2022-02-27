@@ -13,12 +13,12 @@
 
             Your Email  :
                 <!--/*@thymesVar id="userEmail" type="model"*/-->
-            <h4 th:text="${userEmail}"></h4></br>
+            <h4 th:text="${session.userEmail}"></h4></br>
 
 
 
         Your current Id is : <!--/*@thymesVar id="userId" type=""*/-->
-        <h4 th:text="${userId}"></h4></br>
+        <h4 th:text="${session.userId}"></h4></br>
 
 
         Your nick  :
@@ -29,14 +29,19 @@
         <input type="text"  id="nick" name="nick" /></br>
         <!--/*@thymesVar id="valid_nick" type="templates"*/-->
         <span th:text="${valid_nick}"></span>
+        <span th:text="${nickValidError}"></span>
+        <span th:text="${nickErrorMessage}"></span>
     </div>
         </br>
-    <li>
+
+    <div>
         <label for="pw">Password</label>
         <input type="password" id="pw" name="pw"  placeholder="insert password" /></br>
         <!--/*@thymesVar id="valid_pw" type="templates"*/-->
         <span th:text="${valid_pw}"></span>
-    </li>
+        <span th:text="${pwErrorMessage}"></span>
+        <span th:text="${pwValidError}"></span>
+    </div>
 
 
 
@@ -48,13 +53,12 @@
     </br>
         Your Gender is :
         <!--/*@thymesVar id="userGender" type=""*/-->
-        <h4 th:text="${userGender}"></h4><br>
+        <h4 th:text="${session.userGender}"></h4><br>
         <span> gender </span>
         <input type="radio" name="gender" value="m" />Male
         <input type="radio" name="gender" value="f" />Female
         </br>
-        <!--/*@thymesVar id="valid_gender" type="templates"*/-->
-        <span th:text="${valid_gender}"></span>
+
     </br>
 
 
@@ -63,36 +67,35 @@
         <!--/*@thymesVar id="userGender" type=""*/-->
         <!--/*@thymesVar id="userBirht" type=""*/-->
         <!--/*@thymesVar id="userBirthday" type="aj"*/-->
-        <h4 th:text="${userBirthday}"></h4><br>
+        <h4 th:text="${session.userBirthday}"></h4><br>
         <label for="birthday">birthday</label>
         <input type="date" id="birthday" name="birthday" /></br>
-        <!--/*@thymesVar id="valid_birthday" type="templates"*/-->
-        <span th:text="${valid_birthday}"></span></br>
+
 
             
     
         Your Current Question context :
         <!--/*@thymesVar id="userContext" type=""*/-->
-        <h4 th:text="${userContext}"></h4>
+        <h4 th:text="${session.userContext}"></h4>
         <div>
             <select name="context" id="context">
                 <option value="What is your favorite food">What is your favorite food</option>
                 <option value="What is your body secret">What is your body secret</option></br>
 
-                <!--/*@thymesVar id="qvalid_context" type="templates"*/-->
-                <span th:text="${qvalid_context}"></span>
             </select>
         </div>
 
         Your Current Answer of Question :
         <!--/*@thymesVar id="userAnswer" type=""*/-->
 
-        <h4 th:text="${userAnswer}"></h4>
+        <h4 th:text="${session.userAnswer}"></h4>
         <div>
             <label for="answer">question Answer</label>
             <input type="text" id="answer" name="answer"></br>
-            <!--/*@thymesVar id="avalid_answer" type="templates"*/-->
-            <span th:text="${avalid_answer}"></span>
+            <!--/*@thymesVar id="valid_answer" type="templates"*/-->
+            <span th:text="${valid_answer}"></span>
+            <span th:text="${errorMessage}"></span>
+            <span th:text="${answerValidError}"></span>
         </div>
 
     </div>

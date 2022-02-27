@@ -7,9 +7,9 @@ import com.team.team_project.dto.PasswordDTO.PasswordDTO;
 import com.team.team_project.service.QuestionService;
 import com.team.team_project.service.AnswerService;
 import com.team.team_project.service.UserService;
-import com.team.team_project.service.login.loginService;
-import com.team.team_project.service.login.TestLoginService;
+import com.team.team_project.service.login.LoginService;
 import com.team.team_project.service.unscribe.UnscribeService;
+import com.team.team_project.service.validationHandling.ValidateHandling;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,6 +61,9 @@ public class PageController {
     @Autowired
     private AnswerService answerService;
 
+    @Autowired
+    private ValidateHandling validateHandling;
+
     @PostMapping("joining")
     public ModelAndView joining(@Valid UserDTO dto,
                                 Errors errors,
@@ -68,14 +71,15 @@ public class PageController {
                                 Errors qerrors,
                                 @Valid AnswerDTO adto ,
                                 Errors aerrors,
-                                Model model
+                                Model model,
+                                String pwCheck
     ) throws Exception {
         // 유효성 통과 못한 필드와 메시지를 핸들링
         if(errors.hasErrors()){
             model.addAttribute("dto", dto);
 
             // 유효성 통과 못한 필드와 메시지를 핸들링
-            Map<String, String> validatorResult = userService.validateHandling(errors);
+            Map<String, String> validatorResult = validateHandling.validateHandling(errors);
             for (String key : validatorResult.keySet()) {
                 model.addAttribute(key, validatorResult.get(key));
             }
@@ -85,7 +89,7 @@ public class PageController {
         if(qerrors.hasErrors()){
             model.addAttribute("qdto",dto);
 
-            Map<String, String> validatorResult = questionService.qvalidateHandling(qerrors);
+            Map<String, String> validatorResult = validateHandling.validateHandling(qerrors);
             for(String key : validatorResult.keySet()){
                 model.addAttribute(key, validatorResult.get(key));
             }
@@ -94,42 +98,68 @@ public class PageController {
         if(aerrors.hasErrors()){
             model.addAttribute("adto", adto);
 
-            Map<String, String> validatorResult = answerService.avalidateHandling(aerrors);
+            Map<String, String> validatorResult = validateHandling.validateHandling(aerrors);
             for(String key : validatorResult.keySet()){
                 model.addAttribute(key, validatorResult.get(key));
             }
             return new ModelAndView("checkplan/join");
         }
 
-        userService.join(dto);
-        questionService.insertQuestionTableTest(qdto);
-        AnswerDTO answerDTO = AnswerDTO.builder()
-                .code(dto.getCode())
-                .qno(qdto.getQno())
-                .answer(adto.getAnswer())
-                .build();
-        answerService.selfcheckinggood(answerDTO);
-        return new ModelAndView ("redirect:/checkplan/mainpage");
+        String email = dto.getEmail();
+        String id = dto.getId();
+        String pw = dto.getPw();
+        String nick = dto.getNick();
+
+        Map<String, String> result = validateHandling.joinValidation(email, id, nick, pw, pwCheck);
+
+        String validCheck = result.get("result");
+
+        if(validCheck.equals("okay")) {
+
+            userService.join(dto);
+            questionService.insertQuestionTableTest(qdto);
+            AnswerDTO answerDTO = AnswerDTO.builder()
+                    .code(dto.getCode())
+                    .qno(qdto.getQno())
+                    .answer(adto.getAnswer())
+                    .build();
+            answerService.selfcheckinggood(answerDTO);
+        }else{
+            if(result.get("emailMessage")!=null){
+                model.addAttribute("emailMessage",result.get("emailMessage"));
+            }
+            if(result.get("idMessage")!=null){
+                model.addAttribute("idMessage",result.get("idMessage"));
+            }
+            if(result.get("nickMessage")!=null){
+                model.addAttribute("nickMessage",result.get("nickMessage"));
+            }
+            if(result.get("pwMessage")!=null){
+                model.addAttribute("pwMessage",result.get("pwMessage"));
+            }
+            return new ModelAndView("checkplan/join");
+        }
+            return new ModelAndView("redirect:/checkplan/mainpage");
     }
 
 
 
 
-    @Autowired
-    private loginService loginService;
+
 
     @Autowired
     private UnscribeService unscribeService;
 
     @Autowired
-    private TestLoginService testLoginService;
+    private LoginService loginService;
+
 
     @PostMapping("login")
     public String login(String account,@Valid PasswordDTO dto, Errors errors, Model model, HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
 
         if(errors.hasErrors()){
             model.addAttribute("dto", dto);
-            Map<String, String> validatorResult = testLoginService.validateHandling(errors);
+            Map<String, String> validatorResult = validateHandling.validateHandling(errors);
             for (String key : validatorResult.keySet()) {
                 model.addAttribute(key, validatorResult.get(key));
             }
@@ -139,25 +169,25 @@ public class PageController {
 
         String url = null;
 
-        Map<String, Object> loginResult = testLoginService.forlogin(account,dto);
+        Map<String, Object> loginResult = loginService.forloginUpdate(account,dto);
 
-        boolean complete = (boolean) loginResult.get("success");
+        boolean complete = (boolean) loginResult.get("loginResult");
 
 
         if(complete==true){
-            session.setAttribute("code", (Long)loginResult.get("userCode"));
-            session.setAttribute("nick",(String)loginResult.get("userNick"));
-            if(loginResult.get("userStatus").equals("7day")){
+            session.setAttribute("code", (Long)loginResult.get("code"));
+            session.setAttribute("nick",(String)loginResult.get("nick"));
+            if(loginResult.get("status").equals("7day")){
                 url = "checkplan/forUser/retire/UnscribingCancle";
-            }else if(loginResult.get("userStatus").equals("회원")){
+            }else if(loginResult.get("status").equals("회원")){
                 url =  "checkplan/logincomplete";
             }
         }else if(complete==false) {
-            if ((boolean) loginResult.get("account") == false) {
-                model.addAttribute("accountError", (String) loginResult.get("wrongAccount"));
+            if ((boolean) loginResult.get("result") == false) {
+                model.addAttribute("accountError", (String) loginResult.get("validErrorMessage"));
                 return "checkplan/mainpage";
-            } else if ((boolean) loginResult.get("password") == false) {
-                model.addAttribute("passwordError", (String) loginResult.get("wrongPassword"));
+            } else if ((boolean) loginResult.get("result") == true) {
+                model.addAttribute("passwordError", (String) loginResult.get("passwordError"));
                 return "checkplan/mainpage";
             }
         }

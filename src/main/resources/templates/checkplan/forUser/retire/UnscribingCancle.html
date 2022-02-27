@@ -18,6 +18,8 @@
         <label for="pwCheck"> please Insert Your new pw once again</label>
         <input type="password" id="pwCheck" name="pwCheck"  placeholder="insert password" /></br>
     </div>
+    <span th:text="${valid_pw}"></span>
+    <span th:text="${ErrorMessage}"></span>
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
         <button type="submit"  class="btn btn-success">OKAY</button>
         <button type="button" onclick="location.href='/checkplan/mainpage';" class="btn btn-danger">NO</button>

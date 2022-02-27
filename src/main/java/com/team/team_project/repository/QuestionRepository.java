@@ -15,7 +15,7 @@ public interface QuestionRepository extends JpaRepository<Question,Long> {
     List<Long> findByContext(@Param("context")String context);
 
     @Query(value = "select q.context from Question q where q.qno =:qno")
-    String getContextForUserInfo(@Param("qno")Long qno);
+    String getContextByQno(@Param("qno")Long qno);
 
     // qno 를 입력하면 Question table 의 context column 을 설정하게 해주는 method
     @Modifying

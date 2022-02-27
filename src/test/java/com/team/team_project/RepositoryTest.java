@@ -1,6 +1,8 @@
 package com.team.team_project;
 
 
+import com.team.team_project.dto.PasswordDTO.PasswordDTO;
+import com.team.team_project.dto.findDTO.ByQandAandBirthdayDTO;
 import com.team.team_project.entity.*;
 import com.team.team_project.repository.*;
 import com.team.team_project.service.*;
@@ -9,7 +11,7 @@ import com.team.team_project.service.email.EmailSenderService;
 import com.team.team_project.service.email.serialNumberFactory.ForFindPw;
 import com.team.team_project.service.email.serialNumberFactory.ForJoin;
 import com.team.team_project.service.find.FindService;
-import com.team.team_project.service.login.TestLoginService;
+import com.team.team_project.service.login.LoginService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -364,48 +366,48 @@ public class RepositoryTest {
     }
 
 //    @Test
-    public void findIdByanswer() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        String context = "What is your favorite food";
-        String answer = "사과";
+//    public void findIdByanswer() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+//        String context = "What is your favorite food";
+//        String answer = "사과";
+////
+//        List<Long> getQnoListFromQuestion = questionRepository.findByContext(context);
+//        Question codeResult = answerRepository.getQnoByUseContext(answer);
+//        Long resultQnoByAnswer = codeResult.getQno();
+//        System.out.println(resultQnoByAnswer);
 //
-        List<Long> getQnoListFromQuestion = questionRepository.findByContext(context);
-        Question codeResult = answerRepository.getQnoByUseContext(answer);
-        Long resultQnoByAnswer = codeResult.getQno();
-        System.out.println(resultQnoByAnswer);
-
-        String id = null;
-        String email = null;
-        for(Long qnoResult:getQnoListFromQuestion) {
-            if(qnoResult==resultQnoByAnswer){
-                Question question = Question.builder()
-                        .qno(resultQnoByAnswer)
-                        .build();
-                User userInfoByUsingQno = answerRepository.getCodeByUseQno(question);
-                Long userCode = userInfoByUsingQno.getCode();
-
-                Object userIdAndEmail = userRepository.findUserIdAndEmailByUserCode(userCode);
-                Object[] resultUserIdAndEmail = (Object[]) userIdAndEmail;
-                id = (String)resultUserIdAndEmail[0];
-                email = (String)resultUserIdAndEmail[1];
-                email = CryptoUtil.decryptAES256(email,"Email");
-
-            }
-        }
-        System.out.println(id);
-        System.out.println(email);
-    }
-//    @Test
-    public void returnQnoUsingAnwser(){
-        String answer = "사과";
-        Question codeResult = answerRepository.getQnoByUseContext(answer);
-        Long resultQnoByAnswer = codeResult.getQno();
-        System.out.println(resultQnoByAnswer);
-        Question question = Question.builder()
-                .qno(resultQnoByAnswer)
-                .build();
-        User b = answerRepository.getCodeByUseQno(question);
-        System.out.println(b);
-    }
+//        String id = null;
+//        String email = null;
+//        for(Long qnoResult:getQnoListFromQuestion) {
+//            if(qnoResult==resultQnoByAnswer){
+//                Question question = Question.builder()
+//                        .qno(resultQnoByAnswer)
+//                        .build();
+//                User userInfoByUsingQno = answerRepository.getCodeByUseQno(question);
+//                Long userCode = userInfoByUsingQno.getCode();
+//
+//                Object userIdAndEmail = userRepository.findUserIdAndEmailByUserCode(userCode);
+//                Object[] resultUserIdAndEmail = (Object[]) userIdAndEmail;
+//                id = (String)resultUserIdAndEmail[0];
+//                email = (String)resultUserIdAndEmail[1];
+//                email = CryptoUtil.decryptAES256(email,"Email");
+//
+//            }
+//        }
+//        System.out.println(id);
+//        System.out.println(email);
+//    }
+////    @Test
+//    public void returnQnoUsingAnwser(){
+//        String answer = "사과";
+//        Question codeResult = answerRepository.getQnoByUseContext(answer);
+//        Long resultQnoByAnswer = codeResult.getQno();
+//        System.out.println(resultQnoByAnswer);
+//        Question question = Question.builder()
+//                .qno(resultQnoByAnswer)
+//                .build();
+//        User b = answerRepository.getCodeByUseQno(question);
+//        System.out.println(b);
+//    }
     @Test
     public void returnTestUser(){
         Long a = 57L;
@@ -416,12 +418,12 @@ public class RepositoryTest {
         System.out.println(b.getCode());
     }
 
-    @Test
-    public void idAndEmailReturnCodeTest() throws Exception {
-        String userInfo = "singsiuk";
-        Map<String, Object> result = findService.pwFindResult(userInfo);
-        System.out.println(result.get("userInfo"));
-    }
+//    @Test
+//    public void idAndEmailReturnCodeTest() throws Exception {
+//        String userInfo = "singsiuk";
+//        Map<String, Object> result = findService.pwFindResult(userInfo);
+//        System.out.println(result.get("userInfo"));
+//    }
 
 //    @Test
     public void createrandomcode(){
@@ -432,36 +434,36 @@ public class RepositoryTest {
         }
     }
 //    @Test
-    public void middleCheck() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, MessagingException {
-        String userInfo = "singsiuk";
-        String context = "What is your favorite food";
-        String answer = "헤헿맛있는피자";
-        String birthday = "2022-02-11";
-
-        Map<String, Object> result = new HashMap<>();
-
-        result = findService.resultOfPwfind(userInfo,answer,context,birthday);
-        System.out.println(result.get("newPassword"));
-        System.out.println(result.get("UserEmail"));
-        System.out.println(result.get("UserId"));
-        String pwResult = (String) result.get("newPassword");
-        String userEmail = (String) result.get("UserEmail");
-        BCrypt.hashpw(pwResult,BCrypt.gensalt());
-
-        String message = "Your new Password  : "+result.get("newPassword")+"\n" +
-                "\n Plaese Insert BlanK For Join Us";
-        userRepository.changingPw(BCrypt.hashpw(pwResult,BCrypt.gensalt()), (String) result.get("UserId"));
-        emailSenderService.sendMail("Here is New Password From Make Your Plan", userEmail, message);
-    }
-//    @Test
-    public void finalTestOfFindingpw() throws InvalidAlgorithmParameterException, MessagingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        String userInfo = "singsiuk";
-        String context = "What is your favorite food";
-        String answer = "헤헿맛있는피자";
-        String birthday = "2022-02-11";
-
-        findService.resultOfPwfind(userInfo, answer,context, birthday);
-    }
+//    public void middleCheck() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, MessagingException {
+//        String userInfo = "singsiuk";
+//        String context = "What is your favorite food";
+//        String answer = "헤헿맛있는피자";
+//        String birthday = "2022-02-11";
+//
+//        Map<String, Object> result = new HashMap<>();
+//
+//        result = findService.resultOfPwfind(userInfo,answer,context,birthday);
+//        System.out.println(result.get("newPassword"));
+//        System.out.println(result.get("UserEmail"));
+//        System.out.println(result.get("UserId"));
+//        String pwResult = (String) result.get("newPassword");
+//        String userEmail = (String) result.get("UserEmail");
+//        BCrypt.hashpw(pwResult,BCrypt.gensalt());
+//
+//        String message = "Your new Password  : "+result.get("newPassword")+"\n" +
+//                "\n Plaese Insert BlanK For Join Us";
+//        userRepository.changingPw(BCrypt.hashpw(pwResult,BCrypt.gensalt()), (String) result.get("UserId"));
+//        emailSenderService.sendMail("Here is New Password From Make Your Plan", userEmail, message);
+//    }
+////    @Test
+//    public void finalTestOfFindingpw() throws InvalidAlgorithmParameterException, MessagingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+//        String userInfo = "singsiuk";
+//        String context = "What is your favorite food";
+//        String answer = "헤헿맛있는피자";
+//        String birthday = "2022-02-11";
+//
+//        findService.resultOfPwfind(userInfo, answer,context, birthday);
+//    }
     @Autowired
     private EditService editService;
 
@@ -471,7 +473,7 @@ public class RepositoryTest {
         User userCode = User.builder()
                 .code(code)
                 .build();
-        String userAnswer = answerRepository.getAnswerForEditInfo(userCode);
+        String userAnswer = answerRepository.getAnswerByCode(userCode);
         System.out.println(userAnswer);
     }
 
@@ -548,8 +550,65 @@ public class RepositoryTest {
 //        System.out.println(resultQuestion);
 //    }
 
+    @Test
+    public void testmethod() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        ByQandAandBirthdayDTO dto = ByQandAandBirthdayDTO.builder()
+                .answer("사")
+                .context("What is your favorite food")
+                .birthday("2022-02-24")
+                .build();
+        String answer = dto.getAnswer();
+        String context = dto.getContext();
+        String birthday = dto.getBirthday();
+        Map<String, Object> result = findService.findUserIdAndEmailByQuestionAndAnswer(dto);
+        System.out.println(result.get("id"));
+        System.out.println(result.get("email"));
+
+    }
+
     @Autowired
-    private TestLoginService testLoginService;
+    private LoginService loginService;
+
+    @Test
+    public void test() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        String email = "singsiuk9315@naver.com";
+        String pw = "Qwer!2341";
+        PasswordDTO dto = PasswordDTO.builder()
+                .pw(pw)
+                .build();
+        Map<String , Object> result = loginService.forloginUpdate(email,dto);
+        boolean yesOrNo = (boolean) result.get("loginResult");
+        if(yesOrNo==true) {
+            System.out.println((String) result.get("nick"));
+            System.out.println((String) result.get("status"));
+        }else {
+            System.out.println((String)result.get("validErrorMessage"));
+            System.out.println((String)result.get("passwordError"));
+        }
+
+    }
+
+    @Test
+    public void test11() throws InvalidAlgorithmParameterException, MessagingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        String account = "singsiuk";
+        ByQandAandBirthdayDTO dto = ByQandAandBirthdayDTO.builder()
+                .birthday("2022-02-23")
+                .context("What is your favorite food")
+                .answer("바나나")
+                .build();
+            Map<String,Object> result = findService.resultOfPwfind(account,dto);
+            System.out.println(result.get("email"));
+            System.out.println(result.get("newPw"));
+            System.out.println(result.get("allResult"));
+        System.out.println(result.get("infoErrorMessage"));
+        System.out.println(result.get("result"));
+
+    }
+    @Test
+    public void testfind(){
+
+    }
+
 
 
 

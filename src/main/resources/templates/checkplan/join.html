@@ -42,6 +42,7 @@
 
                 <!--/*@thymesVar id="valid_email" type="templates"*/-->
             <span th:text="${valid_email}"></span>
+            <span th:text="${emailMessage}"></span>
 
             </div>
         </li>
@@ -52,6 +53,7 @@
             <input type="text" id="id" name="id" class="textinput" placeholder="Please insert Your Id what u use" /></br>
             <!--/*@thymesVar id="valid_id" type="templates"*/-->
             <span th:text="${valid_id}"></span>
+            <span th:text="${idMessage}"></span>
         </li>
 
         <li>
@@ -59,6 +61,7 @@
             <input type="text"  id="nick" name="nick" /></br>
             <!--/*@thymesVar id="valid_nick" type="templates"*/-->
             <span th:text="${valid_nick}"></span>
+            <span th:text="${nickMessage}"></span>
         </li>
 
 
@@ -71,8 +74,9 @@
 
 
         <li>
-            <label for="pw1">Password Check</label>
-            <input type="password" id="pw1" name="pw1"  placeholder="for checking your password validation" /></br>
+            <label for="pwCheck">Password Check</label>
+            <input type="password" id="pwCheck" name="pwCheck"  placeholder="for checking your password validation" /></br>
+            <span th:text="${pwMessage}"></span>
         </li>
 
 

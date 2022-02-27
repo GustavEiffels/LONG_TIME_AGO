@@ -1,8 +1,6 @@
 package com.team.team_project.service.email.serialNumberFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+
 import java.util.Random;
 
 public class ForFindPw {

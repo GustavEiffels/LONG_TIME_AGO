@@ -16,9 +16,6 @@ import javax.validation.constraints.Pattern;
 @Log4j2
 @ToString
 public class PasswordDTO {
-
-
-
     @NotBlank(message = "Password is a necessary component")
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}",
             message = "Password must be 8 to 16 characters in uppercase and lowercase letters, numbers, and special characters.")
