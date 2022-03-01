@@ -159,7 +159,7 @@ public class ValidateHandling {
         }else{
             // account 가 id 임으로 true 로 변경
             isItId = true ;
-            if(Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$",account)){
+            if(Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{6,11}$",account)){
 
                 /**
                  *  account가 유효한지 확인

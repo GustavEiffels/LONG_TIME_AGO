@@ -20,7 +20,7 @@ public class UserDTO {
     private Long code;
 
     @NotBlank(message = "Id value is a necessary component")
-    @Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$",
+    @Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9_]{6,11}$",
             message = "Id Must be 4 to 11 characters in lowercase letters and  number.")
     private String id;
 
