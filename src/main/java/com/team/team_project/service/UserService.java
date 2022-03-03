@@ -93,8 +93,6 @@ public interface UserService {
     // 로그인을 위해 해당 email이 있는지 확인하는 method 작성
     public Boolean checkEmail(String email);
 
-    // 로그인 기능 구현 - 1 차 시도
-    public User login(String email , String pw) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException;
 
 
 

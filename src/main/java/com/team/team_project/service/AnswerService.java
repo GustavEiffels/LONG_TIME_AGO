@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface AnswerService {
-    default Answer dtoToEntity(AnswerDTO answerDTO){
+
+    default Answer dtoToEntity(AnswerDTO answerDTO)
+    {
         User user = User.builder()
                 .code(answerDTO.getCode())
                 .build();
@@ -25,7 +27,9 @@ public interface AnswerService {
                 .build();
         return answer;
     }
-    default AnswerDTO entityToDto(Answer entity, User code , Question qno){
+
+    default AnswerDTO entityToDto(Answer entity, User code , Question qno)
+    {
         AnswerDTO dto = AnswerDTO.builder()
                 .ano(entity.getAno())
                 .code(code.getCode())
@@ -35,10 +39,12 @@ public interface AnswerService {
         return dto;
     }
 
-    public default Map<String, String> avalidateHandling(Errors errors){
+    public default Map<String, String> avalidateHandling(Errors errors)
+    {
         Map<String, String> avalidatorResult = new HashMap<>();
 
-        for (FieldError error : errors.getFieldErrors()) {
+        for ( FieldError error : errors.getFieldErrors() )
+        {
             String validKeyName = String.format("avalid_%s", error.getField());
             avalidatorResult.put(validKeyName, error.getDefaultMessage());
         }

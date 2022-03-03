@@ -50,11 +50,11 @@ public class ValidateHandling {
         // id
         boolean isItId = false;
 
-        // message
-        String  errorMessage = null;
-
         // 유효성에 만족하고 존재하는 값인지 확인
         boolean validFinalCheck = false;
+
+        // message
+        String  errorMessage = null;
 
         // 비밀번호를 받을 변수
         String password = null;
@@ -117,8 +117,11 @@ public class ValidateHandling {
                      * getStatus 값이 7day 나 회원일때
                      * list 에서 password 값을 갖는다
                      * */
-                    if(CryptoUtil.decryptAES256(getEmail, "Email").equals(account)){
-                        if(status.equals("7day")||status.equals("회원")){
+                    if(CryptoUtil.decryptAES256(getEmail, "Email").equals(account))
+                    {
+
+                        if( (status.equals("7day") ) || ( status.equals("회원") ) )
+                        {
                             validFinalCheck = true ;
                             /**
                              * 여기서 입력받는 password 는 암호화된 password
@@ -128,7 +131,9 @@ public class ValidateHandling {
                             code = (Long)i[4];
                             birthday = (LocalDate) i[5];
                             break;
-                        }else{
+                        }
+                        else
+                        {
                             /**
                              * status 가 만족하지 않을때 출력할 message를 설정
                              * */
@@ -136,6 +141,7 @@ public class ValidateHandling {
                         }
 
                     }
+
 
                     }
                 /**
@@ -220,13 +226,16 @@ public class ValidateHandling {
 
 
         // 값들이 유효한 경우
-        if(validFinalCheck==true) {
+        if(validFinalCheck==true)
+        {
+
             validCheckResult.put("account",account);
             validCheckResult.put("code",code);
             validCheckResult.put("pw",password);
             validCheckResult.put("nick",nick);
             validCheckResult.put("status",status);
             validCheckResult.put("birthday",birthday);
+
             // 유효한 값이 email 일 경우\
             if (isItEmail == true) {
                 validCheckResult.put("validComplete_Value", "email");
@@ -270,10 +279,15 @@ public class ValidateHandling {
 
     public boolean answerValid(String answer){
         boolean result = false;
+
         if(Pattern.matches("^[가-힣a-zA-Z0-9]{2,20}$",answer)){
+
             result = true;
+
         }
+
         return result;
+
     }
 
     boolean emailDupCheck(String email) throws Exception{
@@ -284,21 +298,30 @@ public class ValidateHandling {
         boolean result = false;
         List<String> list = userRepository.getAllEmail();;
         for(String i:list){
+
            String getEmail = CryptoUtil.decryptAES256(i, "Email");
+
            if(getEmail.equals(email)){
+
                result = true;
                break;
+
            }
+
         }
         return result;
     }
     boolean nickDupCheck(String nick){
         boolean result = false;
+
         List<String> list = userRepository.getAllNick();
+
         for(String i:list){
+
             if(i.equals(nick)){
                 result = true;
             }
+
         }
         return result;
     }
@@ -306,9 +329,11 @@ public class ValidateHandling {
         boolean result = false;
         List<String> list = userRepository.getALLId();
         for(String i: list){
+
             if(i.equals(id)){
                 result = true;
             }
+
         }
         return result;
     }
@@ -328,7 +353,6 @@ public class ValidateHandling {
          * fasle 이면 유효하지 않음
          */
         boolean valid = true;
-
         boolean emailResult = emailDupCheck(email);
         boolean idResult = idDupCheck(id);
         boolean nickResult = nickDupCheck(nick);
@@ -346,26 +370,35 @@ public class ValidateHandling {
          */
         Map<String, String> result = new HashMap<>();
 
-        if(emailResult==true){
+        if(emailResult)
+        {
             result.put("emailMessage","Someone use it already");
             valid = false;
         }
-        if(idResult==true){
+
+        if(idResult){
             result.put("idMessage","Someone use it already");
             valid = false;
         }
-        if(nickResult==true){
+
+        if(nickResult)
+        {
             result.put("nickMessage","Someone use it already");
             valid = false;
         }
-        if(pwResult==false){
+
+        if(pwResult)
+        {
             result.put("pwMessage","Passwords do not match");
             valid = false;
         }
 
-        if(valid==true){
+        if(valid)
+        {
             result.put("result","okay");
-        }else{
+        }
+        else
+        {
             result.put("result","no");
         }
 
