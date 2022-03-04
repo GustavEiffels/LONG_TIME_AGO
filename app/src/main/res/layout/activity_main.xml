@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp">
+        <ImageView
+            android:id="@+id/sana01"
+            android:src="@drawable/sana1"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+        <ImageView
+            android:id="@+id/sana02"
+            android:src="@drawable/sana2"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+        <ImageView
+            android:id="@+id/sana03"
+            android:src="@drawable/sana3"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+        <ImageView
+            android:id="@+id/sana04"
+            android:src="@drawable/sana4"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp">
+        <ImageView
+            android:id="@+id/sana05"
+            android:src="@drawable/sana5"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+        <ImageView
+            android:id="@+id/sana06"
+            android:src="@drawable/sana6"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+        <ImageView
+            android:id="@+id/sana07"
+            android:src="@drawable/sana7"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+        <ImageView
+            android:id="@+id/sana08"
+            android:src="@drawable/sana8"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
