@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Your Pw</title>
+</head>
+<body style="text-align: center">
+<h2>Please Choose Your Question and Insert the answer,Email or ID in the box </h2>
+<form th:action="@{/find/result/byEmailOrId}" method="post">
+    <div>
+        <label for="userInfo"> please Insert Your ID or Email</label>
+        <input type="text" id="userInfo" name="userInfo"  placeholder="Please insert Your Email" /></br>
+    </div>
+    <span th:text="${validErrorMessage}"></span>
+    <div>
+        <label for="answer">Question</label>
+        <select name="context" id="context">
+            <option value="What is your favorite food">What is your favorite food</option>
+            <option value="What is your body secret">What is your body secret</option></br>
+        </select>
+        <!--/*@thymesVar id="valid_context" type="aj"*/-->
+        <span th:text="${valid_context}"></span>
+    </div>
+    <div>
+        <label for="answer">question Answer</label>
+        <input type="text" id="answer" name="answer"></br>
+    </div>
+    <!--/*@thymesVar id="valid_answer" type="aj"*/-->
+    <span th:text="${valid_answer}"></span>
+
+    <div>
+        <label for="birthday">birthday</label>
+        <input type="date" id="birthday" name="birthday" /></br>
+    </div>
+    <!--/*@thymesVar id="valid_birthday" type="aj"*/-->
+    <span th:text="${valid_birthday}"></span>
+    <span th:text="${infoErrorMessage}"></span>
+
+    <input type="submit" class="buttons" value="Find!"/>
+</form>
+<input type="button" onclick="location.href='/checkplan/mainpage';" value="Go to Main page">
+
+</body>
+</html>

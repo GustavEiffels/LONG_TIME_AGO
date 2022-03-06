@@ -1,0 +1,94 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.9'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'war'
+
+    // Querydsl 을 위한 plug in
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+
+    id "io.franzbecker.gradle-lombok" version "3.0.0"
+}
+
+group = 'com.team'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'io.motown.operator-api:operator-api-json:0.8.2'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Security TEST
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // Thymeleaf 를 위한 추가 의존성
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time'
+
+    //Sercurity 를 위한 의존성 추가
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5'
+
+    //email 인증을위한 dependency 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+
+
+    // Querydsl
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
+
+
+    // validation 의존성을 추가
+    // 2.3 version 이상 부터는 따로 추가해줘야함
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝
