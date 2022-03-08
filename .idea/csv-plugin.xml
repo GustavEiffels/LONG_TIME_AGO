@@ -122,6 +122,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/class/python_statistics-main 2/drinks.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/data4/titanic.csv">
           <value>
             <Attribute>
