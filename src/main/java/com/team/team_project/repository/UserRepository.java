@@ -1,5 +1,6 @@
 package com.team.team_project.repository;
 
+import com.team.team_project.dto.UserDTO;
 import com.team.team_project.entity.User;
 
 import java.time.LocalDate;
@@ -39,11 +40,37 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     @Query(value = "select u.id, u.pw, u.nick, u.status, u.code , u.birthday from User u where u.id =:id")
     Object findById(@Param("id") String id);
 
-    @Query(value = "select email, pw, nick, status, code, birthday from User")
-    List<Object[]> getalldata();
 
+    @Query(value = "select email, pw, nick, status, code, birthday from User")
+    List<Object[]> getUserInfo();
+
+
+    // --------FindServiceImpl------------------------------------ User 정보 찾기 기능 ----------------------------------------
+
+    /**
+     * nick name 을 Parameter 로 받아서
+     * id, email, status 를 return
+     *
+     * 사용 목적 :
+     * 닉네임으로 사용자의 아이디와 Email 을 마스킹 해서 View 에 표출
+     */
     @Query(value = "select u.id, u.email, u.status from User u where u.nick = :nick")
     Object findByNick(@Param("nick") String nick);
+
+    @Query(value = "select code, email, pw, nick, status, birthday from User")
+    List<Object[]> findAllByEmail();
+
+    @Query(value = "select u.code , u.id, u.pw, u.nick, u.status, u.birthday  from User u where u.id =:id")
+    Object findAllById(@Param("id") String id);
+
+    // --------FindServiceImpl------------------------------------ User 정보 찾기 기능 ----------------------------------------
+
+
+
+
+
+
+
 
     @Query(value = "select u.id, u.email from User u where u.code = :code")
     Object getIdAndEmailByCode(@Param("code")Long code);

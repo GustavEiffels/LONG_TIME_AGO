@@ -1,7 +1,7 @@
 package com.team.team_project.controller;
 
 
-import com.team.team_project.dto.findDTO.ByNickDTO;
+import com.team.team_project.dto.findDTO.NickDTO;
 import com.team.team_project.dto.findDTO.ByQandAandBirthdayDTO;
 import com.team.team_project.service.email.EmailSenderService;
 import com.team.team_project.service.find.FindService;
@@ -13,16 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Map;
 
 @Controller
@@ -30,6 +21,9 @@ import java.util.Map;
 public class FindController {
     @Autowired
     private FindService findService;
+
+    @Autowired
+    private ValidateHandling validateHandling;
 
     @GetMapping("/find/emailPage")
     public void emailFindPage(){
@@ -40,12 +34,10 @@ public class FindController {
     public void byNick(){
     }
 
-    @Autowired
-    private ValidateHandling validateHandling;
+
 
     @PostMapping("/find/result/byNick")
-    public String findingByNick(@Valid ByNickDTO dto, Errors errors, Model model) throws Exception {
-        Map<String, Object> result = findService.findByNick(dto);
+    public String findingByNick(@Valid NickDTO dto, Errors errors, Model model) throws Exception {
 
         if(errors.hasErrors()){
             model.addAttribute("dto", dto);
@@ -56,11 +48,12 @@ public class FindController {
 
             return "find/byNickName";
         }
+        Map<String, Object> result = findService.findByNick(dto);
 
-        String exceptionEmerge = (String) result.get("exceptionEmerge");
+        String exceptionEmerge = (String) result.get("exceptionMessage");
         if(exceptionEmerge==null){
-            model.addAttribute("email",(String) result.get("emailMaskingResult"));
-            model.addAttribute("id",(String) result.get("idMaskingResult"));
+            model.addAttribute("email",(String) result.get("email"));
+            model.addAttribute("id",(String) result.get("id"));
         }else{
             model.addAttribute("exceptionMessage",exceptionEmerge);
             return "/find/byNickName";
@@ -76,23 +69,16 @@ public class FindController {
     @Autowired
     private EmailSenderService emailSenderService;
 
-    @PostMapping("/find/result/byQuestion")
-    public String temp(@Valid ByQandAandBirthdayDTO dto, Errors errors, Model model) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException, MessagingException {
-        Map<String, Object> result = findService.findUserIdAndEmailByQuestionAndAnswer(dto);
-        String message = "Your Id is : "+result.get("id")+"\n" +
-                "Your Email is : " +result.get("email")+
-                "\n Plaese Insert BlanK For Join Us";
-        String userEmail = (String) result.get("email");
-        System.out.println(userEmail);
-        emailSenderService.sendMail("Your Id From Making a Plan", userEmail,message);
-        return "/find/result/byQuestion";
-    }
 
-    @GetMapping("/find/pwByInfo")
-    public void findPwByInfo(){
-    }
+
+
+
     @PostMapping("/find/result/byEmailOrId")
-    public String changePassword__SendingEmail(String userInfo,@Valid ByQandAandBirthdayDTO dto, Errors errors, Model model) throws InvalidAlgorithmParameterException, MessagingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    public String changePassword__SendingEmail(String userInfo,@Valid ByQandAandBirthdayDTO dto, Errors errors, Model model) throws Exception {
+
+        /**
+         * dto 에 유효성 검사 method ----------------------------------------------------------------------
+         */
         if(errors.hasErrors()){
             model.addAttribute("dto", dto);
             Map<String, String> validatorResult = validateHandling.validateHandling(errors);
@@ -102,18 +88,25 @@ public class FindController {
 
             return "/find/pwByInfo";
         }
+        /**
+         * dto 에 유효성 검사 method ----------------------------------------------------------------------
+         */
 
-        Map<String ,Object> checkingComplete = findService.resultOfPwfind(userInfo,dto);
-        boolean allResult = (boolean)checkingComplete.get("allResult");
 
-        if(allResult==true) {
-            findService.PwChangeResult(userInfo, dto);
+
+        Map<String ,Object> validResult = findService.resultAccountValid(userInfo,dto);
+
+        // map 에 email 값이 들어있는 경우는 모든 값이 유효할 때임으로
+        if(validResult.get("email")!=null) {
+            findService.sendNewPassword(userInfo, dto);
         }else{
-            if((boolean)checkingComplete.get("result")){
-                model.addAttribute("infoErrorMessage",(String) checkingComplete.get("infoErrorMessage"));
+            if(validResult.get("infoErrorMessage")!=null){
+                model.addAttribute("infoErrorMessage",(String) validResult.get("infoErrorMessage"));
+                System.out.println((String) validResult.get("infoErrorMessage"));
                 return "/find/pwByInfo";
             }else{
-                model.addAttribute("validErrorMessage",(String) checkingComplete.get("validErrorMessage"));
+                model.addAttribute("validErrorMessage",(String) validResult.get("errorMessage"));
+                System.out.println((String) validResult.get("ErrorMessage"));
                 return "/find/pwByInfo";
             }
         }

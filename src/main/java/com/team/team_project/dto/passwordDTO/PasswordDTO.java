@@ -1,10 +1,9 @@
-package com.team.team_project.dto.PasswordDTO;
+package com.team.team_project.dto.passwordDTO;
 
 
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 

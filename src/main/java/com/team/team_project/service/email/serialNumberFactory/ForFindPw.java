@@ -1,8 +1,11 @@
 package com.team.team_project.service.email.serialNumberFactory;
 
 
+import org.springframework.stereotype.Service;
+
 import java.util.Random;
 
+@Service
 public class ForFindPw {
     private int serialLength = 12;
     private final char[] passwordTableUpper =  { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',

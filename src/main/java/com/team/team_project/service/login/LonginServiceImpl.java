@@ -1,5 +1,5 @@
 package com.team.team_project.service.login;
-import com.team.team_project.dto.PasswordDTO.PasswordDTO;
+import com.team.team_project.dto.passwordDTO.PasswordDTO;
 import com.team.team_project.repository.UserRepository;
 import com.team.team_project.service.validationHandling.ValidateHandling;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class LonginServiceImpl implements LoginService {
 
     @Override
     public Map<String, Object> forloginUpdate(String account, PasswordDTO dto) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        Map<String,Object> result = validateHandling.idAndEmailValidCheck(account);
+        Map<String,Object> result = validateHandling.accountValid(account);
         /*** idAndEmailValidCheck Key
          * // map 에 유효성 검사가 성공했는지 여부를 삽입
          *         validCheckResult.put("result",validFinalCheck);

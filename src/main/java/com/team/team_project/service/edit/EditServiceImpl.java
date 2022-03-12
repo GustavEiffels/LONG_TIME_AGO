@@ -1,7 +1,5 @@
 package com.team.team_project.service.edit;
 
-import com.team.team_project.dto.PasswordDTO.PasswordDTO;
-import com.team.team_project.dto.editInfoDTO.EditInfoDTO;
 import com.team.team_project.entity.Question;
 import com.team.team_project.entity.User;
 import com.team.team_project.repository.AnswerRepository;
@@ -12,17 +10,13 @@ import com.team.team_project.service.pwCheck_And_DuplicateCheck.PwAndDupCheck;
 import com.team.team_project.service.validationHandling.ValidateHandling;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -31,7 +25,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service

@@ -1,7 +1,7 @@
 package com.team.team_project;
 
 
-import com.team.team_project.dto.PasswordDTO.PasswordDTO;
+import com.team.team_project.dto.passwordDTO.PasswordDTO;
 import com.team.team_project.dto.findDTO.ByQandAandBirthdayDTO;
 import com.team.team_project.entity.*;
 import com.team.team_project.repository.*;
@@ -256,7 +256,7 @@ public class RepositoryTest {
 
 //    @Test
     public void allemailre() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        List<Object []> list = userRepository.getalldata();
+        List<Object []> list = userRepository.getUserInfo();
         String inemail = "socket2@naver.com";
         String inpw = "Qwer!34";
         boolean exists = false ;
@@ -588,24 +588,15 @@ public class RepositoryTest {
 
     }
 
-    @Test
-    public void test11() throws InvalidAlgorithmParameterException, MessagingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        String account = "singsiuk";
-        ByQandAandBirthdayDTO dto = ByQandAandBirthdayDTO.builder()
-                .birthday("2022-02-23")
-                .context("What is your favorite food")
-                .answer("바나나")
-                .build();
-            Map<String,Object> result = findService.resultOfPwfind(account,dto);
-            System.out.println(result.get("email"));
-            System.out.println(result.get("newPw"));
-            System.out.println(result.get("allResult"));
-        System.out.println(result.get("infoErrorMessage"));
-        System.out.println(result.get("result"));
 
-    }
     @Test
     public void testfind(){
+
+    }
+
+    @Test
+    public void test123(){
+        Object test = userRepository.findAllById("test0310");
 
     }
 

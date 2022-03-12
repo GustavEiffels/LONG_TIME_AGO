@@ -1,5 +1,5 @@
 package com.team.team_project.controller;
-import com.team.team_project.dto.PasswordDTO.PasswordDTO;
+import com.team.team_project.dto.passwordDTO.PasswordDTO;
 import com.team.team_project.service.edit.EditService;
 import com.team.team_project.service.unscribe.UnscribeService;
 import com.team.team_project.service.validationHandling.ValidateHandling;

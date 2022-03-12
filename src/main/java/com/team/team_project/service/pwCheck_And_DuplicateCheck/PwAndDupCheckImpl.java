@@ -1,6 +1,5 @@
 package com.team.team_project.service.pwCheck_And_DuplicateCheck;
 
-import com.team.team_project.dto.PasswordDTO.PasswordDTO;
 import com.team.team_project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

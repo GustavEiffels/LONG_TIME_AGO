@@ -3,7 +3,7 @@ package com.team.team_project.controller;
 import com.team.team_project.dto.AnswerDTO;
 import com.team.team_project.dto.QuestionDTO;
 import com.team.team_project.dto.UserDTO;
-import com.team.team_project.dto.PasswordDTO.PasswordDTO;
+import com.team.team_project.dto.passwordDTO.PasswordDTO;
 import com.team.team_project.service.QuestionService;
 import com.team.team_project.service.AnswerService;
 import com.team.team_project.service.UserService;
