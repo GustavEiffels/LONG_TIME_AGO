@@ -25,6 +25,9 @@ public class FindController {
     @Autowired
     private ValidateHandling validateHandling;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
+
     @GetMapping("/find/emailPage")
     public void emailFindPage(){
     }
@@ -33,6 +36,8 @@ public class FindController {
     @GetMapping("/find/byNickName")
     public void byNick(){
     }
+    @GetMapping("/find/pwByInfo")
+    public void findPw(){}
 
 
 
@@ -63,11 +68,6 @@ public class FindController {
     }
 
 
-    @GetMapping("/find/byQuestion")
-    public void byQuestion(){
-    }
-    @Autowired
-    private EmailSenderService emailSenderService;
 
 
 

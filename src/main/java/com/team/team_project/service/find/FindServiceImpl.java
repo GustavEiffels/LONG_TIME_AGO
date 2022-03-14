@@ -68,12 +68,15 @@ public class FindServiceImpl implements FindService{
          */
         Object[] info = (Object[]) userInfo;
 
-        String status = (String)info[2];
 
-
-        if(userInfo!=null && !status.equals("expired"))
+//!status.equals("expired")
+        if(userInfo!=null)
         {
-            result = maskingService.masking(info);
+            String status = (String)info[2];
+            if(!status.equals("expired"))
+            {
+                result = maskingService.masking(info);
+            }
         }
         else
         {

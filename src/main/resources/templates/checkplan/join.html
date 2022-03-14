@@ -101,17 +101,16 @@
                 <select name="context" id="context">
                     <option value="What is your favorite food">What is your favorite food</option>
                     <option value="What is your body secret">What is your body secret</option></br>
-                    
-                    <!--/*@thymesVar id="qvalid_context" type="templates"*/-->
-                    <span th:text="${qvalid_context}"></span>
+
+                    <span th:text="${valid_context}"></span>
                 </select>
             </div>
 
             <div>
                 <label for="answer">question Answer</label>
                 <input type="text" id="answer" name="answer"></br>
-                <!--/*@thymesVar id="avalid_answer" type="templates"*/-->
-                <span th:text="${avalid_answer}"></span>
+                <!--/*@thymesVar id="valid_answer" type="aj"*/-->
+                <span th:text="${valid_answer}"></span>
 
             </div>
         </l1>

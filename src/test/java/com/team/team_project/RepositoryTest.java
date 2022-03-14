@@ -550,43 +550,12 @@ public class RepositoryTest {
 //        System.out.println(resultQuestion);
 //    }
 
-    @Test
-    public void testmethod() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        ByQandAandBirthdayDTO dto = ByQandAandBirthdayDTO.builder()
-                .answer("사")
-                .context("What is your favorite food")
-                .birthday("2022-02-24")
-                .build();
-        String answer = dto.getAnswer();
-        String context = dto.getContext();
-        String birthday = dto.getBirthday();
-        Map<String, Object> result = findService.findUserIdAndEmailByQuestionAndAnswer(dto);
-        System.out.println(result.get("id"));
-        System.out.println(result.get("email"));
 
-    }
 
     @Autowired
     private LoginService loginService;
 
-    @Test
-    public void test() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        String email = "singsiuk9315@naver.com";
-        String pw = "Qwer!2341";
-        PasswordDTO dto = PasswordDTO.builder()
-                .pw(pw)
-                .build();
-        Map<String , Object> result = loginService.forloginUpdate(email,dto);
-        boolean yesOrNo = (boolean) result.get("loginResult");
-        if(yesOrNo==true) {
-            System.out.println((String) result.get("nick"));
-            System.out.println((String) result.get("status"));
-        }else {
-            System.out.println((String)result.get("validErrorMessage"));
-            System.out.println((String)result.get("passwordError"));
-        }
 
-    }
 
 
     @Test

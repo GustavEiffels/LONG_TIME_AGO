@@ -11,7 +11,9 @@
         <label for="userInfo"> please Insert Your ID or Email</label>
         <input type="text" id="userInfo" name="userInfo"  placeholder="Please insert Your Email" /></br>
     </div>
-    <span th:text="${validErrorMessage}"></span>
+    <div>
+        <span th:text="${validErrorMessage}"></span>
+    </div>
     <div>
         <label for="answer">Question</label>
         <select name="context" id="context">

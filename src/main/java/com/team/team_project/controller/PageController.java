@@ -87,7 +87,7 @@ public class PageController {
             return new ModelAndView("checkplan/join");
     }
         if(qerrors.hasErrors()){
-            model.addAttribute("qdto",dto);
+            model.addAttribute("dto",qdto);
 
             Map<String, String> validatorResult = validateHandling.validateHandling(qerrors);
             for(String key : validatorResult.keySet()){
@@ -96,7 +96,7 @@ public class PageController {
             return new ModelAndView("checkplan/join");
         }
         if(aerrors.hasErrors()){
-            model.addAttribute("adto", adto);
+            model.addAttribute("dto", adto);
 
             Map<String, String> validatorResult = validateHandling.validateHandling(aerrors);
             for(String key : validatorResult.keySet()){
@@ -146,17 +146,25 @@ public class PageController {
 
 
 
-
-    @Autowired
-    private UnscribeService unscribeService;
-
     @Autowired
     private LoginService loginService;
 
-
+    /**
+     * Login 을 하기 위한 method ===================================================================
+     */
     @PostMapping("login")
-    public String login(String account,@Valid PasswordDTO dto, Errors errors, Model model, HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    public String login(String account,
+                        @Valid PasswordDTO dto,
+                        Errors errors,
+                        Model model,
+                        HttpSession session)
+            throws Exception
 
+
+    {
+        /**
+         *  Password dto가 유효한지 확인하는 method -----------------------------------------------
+         */
         if(errors.hasErrors()){
             model.addAttribute("dto", dto);
             Map<String, String> validatorResult = validateHandling.validateHandling(errors);
@@ -166,28 +174,62 @@ public class PageController {
 
             return "checkplan/mainpage";
         }
+        /**
+         *  Password dto가 유효한지 확인하는 method -----------------------------------------------
+         */
 
         String url = null;
 
-        Map<String, Object> loginResult = loginService.forloginUpdate(account,dto);
+        Map<String, Object> loginResult = loginService.login(account,dto);
 
-        boolean complete = (boolean) loginResult.get("loginResult");
+        /**
+         * login
+         *  공통 값
+         *  key = loginResult
+         *
+         *  true ----------
+         *  result.put("code",(Long)info[0]);
+         *  result.put("pw",(String)info[2]);
+         *  result.put("nick",(String)info[3]);
+         *  result.put("status",(String)info[4]);
+         *  result.put("birthday",(LocalDate)info[5]);
+         *
+         *  false ------------
+         *  key = errorMessage
+         *  key = pwError
+         */
 
+        boolean isLogin = (boolean) loginResult.get("loginResult");
 
-        if(complete==true){
+        // isLogin ---> ture : 로그인 값이 유효 하다면
+        if(isLogin)
+        {
             session.setAttribute("code", (Long)loginResult.get("code"));
             session.setAttribute("nick",(String)loginResult.get("nick"));
-            if(loginResult.get("status").equals("7day")){
+            if(loginResult.get("status").equals("7day"))
+            {
                 url = "checkplan/forUser/retire/UnscribingCancle";
-            }else if(loginResult.get("status").equals("회원")){
+            }
+            else if(loginResult.get("status").equals("회원"))
+            {
                 url =  "checkplan/logincomplete";
             }
-        }else if(complete==false) {
-            if ((boolean) loginResult.get("result") == false) {
-                model.addAttribute("accountError", (String) loginResult.get("validErrorMessage"));
+        }
+        else
+        {
+            String pwError = (String)loginResult.get("pwError");
+            /**
+             *  pwError 가 존재 ---> pw 가 틀렸음
+             *  pwError 가 존재 하지 않음  ---> 입력한 id 혹은 email 이 틀렸을 때
+             */
+            if(pwError==null)
+            {
+                model.addAttribute("accountError", (String) loginResult.get("errorMessage"));
                 return "checkplan/mainpage";
-            } else if ((boolean) loginResult.get("result") == true) {
-                model.addAttribute("passwordError", (String) loginResult.get("passwordError"));
+            }
+            else
+            {
+                model.addAttribute("passwordError", (String) loginResult.get("pwError"));
                 return "checkplan/mainpage";
             }
         }
