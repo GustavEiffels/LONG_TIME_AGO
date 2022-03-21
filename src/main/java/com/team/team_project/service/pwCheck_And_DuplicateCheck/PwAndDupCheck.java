@@ -2,12 +2,10 @@ package com.team.team_project.service.pwCheck_And_DuplicateCheck;
 
 
 public interface PwAndDupCheck {
-    /***
-     *  원래는 PasswordDto 받으려고 했는데
-     *  JOin 에서 사용 할 때 난잡할 것 같아서 이렇게 생성
-     */
 
-    boolean pwAndPwCheck(String pw, String pwCheck);
+    /** pw 와 pwCheck 가 일치하는지 판단하는 method
+     */
+    boolean isPwEqual(String pw, String pwCheck);
 
     boolean nickDuplicateCheck(String nick, String currentNick);
 

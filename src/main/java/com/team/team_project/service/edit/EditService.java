@@ -1,10 +1,6 @@
 package com.team.team_project.service.edit;
 
 
-
-import com.team.team_project.dto.editInfoDTO.EditInfoDTO;
-import org.springframework.ui.Model;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -24,7 +20,9 @@ public interface EditService {
 //
         String bringQuestionInfo(Long code);
 
-        boolean bringPwForRetire(String pw, String nick);
+        /** 입력한 비밀번호가, 사용자의 비밀번호와 같은지 확인하는 method
+        */
+        boolean isPwEqual(String pw, Long code);
 
         // 실제로 값을 바꾸는 method
         Map<String, Object> changeUserInfo(HttpSession session,String currentNick,
@@ -36,7 +34,7 @@ public interface EditService {
                                String answer,
                                String context);
 
-        Map<String , String> parameterNullProcess(HttpSession session,
+        Map<String , Object> parameterValidCheck(HttpSession session,
                                                   String nick,
                                                   String pw,
                                                   String answer,
@@ -45,6 +43,7 @@ public interface EditService {
                                                   String context
                                                  );
 
-
-    int unSubScribeCancle(String pw, String pwCheck, Long code);
+    /** 비밀번호가 서로 일치하면 user 상태를 회원으로 변경하는 method -------------------------------------------------------------
+     */
+    int unSubCancel(String pw, String pwCheck, Long code);
 }

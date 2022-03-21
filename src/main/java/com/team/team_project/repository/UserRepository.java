@@ -87,8 +87,20 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     @Query(value = "select id, email, gender, birthday, code from User where nick = :nick ")
     Object  bringUserData(@Param("nick")String nick);
 
+
+
+
+
+
+    // --------------------------- 사용자의 비밀번호를 가져오는 method
     @Query(value = "select pw from User where nick=:nick")
     String brinUserPw(@Param("nick")String nick);
+
+    // --------------------------- 사용자의 비밀번호를 가져오는 method
+    @Query(value = "select pw from User where code=:code")
+    String getPw(@Param("code")Long code);
+
+
 
     @Query(value = "select u from User u")
     User bringAllData();
@@ -109,17 +121,39 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     // nick 을 사용해서
     // status 를 expiring 으로 변경
 
+
+    // =========== 회원 탈퇴 ============================================
+
+    // -------- 회원 닉네임을 가지고 회원 계정 상태를 변경
     @Modifying
     @Transactional
     @Query(value = "update User set status=:status where nick=:nick")
     int unSubscribe(@Param("status") String status, @Param("nick")String nick);
 
+
+    @Modifying
+    @Transactional
+    @Query(value = "update User set status=:status where code=:code")
+    int unSub(@Param("status") String status, @Param("code")Long code);
+
+
+    // -------- 회원 닉네임을 삽입해서 마지막 수정 날짜를 변경 --------------
     @Modifying
     @Transactional
     @Query(value = "update User set modDate=:modDate where nick=:nick")
     int updateModate(@Param("modDate") LocalDateTime modDate, @Param("nick")String nick);
 
+    @Modifying
+    @Transactional
+    @Query(value = "update User set modDate=:modDate where code=:code")
+    int updateModDateTemp(@Param("modDate") LocalDateTime modDate, @Param("code")Long code);
 
+
+
+
+
+    // 회원정보 수정 =====================================================================================================
+    // 비밀번호 까지 같이 바꿀 경우 -----------------------------------------------
     @Modifying
     @Transactional
     @Query(value = "update User set nick=:nickCh, pw=:pw, birthday=:birthday, gender=:gender where nick=:nick")
@@ -132,10 +166,12 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
     @Modifying
     @Transactional
     @Query(value = "update User set nick=:nickCh, birthday=:birthday, gender=:gender where nick=:nick")
-    int byNickUpdateUserInfo(@Param("nick")String nick,
+    int changeUserInfoExceptPw(@Param("nick")String nick,
                        @Param("nickCh")String nickCh,
                        @Param("gender")String gender,
                        @Param("birthday")LocalDate birthday);
+    // 비밀번호 까지 같이 바꿀 경우 -----------------------------------------------
+    // 회원정보 수정 =====================================================================================================
 
     // nick name 을 입력받으면 code 를 리턴
     @Query(value = "select code from User where nick=:nick")
@@ -147,33 +183,13 @@ public interface UserRepository extends JpaRepository<User,Long> ,QuerydslPredic
      * parameter 로  answer , context , birthday
      * */
 
-//    @Query(value = "select code from User where code in " +
-//            "(select code from Answer where answer=:answer)" +
-//            "and ( birthday=:birthday) in " +
-//            "(select code from Answer where qno in " +
-//            "(select qno from Question where context=:context))")
-//    Long[] getCodeForChangePassword(@Param("answer")String answer,
-//                                    @Param("birthday")LocalDate birthday,
-//                                    @Param("context")String context);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // 계정 복구를 위한 method
+    /** 휴면 계정인 사용자의 state 를 '회원' 으로 변경하기 위한 method ----------
+     */
     @Modifying
     @Transactional
     @Query(value = "update User set status=:status, pw=:pw, modDate=:modDate where code=:code")
-    int unScribeCancle(@Param("status")String status,
+    int unSubCancel(@Param("status")String status,
                        @Param("pw")String pw,
                        @Param("modDate") LocalDateTime modDate,
                        @Param("code")Long code);

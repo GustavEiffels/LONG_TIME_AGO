@@ -41,12 +41,15 @@ public class UserController {
     @PostMapping("Logout")
     public String logOutmethod(HttpSession session){
         String userNick = (String)session.getAttribute("nick");
-        unscribeService.userModDateUpdate(userNick);
+
+        unscribeService.updateModDate((Long)session.getAttribute("code"));
         session.invalidate();
         return "redirect:/checkplan/mainpage";
     }
 
-
+    /**
+     * 회원 정보 변경 page 에서 변경하는 method =============================================================================
+     */
     @PostMapping("editing")
     public String editingUserInfo(HttpSession session ,
                                 String nick,
@@ -56,63 +59,126 @@ public class UserController {
                                 String pwCheck,
                                 String gender,
                                 String birthday,
-                                String context){
-
-
-
-        /***
-         * session 에서 현재 nick name 을 받아온다 .
+                                String context)
+    {
+        /**
+         *  paramValid : key---> isValid
+         *  true --> error 존재 x
+         *  false --> error 존재함
          */
+        Map<String, Object> paramValid = editService.parameterValidCheck
+                (
+                session,
+                nick,
+                pw,
+                answer,
+                gender,
+                birthday,
+                context
+                );
 
-        String currentNick = (String)session.getAttribute("nick");
+        // error 가 존재하지 않음 : 변수 전체는 유효한 값 -----------------------------------------------------------------
+        if((boolean)paramValid.get("isValid"))
+            {
+             nick = (String)paramValid.get("nick");
+             pw = (String)paramValid.get("pw");
+            answer = (String)paramValid.get("answer");
+            birthday = (String)paramValid.get("birthday");
+            gender = (String)paramValid.get("gender");
+            context = (String)paramValid.get("context");
 
+            // session 에서 nick name 을 받아옴 : 바뀔 nick 과 비교하기 위해서 ----------------------------------------------
+            String currentNick = (String)session.getAttribute("nick");
 
-        /***
-         * null 처리를 해야한다 .
-         */
-        System.out.println(birthday);
-
-        Map<String, String> nullProcess = editService.parameterNullProcess(session, nick, pw, answer, gender, birthday, context);
-
-        if(nullProcess.get("error").equals("notExists")) {
-             nick = nullProcess.get("nick");
-             pw = nullProcess.get("pw");
-            answer = nullProcess.get("answer");
-            birthday = nullProcess.get("birthday");
-            gender = nullProcess.get("gender");
-            context = nullProcess.get("context");
-
-            Map<String, Object> result = editService.changeUserInfo(session, currentNick, nick, pw, pwCheck, gender, birthday, answer, context);
-
-            if ((boolean) result.get("result")==true){
+                /**
+                 * @return --------------------------------------------------------------------
+                 * key
+                 * result ---> true : 값을 정상적으로 전달
+                 * result ---> false : error 발생
+                 *
+                 * error
+                 * key
+                 * nickErrorMessage
+                 * pwErrorMessage
+                 */
+            Map<String, Object> result = editService.changeUserInfo
+                    (
+                            session,
+                            currentNick,
+                            nick,
+                            pw,
+                            pwCheck,
+                            gender,
+                            birthday,
+                            answer,
+                            context
+                    );
+            // 정상적으로 회원정보가 변경 됨 -----------------------------------------------
+            if ((boolean) result.get("result"))
+                {
                 session.setAttribute("nick", nick);
-            }else{
-                if((String)result.get("nickErrorMessage")!=null){
-                    model.addAttribute("nickErrorMessage",(String)result.get("nickErrorMessage"));
                 }
-                if((String)result.get("pwErrorMessage")!=null){
-                    model.addAttribute("pwErrorMessage",(String)result.get("pwErrorMessage"));
+
+            // error 가 발생했을 때 ------------------------------------------------------
+            // 닉네임 중복, 비밀번호 비밀번호 체크 불일치
+            else
+                {
+
+                    // 닉네임이 중복 되었을 경우 ----------------------------
+                    if(result.containsKey("nickErrorMessage"))
+                        {
+                        model.addAttribute("nickErrorMessage",(String)result.get("nickErrorMessage"));
+                        }
+
+                    // 비밀번호와 비밀번호 확인 값이 일치하지 않을 경우 -----------------------------
+                    if(result.containsKey("pwErrorMessage"))
+                        {
+                        model.addAttribute("pwErrorMessage",(String)result.get("pwErrorMessage"));
+                        }
+
+                    return "checkplan/forUser/editUser";
                 }
-                return "checkplan/forUser/editUser";
-            }
 
 
-        }else if(nullProcess.get("error").equals("exists")){
-            if((String)nullProcess.get("nickValidError")!=null){
-                model.addAttribute("nickValidError",(String)nullProcess.get("nickValidError"));
-            }
-            if((String)nullProcess.get("pwValidError")!=null){
-                model.addAttribute("pwValidError",(String)nullProcess.get("pwValidError"));
-            }
-            if((String)nullProcess.get("answerValidError")!=null){
-                model.addAttribute("answerValidError",(String)nullProcess.get("answerValidError"));
-            }
-            model.addAttribute("errorMessage",nullProcess.get("errorMessage"));
-
-            return "checkplan/forUser/editUser";
         }
+        // parameter 값이 유효한 값이 아닐 때  ------------------------------------------------------
+        else if(!(boolean)paramValid.get("isValid"))
+            {
+                // 닉네임 유효성을 불만족 ------------------
+                if(paramValid.containsKey("nickValidError"))
+                    {
+                    model.addAttribute("nickValidError",(String)paramValid.get("nickValidError"));
+                    }
+
+
+                // 비밀번호 유효성을 불만족----------
+                if(paramValid.containsKey("pwValidError"))
+                    {
+                    model.addAttribute("pwValidError",(String)paramValid.get("pwValidError"));
+                    }
+
+
+                // 질문에 대한 답 불만족 ----------
+                if(paramValid.containsKey("answerValidError"))
+                    {
+                    model.addAttribute("answerValidError",(String)paramValid.get("answerValidError"));
+                    }
+                    // 질문에 대한 답 불만족 ----------
+
+
+                // 질문이 변경되었는데 답을 입력하지 않았을 때 -----------
+                if(paramValid.containsKey("errorMessage"))
+                    {
+                    model.addAttribute("errorMessage", paramValid.get("errorMessage"));
+                    }
+
+                return "checkplan/forUser/editUser";
+        }
+
         return "checkplan/forUser/editUserInfo";
     }
+
+
 
     @GetMapping("editUser")
     public void editUser(HttpSession session) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
@@ -146,77 +212,98 @@ public class UserController {
     }
 
 
+    // ====================================================================== 회원 탈퇴 기능
 
-
+    // ------------- 탈퇴 page 로 이동하는 method
     @GetMapping("retire/retire")
     public void retire(){
     }
 
+    /** 회원 탈퇴 시 비밀번호를 입력 받아, 탈퇴 할 것인지 확인 받는 method -------------------------------------------
+     */
     @PostMapping("retire/UnscribingChecking")
-    public String unscribingChecking(@Valid PasswordDTO dto, Errors errors,Model model, HttpSession session){
-        String url = null;
-        String userNick = (String) session.getAttribute("nick");
-        String pw = dto.getPw();
-
-        if(errors.hasErrors()){
+    public String unSubCheck(@Valid PasswordDTO dto, Errors errors,Model model, HttpSession session)
+    {
+        // ---- 유효성 검사 ----------
+        if(errors.hasErrors())
+        {
             model.addAttribute("dto", dto);
             Map<String, String> validatorResult = validateHandling.validateHandling(errors);
-            for (String key : validatorResult.keySet()) {
+            for (String key : validatorResult.keySet())
+            {
                 model.addAttribute(key, validatorResult.get(key));
             }
             return "checkplan/forUser/retire/retire";
         }
 
-        boolean userPwCollectOrNot = editService.bringPwForRetire(pw, userNick);
-        if(userPwCollectOrNot==true){
-            url = "checkplan/forUser/retire/UnscribingDoing";
-        }else if(userPwCollectOrNot==false){
+        /** 입력한 비밀번호와, user 의 비밀번호가 같은지 확인 ----------------------------
+         */
 
-            model.addAttribute("errorMessage","Wrong Password! , Please Check again");
-            return  "checkplan/forUser/retire/retire";
-        }
-        return url;
+        // ---  계정을 탈퇴 ( 휴면 ) 계정으로 전환 확인 page 로 이동  ----------
+        if( editService.isPwEqual(dto.getPw(), (Long)session.getAttribute("code")) )
+            {
+                return  "checkplan/forUser/retire/UnscribingDoing";
+            }
+        // --- 비밀번호가 서로 맞지 않음으로 현재 page로 이동 ----------
+        else
+            {
+                model.addAttribute("errorMessage","Wrong Password! , Please Check again");
+                return  "checkplan/forUser/retire/retire";
+            }
     }
+
+
     @Autowired
     private UnscribeService unscribeService;
 
+    // ------------ 회원 탈퇴를 진행하는 method ------------------------------------------------------------
+    @PostMapping("retire/UnscribingComplete")
+    public String unSubComplete(HttpSession sessioin)
+    {
+        Long code = (Long)sessioin.getAttribute("code");
 
-    @GetMapping("retire/UnscribingComplete")
-    public void unscribingComplete(HttpSession sessioin){
-        String userNick = (String) sessioin.getAttribute("nick");
-        String userStatus = "7day";
-        boolean userUnscribeComplete = unscribeService.userUnscribecomplete(userStatus, userNick);
-        if(userUnscribeComplete==true){
-            unscribeService.userModDateUpdate(userNick);
-            sessioin.invalidate();
-        }
+        // 정상적으로 만료가 된다면
+        if ( unscribeService.unSubscribing("휴면",code))
+            {
+                unscribeService.updateModDate(code);
+                sessioin.invalidate();
+            }
+        return "checkplan/forUser/retire/UnscribingComplete";
     }
-    @PostMapping("unScribeCancle")
-    public String unScribeCancle(HttpSession session, @Valid PasswordDTO dto,Errors errors, Model model, String pwCheck){
-        Long code = (Long) session.getAttribute("code");
-        String url = null;
 
-        if(errors.hasErrors()){
+    /** 회원 상태가 expiring 인 계정 state 를 "회원"으로 변경 -------------------------------------------------------
+     *  < 회원 계정 복구 >
+     */
+    @PostMapping("unScribeCancle")
+    public String unSubCancel(
+            HttpSession session,
+            @Valid PasswordDTO dto,
+            Errors errors,
+            Model model,
+            String pwCheck)
+    {
+
+        if(errors.hasErrors())
+        {
             model.addAttribute("dto", dto);
             Map<String, String> validatorResult = validateHandling.validateHandling(errors);
-            for (String key : validatorResult.keySet()) {
-                model.addAttribute(key, validatorResult.get(key));
-            }
-            return "checkplan/forUser/retire/UnscribingCancle";
+            for (String key : validatorResult.keySet())
+                {
+                    model.addAttribute(key, validatorResult.get(key));
+                }
+        return "checkplan/forUser/retire/UnscribingCancle";
         }
-        /***
-         * dto 에서 pw 를 받아온다.
-         */
-        String pw = dto.getPw();
 
-        int unScribeCancleResult = editService.unSubScribeCancle(pw, pwCheck, code);
-        if(unScribeCancleResult>0){
-            url = "redirect:/checkplan/mainpage";
-        }else{
-            model.addAttribute("ErrorMessage", "The passwords entered do not match each other.");
+        // 비밀번호 값과 비밀번호 확인 값이 같다면 --------------------
+        if( editService.unSubCancel(dto.getPw(), pwCheck, (Long) session.getAttribute("code")) > 0 )
+            {
+                return "redirect:/checkplan/mainpage";
+            }
+        else
+            {
+                model.addAttribute("ErrorMessage", "The passwords entered do not match each other.");
             return "checkplan/forUser/retire/UnscribingCancle";
-        }
-        return url;
+            }
     }
 
 }

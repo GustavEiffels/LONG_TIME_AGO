@@ -8,7 +8,6 @@ import com.team.team_project.service.QuestionService;
 import com.team.team_project.service.AnswerService;
 import com.team.team_project.service.UserService;
 import com.team.team_project.service.login.LoginService;
-import com.team.team_project.service.unscribe.UnscribeService;
 import com.team.team_project.service.validationHandling.ValidateHandling;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Map;
 
 @Controller
@@ -206,7 +198,7 @@ public class PageController {
         {
             session.setAttribute("code", (Long)loginResult.get("code"));
             session.setAttribute("nick",(String)loginResult.get("nick"));
-            if(loginResult.get("status").equals("7day"))
+            if(loginResult.get("status").equals("휴면"))
             {
                 url = "checkplan/forUser/retire/UnscribingCancle";
             }

@@ -5,17 +5,8 @@ import com.team.team_project.service.CryptoUtil;
 import com.team.team_project.service.pwCheck_And_DuplicateCheck.PwAndDupCheck;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -204,7 +195,8 @@ public class ValidateHandling {
 
     public boolean pwValid(String pw) {
         boolean result = false;
-        if (Pattern.matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", pw)) {
+        if (Pattern.matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", pw))
+        {
             result = true;
         }
         return result;
@@ -311,7 +303,7 @@ public class ValidateHandling {
          * true 일 때 서로 일치
          * false 일 때 서로 일치하지 않음
          */
-        boolean pwResult = pwAndDupCheck.pwAndPwCheck(pw, pwCheck);
+        boolean pwResult = pwAndDupCheck.isPwEqual(pw, pwCheck);
         System.out.println(pw);
         System.out.println(pwCheck);
 

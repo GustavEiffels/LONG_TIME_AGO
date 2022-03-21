@@ -1,13 +1,17 @@
 package com.team.team_project.service.unscribe;
 
-import java.time.LocalDateTime;
 
+/** 계정 탈퇴 시, 사용하는 method
+ */
 public interface UnscribeService {
-     // 바뀌면 true
-    // 실패하면 false
-    boolean userUnscribecomplete(String status, String nick);
+
+    /** 회원 탈퇴를 진행하는 method ----------
+     */
+    boolean unSubscribing(String status, Long code);
 
 
-    void userModDateUpdate(String nick);
+    /** modeDate를 변경하는 method
+     */
+    void updateModDate(Long code );
 }
 
