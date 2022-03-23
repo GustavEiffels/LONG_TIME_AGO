@@ -136,6 +136,34 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/machineLearningData/0317/data/housing.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/machineLearningData/0318/data/housing.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/machineLearningData/0321/score.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/machineLearningData/data/housing.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/studySelf/FebSecond/Covid19Vaccine01.csv">
           <value>
             <Attribute>
