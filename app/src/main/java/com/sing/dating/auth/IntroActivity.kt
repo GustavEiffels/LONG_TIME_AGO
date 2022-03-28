@@ -15,6 +15,15 @@ class IntroActivity : AppCompatActivity()
         setContentView(R.layout.activity_intro)
 
 
+        /** login Btn 눌렀을때, LoginActivity 를 실행
+         */
+        intro_login.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+
+        }
+
+
 
         /** joinBtn 을 누를 때 , JoinActivity 로 이동시키기
          */

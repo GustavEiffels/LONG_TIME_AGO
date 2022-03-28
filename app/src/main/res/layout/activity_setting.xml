@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/setting_page"
+    tools:context=".setting.SettingActivity">
+
+    <Button
+        android:id="@+id/user_pageBtn"
+        android:text="MY INFO"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/mainColor"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/setting_logoutBtn"
+        android:text="LogOut"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/mainColor"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
