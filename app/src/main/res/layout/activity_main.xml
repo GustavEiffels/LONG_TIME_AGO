@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/image_area"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:layout_width="120dp"
+        android:layout_height="120dp"/>
+
+    <Button
+        android:id="@+id/image_load_btn"
+        android:layout_marginTop="100dp"
+        android:text="Image Load"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+    <Button
+        android:id="@+id/move_to_play_page_btn"
+        android:layout_marginTop="20dp"
+        android:text="Going to play Music"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+
+    <Button
+        android:id="@+id/goto_video"
+        android:layout_marginTop="20dp"
+        android:text="Going to play video"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+
+
+</LinearLayout>

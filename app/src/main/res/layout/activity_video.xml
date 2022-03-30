@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <VideoView
+        android:id="@+id/video_area"
+        android:layout_marginTop="30dp"
+        android:layout_width="800dp"
+        android:layout_height="200dp"/>
+
+
+
+    <Button
+        android:id="@+id/vplay_btn"
+        android:layout_marginTop="80dp"
+        android:text="Play_video"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+    <Button
+        android:id="@+id/vstop_btn"
+        android:layout_marginTop="10dp"
+        android:text="Stop_video"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+    <Button
+        android:id="@+id/move_to_main_btn2"
+        android:layout_marginTop="30dp"
+        android:text="Going to Main page"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+
+
+</LinearLayout>
