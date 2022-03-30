@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             // Thread 구동
             thread{
                 // 접속할 page 의 주소
-                val site = "http://192.168.0.17:8080/xml.xml"
+                val site = "http://localhost:8080/xml.xml"
 
                 //url 객체 생성
                 val url = URL(site)
