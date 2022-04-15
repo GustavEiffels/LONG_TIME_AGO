@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_board_read.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_read.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_board_main.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_main.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_pass_word_confirm.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_pass_word_confirm.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_nick.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_nick.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_change_password.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_change_password.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_setting_recyclerview.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/board_setting_recyclerview.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_board_main.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/activity_board_main.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_main_recyclerview.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/board_main_recyclerview.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_board_write.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_write.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_setting.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_setting.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_join.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_join.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_login.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_login.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_board_modify.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_modify.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_main.xml",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/activity_main.xml"
+    }
+]

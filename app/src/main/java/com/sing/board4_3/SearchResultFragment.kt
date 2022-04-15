@@ -112,10 +112,16 @@ class SearchResultFragment : Fragment() {
         {
             override fun onQueryTextSubmit(query: String?): Boolean
             {
-                val act = activity as BoardMainActivity
-                act.query = query.toString()
+                if(query.toString().length>1)
+                {
+                    act.query = query.toString()
+                    act.fragmentController("search_result", true, true)
+                }
+                else
+                {
+                    Toast.makeText(requireContext(),"Please enter at least 2 characters", Toast.LENGTH_SHORT).show()
 
-                getContentList(true)
+                }
 
                 return true
             }
