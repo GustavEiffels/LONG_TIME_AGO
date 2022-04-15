@@ -1,4 +1,4 @@
-package com.example.memoserver.service;
+package com.example.memoserver.service.User;
 
 
 import com.example.memoserver.dto.UserDto;

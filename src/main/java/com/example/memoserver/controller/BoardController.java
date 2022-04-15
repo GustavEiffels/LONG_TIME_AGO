@@ -2,7 +2,7 @@ package com.example.memoserver.controller;
 
 
 import com.example.memoserver.entity.Board;
-import com.example.memoserver.service.BoardService;
+import com.example.memoserver.service.Board.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,7 +1,7 @@
 package com.example.memoserver.controller;
 
-import com.example.memoserver.service.DupCheckService;
-import com.example.memoserver.service.UserService;
+import com.example.memoserver.service.DupCheck.DupCheckService;
+import com.example.memoserver.service.User.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

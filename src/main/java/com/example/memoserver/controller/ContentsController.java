@@ -4,7 +4,8 @@ import com.example.memoserver.entity.Board;
 import com.example.memoserver.entity.Content;
 import com.example.memoserver.entity.User;
 import com.example.memoserver.repository.ContentRepository;
-import com.example.memoserver.service.ContentService;
+import com.example.memoserver.service.Content.ContentService;
+import com.example.memoserver.service.File.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class ContentsController
 
     @Autowired
     private ContentRepository contentRepository;
+
+    @Autowired
+    private FileService fileService;
 
     @PostMapping(value = "")
     public void saveContent(HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -83,7 +87,7 @@ public class ContentsController
             String saveFileName  = fileName.substring(0,spot);
 
             // 저장할 디렉토리 만들기
-            String realUploadFolder = contentService.makeFolder(uploadPath);
+            String realUploadFolder = fileService.makeFolder(uploadPath);
 
             // directory 에 image 저장하기
             String imageSavePath = uploadPath+File.separator+realUploadFolder+File.separator+uuid+fileName;
@@ -123,13 +127,13 @@ public class ContentsController
 
 
 
-    @PostMapping("/readContent")
+    @PostMapping("/read")
     public String getContentInfo(Long read_content_idx)
     {
         return contentService.getContentInfo(read_content_idx).toString();
     }
 
-    @PostMapping("/getBoardContent")
+    @PostMapping("/bring")
     public String getBoardContent(Long content_board_idx, int limit)
     {
         JSONArray result = contentService.getContentByBoard(content_board_idx, limit);
@@ -138,7 +142,7 @@ public class ContentsController
         return result.toString();
     }
 
-    @PostMapping("/getPrivateContentInfo")
+    @PostMapping("/personal")
     public String getPrivateContentInfo(String user_idx)
     {
         Long userId = Long.valueOf(user_idx);
@@ -149,6 +153,7 @@ public class ContentsController
         return result.toString();
     }
 
+
     @PostMapping("/getImage")
     public byte[] getImage(String content_image_url) throws IOException {
         File file = new File(content_image_url);
@@ -156,6 +161,11 @@ public class ContentsController
         return fileContent;
     }
 
+    /**
+     *
+     * @param content_idx
+     */
+    /**/
 
     @DeleteMapping("/delete")
     public void deleteContent(Long content_idx)

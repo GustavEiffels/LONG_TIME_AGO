@@ -1,4 +1,4 @@
-package com.example.memoserver.service;
+package com.example.memoserver.service.Board;
 
 import com.example.memoserver.entity.Board;
 import com.example.memoserver.repository.BoardRepository;

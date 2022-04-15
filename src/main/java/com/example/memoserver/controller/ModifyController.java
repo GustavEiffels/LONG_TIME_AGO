@@ -1,7 +1,7 @@
 package com.example.memoserver.controller;
 
-import com.example.memoserver.service.ContentService;
-import com.example.memoserver.service.ModifyService;
+import com.example.memoserver.service.Content.ContentService;
+import com.example.memoserver.service.Modify.ModifyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.example.memoserver.service;
+package com.example.memoserver.service.Content;
 
 import com.example.memoserver.dto.ContentDto;
 import com.example.memoserver.entity.Board;
@@ -114,40 +114,7 @@ public class ContentServiceImpl implements ContentService
         return array;
     }
 
-    @Override
-    public String transToImage(MultipartFile file, String uploadPath) throws IOException {
-        // 저장할 파일
-        byte[] saveFile = file.getBytes();
 
-        // Random 한 UUID 생성
-        String uuid = UUID.randomUUID().toString();
-        String fileName = file.getOriginalFilename();
-        int spot = fileName.indexOf(".");
-        String saveFileName  = fileName.substring(0,spot);
-
-        // 저장할 디렉토리 만들기
-        String realUploadFolder = makeFolder(uploadPath);
-
-        // directory 에 image 저장하기
-        String imageSavePath = uploadPath+ File.separator+realUploadFolder+File.separator+uuid+fileName;
-
-        Path savePath = Paths.get(imageSavePath);
-
-        file.transferTo(savePath);
-
-        return imageSavePath;
-    }
-
-    @Override
-    public String makeFolder(String uploadPath) {
-        String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String realUploadPath =  str.replace("/", File.separator);
-        File uploadPathDir = new File(uploadPath, realUploadPath);
-        if (uploadPathDir.exists() == false) {
-            uploadPathDir.mkdirs();
-        }
-        return realUploadPath;
-    }
 
     @Override
     public JSONArray getPrivateUserContent(Long user_idx)

@@ -1,7 +1,9 @@
-package com.example.memoserver.service;
+package com.example.memoserver.service.Modify;
 
 import com.example.memoserver.entity.Board;
 import com.example.memoserver.repository.ContentRepository;
+import com.example.memoserver.service.Content.ContentService;
+import com.example.memoserver.service.File.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,10 @@ public class ModifyServiceImpl implements ModifyService
     private final ContentRepository contentRepository;
 
     private  final ContentService contentService;
+
+    private final FileService fileService;
+
+
 
     @Override
     public String updateContent(HttpServletRequest request, String uploadPath) throws IOException {
@@ -46,7 +52,7 @@ public class ModifyServiceImpl implements ModifyService
         }
         else
         {
-            String url = contentService.transToImage(file, uploadPath);
+            String url = fileService.transToImage(file, uploadPath);
             contentRepository.contentUpdate(
                     request.getParameter("content_subject"),
                     request.getParameter("content_text"),

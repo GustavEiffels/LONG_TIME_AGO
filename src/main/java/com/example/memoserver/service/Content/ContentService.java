@@ -1,4 +1,4 @@
-package com.example.memoserver.service;
+package com.example.memoserver.service.Content;
 
 
 import com.example.memoserver.dto.ContentDto;
@@ -57,12 +57,8 @@ public interface ContentService
 
     JSONObject getContentInfo(Long content_board_idx);
 
-
     JSONArray getContentByBoard(Long content_board_idx, int limit);
 
-    String transToImage(MultipartFile file, String uploadPath) throws IOException;
-
-    String makeFolder(String uploadPath);
 
     JSONArray getPrivateUserContent(Long user_idx);
 }

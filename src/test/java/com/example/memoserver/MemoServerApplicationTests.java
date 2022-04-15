@@ -1,9 +1,13 @@
 package com.example.memoserver;
 
+import com.example.memoserver.controller.SearchController;
 import com.example.memoserver.entity.Board;
 import com.example.memoserver.entity.Content;
 import com.example.memoserver.entity.User;
 import com.example.memoserver.repository.ContentRepository;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
+import org.json.JSONArray;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,9 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootTest
 class MemoServerApplicationTests {
@@ -67,6 +69,16 @@ class MemoServerApplicationTests {
             contentRepository.save(content);
         }
     }
+
+    @Autowired
+    private SearchController searchController;
+
+//    @Test
+//    public void searchController() throws ParseException {
+//
+//
+//    }
+
 
 
 

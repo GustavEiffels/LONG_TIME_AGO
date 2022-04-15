@@ -1,4 +1,4 @@
-package com.example.memoserver.service;
+package com.example.memoserver.service.Modify;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

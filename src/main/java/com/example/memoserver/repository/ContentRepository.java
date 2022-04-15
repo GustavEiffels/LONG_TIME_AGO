@@ -107,39 +107,24 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                       @Param("content_idx")Long content_idx);
 
 
+
     /**
-     *  선택한 게시판 조회 ------------
+     *  검색어를 이용해서 board 를 가져온다.
      */
-//    @Query(value =
-//            "select c.content_subject,\n" +
-//                    "u.user_nick_name as content_nick_name,\n" +
-//                    "date_format(c.content_write_date,'%Y-%m-%d') as content_write_date,\n" +
-//                    "c.content_image_url, " +
-//                    "c.content_idx, " +
-//                    "c.content_writer_idx, " +
-//                    "c.content_board_idx " +
-//                    "from Content c, User u \n" +
-//                    "where c.content_writer_idx = u.user_idx\n" +
-//                    "and c.content_board_idx=:content_board_idx " +
-//                    "order by c.content_idx desc " +
-//                    "limite=:limit, 10 ", nativeQuery = true)
-//    List<Object> getContentByContent_board_idx(@Param("content_board_idx")Board content_board_idx, @Param("limit")int limit);
-//
-//
-//    /**
-//     * 전체 게시판 조회 -------------
-//     */
-//    @Query(value =
-//            "select c.content_subject,\n" +
-//                    "u.user_nick_name as content_nick_name,\n" +
-//                    "date_format(c.content_write_date,'%Y-%m-%d') as content_write_date,\n" +
-//                    "c.content_image_url, " +
-//                    "c.content_idx, " +
-//                    "c.content_writer_idx, " +
-//                    "c.content_board_idx " +
-//                    "from Content c, User u \n" +
-//                    "where c.content_writer_idx = u.user_idx\n" +
-//                    "order by c.content_idx desc " +
-//    List<Object> getContentByContent_board_idx_T(@Param("limit")int limit);
+    @Query(value =
+            "select c.content_idx, \n" +
+                    "u.user_nick_name as content_nick_name, \n" +
+                    "date_format(c.content_write_date,'%Y-%m-%d') as content_write_date, \n" +
+                    "c.content_subject, " +
+                    "c.content_image_url, " +
+                    "c.content_image, " +
+                    "c.content_board_idx  " +
+                    "from Content c,  User u \n" +
+                    "where c.content_writer_idx = u.user_idx\n " +
+                    "and c.content_subject LIKE %:query% \n ", nativeQuery = true)
+    List<Object> getContentBySearch(@Param("query")String query, Pageable pageable);
+
+
+
 
 }
