@@ -17,7 +17,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sing.board4_3.databinding.BoardMainRecyclerviewBinding
 import com.sing.board4_3.databinding.BoardSettingRecyclerviewBinding
 import com.sing.board4_3.databinding.FragmentSettingBinding
 import okhttp3.FormBody
@@ -286,7 +285,7 @@ class BoardSettingFragment : Fragment() {
         thread{
             val client = OkHttpClient()
 
-            val site = "http://${ServerIP.serverIp}/content/getPrivateContentInfo"
+            val site = "http://${ServerIP.serverIp}/content/personal"
 
 
             val builder1 = FormBody.Builder()

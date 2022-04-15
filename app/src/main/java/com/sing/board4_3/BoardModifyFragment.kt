@@ -29,7 +29,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
-import java.net.URI
 import kotlin.concurrent.thread
 
 class BoardModifyFragment : Fragment()
@@ -82,7 +81,7 @@ class BoardModifyFragment : Fragment()
 
             when(it.itemId)
             {
-                R.id.board_modify_menu_camera->{
+                R.id.board_modify_menu_camera ->{
                     val filePath = requireContext().getExternalFilesDir(null).toString()
 
                     val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -109,7 +108,7 @@ class BoardModifyFragment : Fragment()
                     true
                 }
 
-                R.id.board_modify_menu_gallery->{
+                R.id.board_modify_menu_gallery ->{
                     val albumIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     // 이미지만 가져오게 설정
                     albumIntent.type = "image/*"
@@ -122,7 +121,7 @@ class BoardModifyFragment : Fragment()
                     true
                 }
 
-                R.id.board_modify_menu_upload->
+                R.id.board_modify_menu_upload ->
                 {
 
                     val boardModifySubject = boardModifyFragmentBinding.boardModifySubject.text.toString()

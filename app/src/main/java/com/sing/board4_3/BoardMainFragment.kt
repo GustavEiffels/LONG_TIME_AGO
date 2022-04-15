@@ -2,13 +2,14 @@ package com.sing.board4_3
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.sing.board4_3.databinding.FragmentBoardMainBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import org.json.JSONArray
 import kotlin.concurrent.thread
 
@@ -70,18 +72,14 @@ class BoardMainFragment : Fragment() {
         boardMainFragmentBinding.boardToolbar.inflateMenu(R.menu.board_main_menu)
 
 
-
-        /** Dialog
-         *  true ---> menu를 눌렀을 때 어떤 작업이 진행됨
-         *  false ---> menu 눌렀을 때 어떤 작업을 하지 않음
-         *
-         *  boolean 으로 반드시 return 해주어야함
+        /** Tool bar 의 menu 를 들고올 경우
          */
         boardMainFragmentBinding.boardToolbar.setOnMenuItemClickListener {
 
             when(it.itemId)
             {
-                // tool bar 에 추가한 menu 이름
+                /** 다른 게시판 종류를 선택할 수 있는 spinner 를 눌렀을 경우 -----------------------------------
+                 */
                 R.id.board_main_menu_board_list ->
                 {
                     // Board Main Activity 를 부름
@@ -107,7 +105,8 @@ class BoardMainFragment : Fragment() {
                     true
                 }
 
-
+                /** 메뉴에서 글쓰기 버튼을 눌렀을 경우 ------------------------------------------------------
+                 */
                 R.id.board_main_menu_write ->
                 {
 
@@ -116,7 +115,10 @@ class BoardMainFragment : Fragment() {
                     act.fragmentController("board_write",true, true)
                     true
                 }
-                R.id.board_main_setting->
+
+                /** 메뉴에서 세팅 버튼을 눌렀을 경우 --------------------------------------------------------
+                 */
+                R.id.board_main_setting ->
                 {
                     val act = activity as BoardMainActivity
                     act.fragmentController("board_setting", true,true)
@@ -126,6 +128,39 @@ class BoardMainFragment : Fragment() {
                 else -> false
             }
         }
+
+
+        /** Search view
+         */
+        boardMainFragmentBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener
+        {
+            override fun onQueryTextSubmit(query: String?): Boolean
+            {
+
+
+                if(query.toString().length>1)
+                {
+                    act.query = query.toString()
+                    act.fragmentController("search_result", true, true)
+                }
+                else
+                {
+                    Toast.makeText(requireContext(),"Please enter at least 2 characters", Toast.LENGTH_SHORT).show()
+
+                }
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean
+            {
+                return false
+            }
+
+        })
+
+
 
 
         /** RecyclerView 설정 ----
@@ -178,16 +213,18 @@ class BoardMainFragment : Fragment() {
             })
 
 
+
         // 기져오게 설정하기
         getContentList(true)
 
-        /**
-         *  새로 고침 기능 구현 시작 -------------------------------------------------------
+        /** 새로 고침 기능 구현  ------------------------------------------------------------------------
          */
         boardMainFragmentBinding.boardMainSwipe.setOnRefreshListener {
+
+            // recyclerView 에 있는 Content 를 비우고 새로 가져온다.
             getContentList(true)
 
-            // 지속해서 회전하는 것을 제거
+            //계속해서 회전하지 않게 사용
             boardMainFragmentBinding.boardMainSwipe.isRefreshing = false
         }
 
@@ -284,7 +321,7 @@ class BoardMainFragment : Fragment() {
         thread{
             val client = OkHttpClient()
 
-            val site = "http://${ServerIP.serverIp}/content/getBoardContent"
+            val site = "http://${ServerIP.serverIp}/content/bring"
 
             // activity 가져오기
             val act = activity as BoardMainActivity
@@ -338,3 +375,5 @@ class BoardMainFragment : Fragment() {
     }
 
 }
+
+

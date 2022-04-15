@@ -37,15 +37,17 @@ class BoardReadFragment : Fragment() {
         boardReadFragmentBinding = FragmentBoardReadBinding.inflate(layoutInflater)
         boardReadFragmentBinding.boardReadToolbar.title="Board Read"
 
-        // drawable 객체 생성
+        /** Toolbar 상단에 backButton 추가로 생성 -------------------------------------------------------
+         */
         val navIcon = requireActivity().getDrawable(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
 
         boardReadFragmentBinding.boardReadToolbar.navigationIcon = navIcon
 
+
         // 색상을 변경 --- android 10 버전일 경우와 그렇지 않을경우 둘다 고려
 
-
-        // Q
+        /** 현재 SDK Version 이 10 Version 이상인 경우 --------------------------------------------------
+         */
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
         {
             boardReadFragmentBinding.
@@ -53,6 +55,10 @@ class BoardReadFragment : Fragment() {
             navigationIcon?.
             colorFilter= BlendModeColorFilter(Color.parseColor("#FFFFFF"), BlendMode.SRC_ATOP)
         }
+
+
+        /** 현재 SDK Version 이 10 Version 미만인 경우 --------------------------------------------------
+         */
         else
         {
             boardReadFragmentBinding.boardReadToolbar.navigationIcon?.setColorFilter(
@@ -60,19 +66,21 @@ class BoardReadFragment : Fragment() {
             )
         }
 
+        /** 화살표를 눌렀을 경우 현재 Fragment 를 backStack 에서 제거 ----------------------------------------
+         */
         boardReadFragmentBinding.boardReadToolbar.setNavigationOnClickListener {
             val act = activity as BoardMainActivity
             act.fragmentRemoveBackStack("board_read")
         }
 
 
-
-
+        /** page를 읽기 위한 thread -------------------------------------------------------------------
+         */
         thread{
             // Server 로 부터 데이터 받아오기
             val client = OkHttpClient()
 
-            val site = "http://${ServerIP.serverIp}/content/readContent"
+            val site = "http://${ServerIP.serverIp}/content/read"
 
             val act = activity as BoardMainActivity
 
@@ -86,7 +94,8 @@ class BoardReadFragment : Fragment() {
             val response = client.newCall(request).execute()
 
 
-
+            /** 읽기에 성공 했을 경우 JSON 으로 게시글에 대한 정보를 받는다 --------------------------------------
+             */
             if(response.isSuccessful)
             {
                 val resultText = response.body?.string()!!.trim()
@@ -109,19 +118,23 @@ class BoardReadFragment : Fragment() {
                     // Image 가져오기
                     val contentImage = obj.getString("content_image_url")
 
-                    // 존재하지 않는다면
+
+                    /** 게시글의 이미지가 존재하지 않는 경우 -------------------------------------------------
+                     */
                     if( contentImage == "")
                     {
-                        // 안보이게 설정
+                        // 보이지 않게 설정
                         boardReadFragmentBinding.boardReadImage.visibility =View.GONE
                     }
+
+                    /** 게시글의 이미지가 존재하는 경우 -----------------------------------------------------
+                     */
                     else
                     {
 
+                        /** 이미지의 url 을 사용해서 SERVER 절대 경로에 있는 해당 이미지를 가져와서 구현 -------------
+                         */
                         thread{
-
-//                            val act = activity as BoardMainActivity
-
                             val uploadClient = OkHttpClient()
 
                             val uploadSite = "http://${ServerIP.serverIp}/content/getImage"
@@ -146,28 +159,32 @@ class BoardReadFragment : Fragment() {
                             }
                     }
 
-                    // 로그인한 사용자 index 번호 추출
+                    /** 로그인한 사용자의 index 를 받는다 -------------------------------------------------
+                     */
                     val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
                     // 초기값은 -1
                     val loginUserIdx = pref.getInt("login_user_idx",-1)
 
-                    // 로그인 index 와 글쓴이의 index 가 같을  경우
+
+                    /** 해당 Content 의 작성자와 로그인한 사용자가 같을 경우 menu가 보여지게 만듬 ------------------
+                     */
                     if( loginUserIdx.equals(contentWriterIdx) )
                     {
 
-                        /** ToolBar Menu 설정 ----------------------------------------------------------------------
+                        /** ToolBar Menu 설정 --------------------------------------------------------
                          */
 
                         // Toolbar 에 menu 추가
                         boardReadFragmentBinding.boardReadToolbar.inflateMenu(R.menu.board_read_menu)
 
-                        // Toolbar 에 menu 눌렀을 때 적용하기
-                        boardReadFragmentBinding.boardReadToolbar.setOnMenuItemClickListener {
+                        // Toolbar 에 menu 상호작용
+                        boardReadFragmentBinding.boardReadToolbar.setOnMenuItemClickListener{
                             when(it.itemId)
                             {
-                                // 수정할 때
-                                R.id.board_read_menu_modify->
+                                /** 해당 Content 를 수정하기 위한 Fragment로 이동하는 기능 -------------------
+                                 */
+                                R.id.board_read_menu_modify ->
                                 {
                                     val act =activity as BoardMainActivity
                                     // backStack 에 추가 및 , Animation 추가
@@ -175,8 +192,9 @@ class BoardReadFragment : Fragment() {
                                     true
                                 }
 
-                                // 삭제할 때 method 구현
-                                R.id.board_read_menu_delete->
+                                /** 해당 Content 를 삭제 기능 ------------------------------------------
+                                 */
+                                R.id.board_read_menu_delete ->
                                 {
 
                                     thread{

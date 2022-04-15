@@ -13,7 +13,6 @@ import com.sing.board4_3.databinding.ActivityBoardMainBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
-import java.util.zip.Inflater
 import kotlin.concurrent.thread
 
 class BoardMainActivity : AppCompatActivity() {
@@ -50,6 +49,10 @@ class BoardMainActivity : AppCompatActivity() {
 
     // 현재 보고 있는 page 번호
     var nowPage = 1
+
+
+    // 검색어 저장
+    var query = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -113,36 +116,40 @@ class BoardMainActivity : AppCompatActivity() {
 
             "board_main" ->
             {
-             currentFragment=BoardMainFragment()
+             currentFragment= BoardMainFragment()
             }
 
             // name 이 board_read 일 때 BoardReadFragment 실행
             "board_read"->
             {
-                currentFragment=BoardReadFragment()
+                currentFragment= BoardReadFragment()
             }
 
             "board_write"->
             {
-                currentFragment=BoardWriteFragment()
+                currentFragment= BoardWriteFragment()
             }
 
             "board_modify"->
             {
-                currentFragment=BoardModifyFragment()
+                currentFragment= BoardModifyFragment()
             }
             "board_setting"->
             {
-                currentFragment=BoardSettingFragment()
+                currentFragment= BoardSettingFragment()
             }
             "password_confirm"->
             {
-                currentFragment=PassWordConfirmFragment()
+                currentFragment= PassWordConfirmFragment()
             }
             "change_password"->
             {
-                currentFragment=ChangePasswordFragment()
+                currentFragment= ChangePasswordFragment()
                 Log.i("test","come here")
+            }
+            "search_result"->
+            {
+                currentFragment=SearchResultFragment()
             }
 
         }

@@ -8,8 +8,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
-import android.hardware.input.InputManager
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,12 +21,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.content.FileProvider
 import com.sing.board4_3.databinding.FragmentBoardWriteBinding
-import okhttp3.FormBody
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.junit.runner.manipulation.Ordering
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.concurrent.thread
@@ -84,7 +80,7 @@ class BoardWriteFragment : Fragment() {
             when(it.itemId)
             {
                 // itemid 가 camera 일 때
-                R.id.board_write_menu_camera->
+                R.id.board_write_menu_camera ->
                 {
 
                     val filePath = requireContext().getExternalFilesDir(null).toString()
