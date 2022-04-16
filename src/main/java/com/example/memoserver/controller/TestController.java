@@ -37,12 +37,13 @@ public class TestController
         String userId = request.getParameter("userId");
         String userPw = request.getParameter("userPw");
         String userNick = request.getParameter("userNick");
+        String userEmail = request.getParameter("userEmail");
 
         log.info("id",userId);
         log.info("Pw",userPw);
         log.info("nick",userNick);
 
-        userService.saveUser(userId,userPw,userNick);
+        userService.saveUser(userId,userPw,userNick,userEmail);
 
         return "success";
     }

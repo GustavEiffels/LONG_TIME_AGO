@@ -59,6 +59,33 @@ public interface UserRepository extends JpaRepository<User,Long>
     int updatePw(@Param("userAuto")int userAuto, @Param("newPw")String newPw, @Param("userIdx")Long userIdx);
 
 
+    /**  Email Duplicate Check
+     */
+    @Query(value = "select user_Email from User where user_Email=:user_email")
+    String emailCheck(@Param("user_email")String user_email);
+
+
+    /**  google Account Check
+     */
+    @Query(value = "select user_nick_name from User where user_Email=:user_email")
+    String googleCheck(@Param("user_email")String user_email);
+
+
+    /** get GoogleAccount
+     */
+    @Query(value ="select user_idx, user_nick_name, user_auto_login from User where user_Email=:email")
+    Object googleAccount(@Param("email")String email);
+
+
+    /** Change user_auto_login
+     */
+
+    @Transactional
+    @Modifying
+    @Query(value = "update User set user_auto_login=:login where user_Email=:email")
+    void googleAutoLogin(@Param("login")int login, @Param("email")String email);
+
+
 
 
 

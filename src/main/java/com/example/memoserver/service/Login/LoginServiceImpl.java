@@ -1,8 +1,10 @@
 package com.example.memoserver.service.Login;
 
+import com.example.memoserver.entity.User;
 import com.example.memoserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -94,5 +96,55 @@ public class LoginServiceImpl implements LoginService
     public int changePw(int userAuto, String newPw, Long userIdx)
     {
         return userRepository.updatePw(0, newPw, userIdx);
+    }
+
+    /** --- true ---> email 사용 불가능
+     *  --- false ---> email 사용 가능
+     */
+    @Override
+    public String emailCheck(String user_email)
+    {
+        String result =  userRepository.emailCheck(user_email);
+
+
+        if(result==null)
+        {
+            result="null";
+        }
+        return result;
+    }
+
+    @Override
+    public String googleCheck(String email)
+    {
+
+        String result = "Y";
+
+        // 이미 계정이 존재하는 경우
+        if( userRepository.googleCheck(email) != null )
+        {
+            result = "N";
+        }
+
+        return result;
+    }
+
+    @Override
+    public JSONObject googleAccount(String email)
+    {
+
+        JSONObject jsonObject = new JSONObject();
+        userRepository.googleAutoLogin(1,email);
+        Object result = userRepository.googleAccount(email);
+
+        Object[] accountResult = (Object[]) result;
+
+        jsonObject.put("login_user_idx",accountResult[0]);
+        jsonObject.put("login_user_nick",accountResult[1]);
+        jsonObject.put("login_auto_login",accountResult[2]);
+
+
+
+        return jsonObject;
     }
 }

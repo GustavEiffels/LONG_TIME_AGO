@@ -4,6 +4,7 @@ package com.example.memoserver.controller;
 import com.example.memoserver.service.Login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,5 +87,27 @@ public class LoginController
     {
         loginService.changePw(0, newPw, user_idx);
     }
+
+
+    @PostMapping("emailCheck")
+    public String emailCheck(String email)
+    {
+        return loginService.emailCheck(email);
+    }
+
+    @PostMapping("googleCheck")
+    public String googleCheck(String email)
+    {
+        return loginService.googleCheck(email);
+    }
+
+
+    @PostMapping("googleAccount")
+    public String googleAccount(String email)
+    {
+        return loginService.googleAccount(email).toString();
+    }
+
+
 
 }

@@ -25,10 +25,10 @@ server:
   spring:
     servlet:
       multipart:
-        file-size-threshold: 1MB
+        file-size-threshold: 10MB
         location: /Users/mac/Desktop/Desktop-SungMak/00And/memoServer/image
-        max-file-size: 100MB
-        max-request-size: 100MB
+        max-file-size: 200MB
+        max-request-size: 200MB
 
 uploadlocation: /Users/mac/Desktop/Desktop-SungMak/00And/memoServer/src/main/resources/static/upload
 

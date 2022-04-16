@@ -14,6 +14,7 @@ public interface UserService
                 .user_pw(userDto.getUser_pw())
                 .user_auto_login(userDto.getUser_auto_login())
                 .user_nick_name(userDto.getUser_nick_name())
+                .user_Email(userDto.getUser_email())
                 .build();
 
         return user;
@@ -27,6 +28,7 @@ public interface UserService
                 .user_pw(user.getUser_pw())
                 .user_auto_login(user.getUser_auto_login())
                 .user_nick_name(user.getUser_nick_name())
+                .user_email(user.getUser_Email())
                 .build();
 
         return userDto;
@@ -34,7 +36,7 @@ public interface UserService
 
 
     // user 정보 저장
-    void saveUser(String id, String pw, String nick);
+    void saveUser(String id, String pw, String nick, String email);
 
 
 

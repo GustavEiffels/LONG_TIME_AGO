@@ -18,6 +18,8 @@ public class UserDto
 
     private String user_pw;
 
+    private String user_email;
+
     private int user_auto_login;
 
     private String user_nick_name;

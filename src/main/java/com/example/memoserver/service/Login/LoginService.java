@@ -1,5 +1,7 @@
 package com.example.memoserver.service.Login;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 public interface LoginService
@@ -20,4 +22,13 @@ public interface LoginService
 
   // change pw
   int changePw(int userAuto, String newPw, Long userIdx);
+
+  //  Email Check
+  String emailCheck(String user_email);
+
+  // Google Account check
+  String googleCheck(String email);
+
+  // Get Google Account
+  JSONObject googleAccount(String email);
 }

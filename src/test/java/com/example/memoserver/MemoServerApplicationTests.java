@@ -54,7 +54,7 @@ class MemoServerApplicationTests {
                     .build();
 
             Board board = Board.builder()
-                    .board_idx(2L)
+                    .board_idx(1L)
                     .build();
 
             Content content = Content.builder()
