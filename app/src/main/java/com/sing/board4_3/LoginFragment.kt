@@ -11,24 +11,50 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.*
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.sing.board4_3.databinding.FragmentLoginBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.internal.GoogleApiAvailabilityCache
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.AuthResult
+import org.json.JSONObject
 
-class LoginFragment : Fragment() {
+
+class LoginFragment : Fragment(){
 
     // Binding 을 설정
     lateinit var loginFragmentBinding: FragmentLoginBinding
+
+    var auth:FirebaseAuth? = null
+
+    var googleSignInClient : GoogleSignInClient? = null
+    var GOOGLE_LOGIN_CODE = 9000
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-
     }
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +68,31 @@ class LoginFragment : Fragment() {
 
         loginFragmentBinding.loginToolbar.title="LOGIN"
 
+
+        auth = FirebaseAuth.getInstance()
+
+        loginFragmentBinding.signInButton.setOnClickListener {
+            googleLogin()
+        }
+
+        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        // options 에 google SignIn 에 등록
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+
+
         loginFragmentBinding.loginJoinBtn.setOnClickListener {
 
             // 해당 Fragment 를 소유하고 있는 Activity 를 추출할 수 있다
             val act = activity as MainActivity
-            act.fragmentController("join",true,true)
+            act.fragmentController("email",true,true)
         }
+
+
 
 
         loginFragmentBinding.loginLoginBtn.setOnClickListener {
@@ -104,7 +149,7 @@ class LoginFragment : Fragment() {
                     return@setOnClickListener
                 }
             }
-            /** 비밀번호 유효성 설정하기
+            /** 비밀번호 유효성 설정하기 ------
              */
             if(!Pattern.matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}",loginPw))
             {
@@ -251,7 +296,148 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+
+
         return loginFragmentBinding.root
     }
 
+    fun googleLogin(){
+        var signInIntent = googleSignInClient?.signInIntent
+        startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == GOOGLE_LOGIN_CODE)
+        {
+            var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+
+            if(result!!.isSuccess)
+            {
+                var account = result.signInAccount
+                firebaseAuthWithGoogle(account)
+
+                var googleEmail = account!!.email.toString()
+                Log.i("google Email",googleEmail)
+
+                val act = activity as MainActivity
+
+                act.email = googleEmail
+
+                thread{
+                    val client = OkHttpClient()
+
+                    val site = "http://${ServerIP.serverIp}/login/googleCheck"
+
+                    val builder1 = FormBody.Builder()
+                    builder1.add("email",googleEmail)
+
+
+                    Log.i("google Email!!!!!",googleEmail)
+
+                    val form = builder1.build()
+
+                    val request  = Request.Builder().url(site).post(form).build()
+
+                    val response = client.newCall(request).execute()
+
+
+                    /** response.isSuccessful ----> 통신이 됐을 때
+                     */
+                    if(response.isSuccessful)
+                    {
+                        // 닉네임 존재 여부
+                        val result = response.body?.string()!!.trim()
+
+
+                        // 닉네임이 존재하지 않는 경우
+                        if( result.equals("Y") )
+                        {
+                            // 회원가입 하게 만듬
+                            act.fragmentController("join",true,true)
+
+                        }
+                        else
+                        {
+                            // 계정이 존재함으로 main page 로 이동
+                            thread{
+
+                                val client2 = OkHttpClient()
+                                val site = "http://${ServerIP.serverIp}/login/googleAccount"
+
+                                val request1 = Request.Builder().url(site).post(form).build()
+
+                                val response1 = client2.newCall(request1).execute()
+
+                                if(response1.isSuccessful)
+                                {
+                                    val account = response1.body?.string()!!.trim()
+
+                                    val json = JSONObject(account)
+
+                                    Log.i("LoginFragment Google",json.getString("login_user_nick"))
+
+                                    val pref = activity?.getSharedPreferences("login_data", Context.MODE_PRIVATE)
+
+                                    val editor = pref?.edit()
+
+
+                                    editor?.putInt("login_user_idx",json.getInt("login_user_idx"))
+                                    editor?.putInt("login_auto_login",json.getInt("login_auto_login"))
+                                    editor?.putString("login_user_nick",json.getString("login_user_nick"))
+                                    editor?.commit()
+
+                                    Log.i("test",json.getString("login_user_nick"))
+
+                                    val boardMainIntent = Intent(requireContext(), BoardMainActivity::class.java)
+                                    startActivity(boardMainIntent)
+                                    activity?.finish()
+
+                                }
+                                else
+                                {
+                                    activity?.runOnUiThread{
+                                        val dialogBuilder = AlertDialog.Builder(requireContext())
+                                        dialogBuilder.setTitle("NetWork Error")
+                                        dialogBuilder.setMessage("It's something Wrong Try Again")
+                                        dialogBuilder.setPositiveButton("confirm",null)
+                                        dialogBuilder.show()
+                                    }
+                                }
+
+
+                            }
+                        }
+
+                    }
+                    /** 통신이 안됐을 때
+                     */
+                    else
+                    {
+                        activity?.runOnUiThread{
+                            val dialogBuilder = AlertDialog.Builder(requireContext())
+                            dialogBuilder.setTitle("NetWork Error")
+                            dialogBuilder.setMessage("It's something Wrong Try Again")
+                            dialogBuilder.setPositiveButton("confirm",null)
+                            dialogBuilder.show()
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?)
+    {
+        var credential = GoogleAuthProvider.getCredential(account?.idToken,null)
+        auth?.signInWithCredential(credential)
+    }
+
+
 }
+
+
+

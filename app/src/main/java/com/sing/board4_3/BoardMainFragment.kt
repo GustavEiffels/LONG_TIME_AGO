@@ -2,6 +2,8 @@ package com.sing.board4_3
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -41,10 +43,15 @@ class BoardMainFragment : Fragment() {
     val contentImageUrl = ArrayList<String>()
 
 
+    lateinit var googleNick:String
+
+
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+
+
 
     }
 
@@ -57,6 +64,8 @@ class BoardMainFragment : Fragment() {
 
         // BoardMainActivity 를 불러옴
         val act = activity as BoardMainActivity
+
+
 
 
 
@@ -354,6 +363,7 @@ class BoardMainFragment : Fragment() {
                     contentWriteDateList.add( obj.getString("content_write_date") )
                     contentSubjectList.add( obj.getString("content_subject") )
                     contentImageUrl.add( obj.getString("content_image_url") )
+
                 }
 
                 // page를 가져온 것이 없다면 존재하지 않는 페이지를 가져오려하기 때문에

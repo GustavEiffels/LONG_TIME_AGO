@@ -33,6 +33,7 @@ android {
         viewBinding=true
     }
 }
+apply plugin: 'com.google.gms.google-services'
 
 dependencies {
 
@@ -48,6 +49,24 @@ dependencies {
 
     // Swiperefreshlayout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+
+
+    //Firebase register
+    implementation platform('com.google.firebase:firebase-bom:29.3.0')
+
+    // Firebase app analysis
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Firebase provide UI
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+
+
+
+    // Firebase outh?
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
 
 }

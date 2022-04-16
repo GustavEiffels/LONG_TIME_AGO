@@ -114,9 +114,7 @@ class BoardSettingFragment : Fragment() {
             val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
             // AutoLogin 정보를 0 으로 변경
-            val editor = pref?.edit()
-            editor?.putInt("login_auto_login", 0)
-            editor?.commit()
+
 
 
 
@@ -144,6 +142,12 @@ class BoardSettingFragment : Fragment() {
 
                 if(response.isSuccessful)
                 {
+
+                    val editor = pref?.edit()
+                    editor?.clear()
+                    editor?.putInt("login_auto_login", 0)
+                    editor?.commit()
+
                     activity?.runOnUiThread {
                         Toast.makeText(requireContext(),"Logout complete", Toast.LENGTH_SHORT).show()
 

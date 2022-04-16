@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity()
     // Fragment 를 담을 변수 생성
     lateinit var currentFragment : Fragment
 
+    var email =""
+
 
     /**  회원 가입 처리를 위한 변수 생성
      */
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity()
         SystemClock.sleep(2000)
         setTheme(R.style.Theme_Board4_3)
 
+        Log.i("Email Main Activity", email)
 
         mainAcitivityBindg = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainAcitivityBindg.root)
@@ -129,6 +132,10 @@ class MainActivity : AppCompatActivity()
             "nick"->
             {
                 currentFragment = NickFragment()
+            }
+            "email"->
+            {
+                currentFragment= EmailFragment()
             }
         }
 

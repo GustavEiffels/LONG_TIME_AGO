@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_board_main.xml" value="0.14166666666666666" />
+        <entry key="app/src/main/res/layout/activity_google_result.xml" value="0.4279253871383858" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14166666666666666" />
         <entry key="app/src/main/res/layout/board.xml" value="0.23641304347826086" />
         <entry key="app/src/main/res/layout/board_main_recyclerview.xml" value="0.2626354183101793" />
@@ -16,8 +17,9 @@
         <entry key="app/src/main/res/layout/fragment_board_read.xml" value="0.23680836937076088" />
         <entry key="app/src/main/res/layout/fragment_board_write.xml" value="0.1671195652173913" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.35723771580345287" />
+        <entry key="app/src/main/res/layout/fragment_email.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/fragment_join.xml" value="0.2708333333333333" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.16329183616847473" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_nick.xml" value="0.22181896162539494" />
         <entry key="app/src/main/res/layout/fragment_pass_word_confirm.xml" value="0.19592459221158132" />
         <entry key="app/src/main/res/layout/fragment_search_result.xml" value="0.1734375" />
