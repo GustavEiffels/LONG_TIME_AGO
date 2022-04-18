@@ -29,6 +29,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
+    //email 인증을위한 dependency 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+
 
 
     implementation 'org.json:json:20200518'
