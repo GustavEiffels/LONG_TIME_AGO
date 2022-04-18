@@ -53,10 +53,64 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
 
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/getSerial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Serial Code"
+                android:visibility="gone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:inputType="textPersonName" />
+
+
+            <TextView
+                android:id="@+id/leftTime"
+                android:text="00:00"
+                android:layout_marginLeft="20dp"
+                android:textColor="#009999"
+                android:textSize="20sp"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/auth_resend"
+                android:text="resend"
+                android:layout_marginLeft="30dp"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </Button>
+
+
+
+        </LinearLayout>
+
+
+
         <Button
-            android:id="@+id/email_button"
+            android:id="@+id/auth_submit"
+            android:layout_marginTop="30dp"
+            android:text="Submit"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <Button
+            android:id="@+id/email_next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:text="NEXT"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 

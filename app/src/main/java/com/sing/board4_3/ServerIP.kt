@@ -7,6 +7,6 @@ class ServerIP
         // the 조은 192.168.20.98
         // 집 : 192.168.0.17
 
-        const val serverIp = "172.20.10.6"
+        const val serverIp = "192.168.20.98"
     }
 }

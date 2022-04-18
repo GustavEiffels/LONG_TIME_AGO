@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.sing.board4_3.databinding.ActivityMainBinding
 import okhttp3.FormBody
@@ -157,4 +158,14 @@ class MainActivity : AppCompatActivity()
         }
         trans.commit()
     }
+
+    /**
+     *  이름을 받아서 Fragment 를 제거하는 method
+     */
+    fun fragmentRemoveBackStack(name:String)
+    {
+        // FragmentManager.POP_BACK_STACK_INCLUSIVE --> Fragment 가 제거되게 설정
+        supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
 }
