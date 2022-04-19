@@ -7,9 +7,6 @@ import com.example.memoserver.entity.Content;
 import com.example.memoserver.entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 public interface ContentService
