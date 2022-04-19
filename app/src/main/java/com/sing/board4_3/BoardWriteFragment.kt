@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.sing.board4_3.databinding.FragmentBoardWriteBinding
 import okhttp3.MultipartBody
@@ -240,16 +241,9 @@ class BoardWriteFragment : Fragment() {
                                 inputMethodManager.hideSoftInputFromWindow(boardWriteFragmentBinding.boardWriteSubject.windowToken, 0)
                                 inputMethodManager.hideSoftInputFromWindow(boardWriteFragmentBinding.boardWriteText.windowToken, 0)
 
-                                val dialogBuilder = AlertDialog.Builder(requireContext())
-                                dialogBuilder.setTitle("Complete")
-                                dialogBuilder.setMessage("Write Complete")
-                                dialogBuilder.setPositiveButton("confirm"){
-                                        dialogInterface: DialogInterface, i: Int ->
-                                    act.fragmentRemoveBackStack("board_write")
-                                    act.fragmentController("board_read", true,true)
-
-                                }
-                                dialogBuilder.show()
+                                Toast.makeText(requireContext(), "Write Complete", Toast.LENGTH_SHORT).show()
+                                act.fragmentRemoveBackStack("board_write")
+                                act.fragmentController("board_read", true,true)
                             }
                         }
                         /**

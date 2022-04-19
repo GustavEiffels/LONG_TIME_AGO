@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.Intent.getIntent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -41,6 +42,7 @@ class BoardMainFragment : Fragment() {
 
 
     val contentImageUrl = ArrayList<String>()
+
 
 
     lateinit var googleNick:String
@@ -274,6 +276,41 @@ class BoardMainFragment : Fragment() {
             holder.boardMainItemWriteDate.text= contentWriteDateList[position]
 
             holder.boardMainItemSubject.text =contentSubjectList[position]
+
+            if(!contentImageUrl[position].equals(""))
+            {
+                holder.boardImage.visibility = View.VISIBLE
+                /** 이미지의 url 을 사용해서 SERVER 절대 경로에 있는 해당 이미지를 가져와서 구현 -------------
+                 */
+                thread{
+                    val uploadClient = OkHttpClient()
+
+                    val uploadSite = "http://${ServerIP.serverIp}/content/getImage"
+
+                    val urlBuilder = FormBody.Builder()
+                    urlBuilder.add("content_image_url",contentImageUrl[position])
+
+                    val urlForm = urlBuilder.build()
+
+                    val urlRequest = Request.Builder().url(uploadSite).post(urlForm).build()
+
+                    val uploadResponse = uploadClient.newCall(urlRequest).execute()
+
+                    val result = uploadResponse.body?.bytes()!!
+
+                    // 이미지 만들기
+                    val bitmap = BitmapFactory.decodeByteArray(result,0, result.size)
+
+                    activity?.runOnUiThread {
+                        holder.boardImage.setImageBitmap(bitmap)
+                    }
+                }
+            }
+
+
+
+
+
         }
 
 
@@ -291,6 +328,8 @@ class BoardMainFragment : Fragment() {
             val boardMainItemNickname = boardMainRecyclerItemBinding.boardMainItemNickname
             val boardMainItemSubject = boardMainRecyclerItemBinding.boardMainItemSubject
             val boardMainItemWriteDate = boardMainRecyclerItemBinding.boardMainItemWriteDate
+
+            val boardImage = boardMainRecyclerItemBinding.mainImageView
 
             override fun onClick(p0: View?)
             {
@@ -316,6 +355,7 @@ class BoardMainFragment : Fragment() {
             contentWriterList.clear()
             contentSubjectList.clear()
             contentWriteDateList.clear()
+            contentImageUrl.clear()
 
             // 다른 게시판을 고를 경우
 
@@ -363,6 +403,7 @@ class BoardMainFragment : Fragment() {
                     contentWriteDateList.add( obj.getString("content_write_date") )
                     contentSubjectList.add( obj.getString("content_subject") )
                     contentImageUrl.add( obj.getString("content_image_url") )
+
 
                 }
 
