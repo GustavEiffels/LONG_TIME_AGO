@@ -138,6 +138,10 @@ class MainActivity : AppCompatActivity()
             {
                 currentFragment= EmailFragment()
             }
+            "find_account"->
+            {
+                currentFragment=FindAccountFragment()
+            }
         }
 
         val trans = supportFragmentManager.beginTransaction()

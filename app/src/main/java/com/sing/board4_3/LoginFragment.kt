@@ -63,6 +63,10 @@ class LoginFragment : Fragment(){
     {
         // Inflate the layout for this fragment
 
+        val activity = activity as MainActivity
+
+
+
         //Binding
         loginFragmentBinding = FragmentLoginBinding.inflate(inflater)
 
@@ -82,6 +86,8 @@ class LoginFragment : Fragment(){
 
         // options 에 google SignIn 에 등록
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+
 
 
 
@@ -295,6 +301,11 @@ class LoginFragment : Fragment(){
                     }
                 }
             }
+        }
+
+
+        loginFragmentBinding.findAccount.setOnClickListener {
+         activity.fragmentController("find_account",true,true)
         }
 
 
