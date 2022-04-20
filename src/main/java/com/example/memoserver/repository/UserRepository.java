@@ -58,6 +58,11 @@ public interface UserRepository extends JpaRepository<User,Long>
     @Query(value = "update User set user_auto_login=:userAuto, user_pw=:newPw where user_idx=:userIdx")
     int updatePw(@Param("userAuto")int userAuto, @Param("newPw")String newPw, @Param("userIdx")Long userIdx);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update User set user_pw=:newPw where user_Email=:email")
+    int updatePwByEmail(@Param("newPw")String newPw, @Param("email")String email);
+
 
     /**  Email Duplicate Check
      */
@@ -80,10 +85,19 @@ public interface UserRepository extends JpaRepository<User,Long>
     /** Change user_auto_login
      */
 
+
+
     @Transactional
     @Modifying
     @Query(value = "update User set user_auto_login=:login where user_Email=:email")
     void googleAutoLogin(@Param("login")int login, @Param("email")String email);
+
+    /**
+     * finding user password
+     */
+
+
+
 
 
 

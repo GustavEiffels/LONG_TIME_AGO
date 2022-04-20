@@ -7,6 +7,7 @@ import com.example.memoserver.entity.Content;
 import com.example.memoserver.entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.time.LocalDateTime;
 
 public interface ContentService
@@ -55,7 +56,6 @@ public interface ContentService
     JSONObject getContentInfo(Long content_board_idx);
 
     JSONArray getContentByBoard(Long content_board_idx, int limit);
-
 
     JSONArray getPrivateUserContent(Long user_idx);
 }

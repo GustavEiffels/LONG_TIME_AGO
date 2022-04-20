@@ -68,8 +68,8 @@ public class ContentsController
                     .content_text(request.getParameter("content_text"))
                     .content_writer_idx(user)
                     .content_write_date(LocalDateTime.now())
-                    .content_image("")
-                    .content_image_url("")
+                    .content_image("empty")
+                    .content_image_url("/Users/mac/Desktop/Desktop-SungMak/00And/memoServer/src/main/resources/static/upload/images.jpg")
                     .content_board_idx(board)
                     .build();
             contentRepository.save(content);

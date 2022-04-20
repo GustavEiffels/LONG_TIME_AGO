@@ -1,8 +1,5 @@
 package com.example.memoserver.controller;
 
-
-
-import com.example.memoserver.service.Email.EmailSenderService;
 import com.example.memoserver.service.Email.ForJoin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
