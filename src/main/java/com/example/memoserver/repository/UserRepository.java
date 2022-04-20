@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 public interface UserRepository extends JpaRepository<User,Long>
 {
 
-    @Query(value ="select user_pw, user_idx from User where user_id=:userId")
+    @Query(value ="select user_pw, user_idx, user_status from User where user_id=:userId")
     Object login(@Param("userId")String userId);
 
     @Query(value = "select user_id from User where user_id=:userId")
@@ -103,6 +103,11 @@ public interface UserRepository extends JpaRepository<User,Long>
     @Query(value = "select user_idx from User where user_Email=:email")
     Long getUserIdxByEmail(@Param("email")String email);
 
+
+    @Transactional
+    @Modifying
+    @Query(value = "update User set user_status=:status where user_idx=:idx")
+    int resignUser(@Param("status")String status, @Param("idx")Long idx);
 
 
 

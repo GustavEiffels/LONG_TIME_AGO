@@ -79,12 +79,12 @@ public class ContentServiceImpl implements ContentService
 
         if(content_board_idx==0)
         {
-            result = contentRepository.getContentByContent_board_idx_T(pageRequest);
+            result = contentRepository.getContentByContent_board_idx_T(pageRequest,"available");
             System.out.println("test");
         }
         else
         {
-            result = contentRepository.getContentByContent_board_idx(board, pageRequest);
+            result = contentRepository.getContentByContent_board_idx(board, pageRequest,"available");
         }
 
         for(Object r:result)
@@ -99,6 +99,7 @@ public class ContentServiceImpl implements ContentService
             json.put("content_image_url",rArr[4]);
             json.put("content_image",rArr[5]);
             json.put("content_board_idx",rArr[6]);
+            json.put("content_text",rArr[7]);
 
             array.put(json);
         }

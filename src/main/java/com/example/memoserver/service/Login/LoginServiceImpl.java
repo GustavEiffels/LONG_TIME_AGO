@@ -35,20 +35,15 @@ public class LoginServiceImpl implements LoginService
         Object[] loginArr = (Object[]) loginRes;
 
 
-
-
-
-        if(loginArr==null)
+        if(loginArr==null || loginArr[2].equals("NotAvailable") )
         {
             result.put("errorMessage","Not Exist Account");
         }
         else
         {
-            log.info("loginArr[0].toString()",(String)loginArr[0]);
-            if(  ( (String)loginArr[0] ).equals(userPw) )
+            if(  ( loginArr[0] ).equals(userPw) )
             {
-                result.put("userIdx",(Long)loginArr[1]);
-                log.info("loginArr[0].toString()",(String)loginArr[0]);
+                result.put("userIdx",loginArr[1]);
             }
             else
             {
@@ -146,5 +141,11 @@ public class LoginServiceImpl implements LoginService
 
 
         return jsonObject;
+    }
+
+    @Override
+    public int resignUser(Long idx)
+    {
+        return userRepository.resignUser("NotAvailable",idx);
     }
 }

@@ -15,6 +15,7 @@ public interface UserService
                 .user_auto_login(userDto.getUser_auto_login())
                 .user_nick_name(userDto.getUser_nick_name())
                 .user_Email(userDto.getUser_email())
+                .user_status(userDto.getUser_status())
                 .build();
 
         return user;
@@ -29,6 +30,7 @@ public interface UserService
                 .user_auto_login(user.getUser_auto_login())
                 .user_nick_name(user.getUser_nick_name())
                 .user_email(user.getUser_Email())
+                .user_status(user.getUser_status())
                 .build();
 
         return userDto;

@@ -24,6 +24,8 @@ public class UserDto
 
     private String user_nick_name;
 
+    private String user_status;
+
 
 }
 

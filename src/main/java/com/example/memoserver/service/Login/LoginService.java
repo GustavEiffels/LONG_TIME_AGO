@@ -31,4 +31,6 @@ public interface LoginService
 
   // Get Google Account
   JSONObject googleAccount(String email);
+
+  int resignUser(Long idx);
 }

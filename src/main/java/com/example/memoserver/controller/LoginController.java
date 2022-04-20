@@ -4,7 +4,7 @@ package com.example.memoserver.controller;
 import com.example.memoserver.service.Login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,6 +106,18 @@ public class LoginController
     public String googleAccount(String email)
     {
         return loginService.googleAccount(email).toString();
+    }
+
+    @PatchMapping("resign")
+    public String resignUser(String idx)
+    {
+        String result = "N";
+        if(loginService.resignUser(Long.valueOf(idx)) >0 )
+        {
+            result = "Y";
+        }
+
+        return result;
     }
 
 

@@ -72,7 +72,6 @@ public class ContentsController
                     .content_image_url("empty")
                     .content_board_idx(board)
                     .build();
-//            "/Users/mac/Desktop/Desktop-SungMak/00And/memoServer/src/main/resources/static/upload/images.jpg"
             contentRepository.save(content);
 
         }

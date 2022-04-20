@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService
                 .user_nick_name(nick)
                 .user_auto_login(1)
                 .user_email(email)
+                .user_status("available")
                 .build();
 
         userRepository.save(dtoToEntity(dto));

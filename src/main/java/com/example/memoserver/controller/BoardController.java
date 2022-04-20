@@ -43,9 +43,5 @@ public class BoardController
         return jsonArray.toString();
     }
 
-    @GetMapping("/getBoard")
-    public void getBoard(Long content_board_idx)
-    {
 
-    }
 }

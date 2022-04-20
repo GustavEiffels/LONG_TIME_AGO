@@ -37,4 +37,7 @@ public class User
     @Column(name="user_nick_name",length = 100, nullable = false)
     private String user_nick_name;
 
+    @Column(nullable = false)
+    private String user_status;
+
 }

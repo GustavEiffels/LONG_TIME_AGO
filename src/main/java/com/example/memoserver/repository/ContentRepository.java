@@ -60,12 +60,14 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                     "c.content_subject, " +
                     "c.content_image_url, " +
                     "c.content_image, " +
-                    "c.content_board_idx  " +
+                    "c.content_board_idx,  " +
+                    "c.content_text " +
                     "from Content c, User u \n" +
                     "where c.content_writer_idx = u.user_idx \n" +
-                    "and c.content_board_idx=:content_board_idx ", nativeQuery = true)
+                    "and c.content_board_idx=:content_board_idx and u.user_status=:status ", nativeQuery = true)
     List<Object> getContentByContent_board_idx(@Param("content_board_idx")Board content_board_idx,
-                                               Pageable pageable);
+                                               Pageable pageable,
+                                               @Param("status")String status);
 
 
     /**
@@ -78,10 +80,11 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                     "c.content_subject, " +
                     "c.content_image_url, " +
                     "c.content_image, " +
-                    "c.content_board_idx " +
+                    "c.content_board_idx, " +
+                    "c.content_text  " +
                     "from Content c,  User u \n" +
-                    "where c.content_writer_idx = u.user_idx\n", nativeQuery = true)
-    List<Object> getContentByContent_board_idx_T(Pageable pageable);
+                    "where c.content_writer_idx = u.user_idx\n and u.user_status=:status", nativeQuery = true)
+    List<Object> getContentByContent_board_idx_T(Pageable pageable, @Param("status")String status);
 
     /**
      *  글을 삭제하기 위한 method
@@ -134,6 +137,9 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                     "where c.content_writer_idx = u.user_idx\n " +
                     "and c.content_subject LIKE %:query% \n ", nativeQuery = true)
     List<Object> getContentBySearch(@Param("query")String query, Pageable pageable);
+
+
+
 
 
 
