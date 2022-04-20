@@ -44,6 +44,14 @@ class BoardModifyFragment : Fragment()
     // image 를 담을 변수
     var uploadImage : Bitmap? =null
 
+    // temp imageBitmap
+    lateinit var tempImageBitmap:Bitmap
+
+
+    var isImageDelete = "not"
+
+    var isImageChange = "not"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -79,8 +87,32 @@ class BoardModifyFragment : Fragment()
         //toolBar Event 처리
         boardModifyFragmentBinding.boardModifyToolbar.setOnMenuItemClickListener {
 
+
+
             when(it.itemId)
             {
+                R.id.board_modify_menu_deletepic->
+                {
+                    val dialog = AlertDialog.Builder(requireContext())
+                    dialog.setTitle("Current Image Delete")
+                    dialog.setMessage("Do you want to delete current Image?")
+                    dialog.setPositiveButton("confirm")
+                    {
+                            dialogInterface: DialogInterface, i: Int ->
+                        isImageDelete = "delete"
+                        boardModifyFragmentBinding.boardModifyImage.setImageBitmap(null)
+
+                    }
+                    dialog.setNegativeButton("cancel")
+                    {
+                            dialogInterface: DialogInterface, i: Int ->
+                            boardModifyFragmentBinding.boardModifyImage.setImageBitmap(tempImageBitmap)
+
+                    }
+                    dialog.show()
+                 true
+                }
+
                 R.id.board_modify_menu_camera ->{
                     val filePath = requireContext().getExternalFilesDir(null).toString()
 
@@ -102,6 +134,7 @@ class BoardModifyFragment : Fragment()
                     {
                         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri)
                         startActivityForResult(cameraIntent, 1)
+                        isImageChange="change"
                     }
 
 
@@ -117,6 +150,9 @@ class BoardModifyFragment : Fragment()
                     albumIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeType)
 
                     startActivityForResult(albumIntent, 2)
+
+                    isImageChange="change"
+
 
                     true
                 }
@@ -184,8 +220,10 @@ class BoardModifyFragment : Fragment()
                         builder1.addFormDataPart("content_subject",boardModifySubject)
                         builder1.addFormDataPart("content_text",boardModifyText)
                         builder1.addFormDataPart("content_idx","${act.readContentidx}")
+                        builder1.addFormDataPart("Change",isImageChange.toString())
+                        builder1.addFormDataPart("Delete",isImageDelete.toString())
 
-                        Log.i("boardModifiyType = {} ","$boardModifyType" )
+
 
                         var file: File? = null
 
@@ -204,6 +242,8 @@ class BoardModifyFragment : Fragment()
 
                             builder1.addFormDataPart("content_image", file.name, file.asRequestBody(MultipartBody.FORM))
                         }
+
+
 
                         val formBody = builder1.build()
 
@@ -286,6 +326,8 @@ class BoardModifyFragment : Fragment()
             {
                 val resultText = response.body?.string()!!.trim()
 
+
+
                 val obj = JSONObject(resultText)
 
                 // activity 위에서 Thread 수행
@@ -299,7 +341,7 @@ class BoardModifyFragment : Fragment()
                     // Image 절대값 가져오기
                     val contentImageAbsolute = obj.getString("content_image_url")
 
-                    if(contentImage=="")
+                    if(contentImage=="empty")
                     {
                         boardModifyFragmentBinding.boardModifyImage.visibility = View.GONE
                     }
@@ -322,14 +364,27 @@ class BoardModifyFragment : Fragment()
 
                             val uploadResponse = uploadClient.newCall(urlRequest).execute()
 
-                            val result = uploadResponse.body?.bytes()!!
 
-                            // 이미지 만들기
-                            val bitmap = BitmapFactory.decodeByteArray(result,0, result.size)
+                                val result = uploadResponse.body?.bytes()!!
 
-                            activity?.runOnUiThread {
-                                boardModifyFragmentBinding.boardModifyImage.setImageBitmap(bitmap)
+                                if(request!=null)
+                                {
+
+
+                                // 이미지 만들기
+                                val bitmap = BitmapFactory.decodeByteArray(result, 0, result.size)
+
+                                tempImageBitmap = bitmap
+
+                                activity?.runOnUiThread {
+                                    boardModifyFragmentBinding.boardModifyImage.setImageBitmap(
+                                        bitmap
+                                    )
+                                }
                             }
+
+
+
                         }
                     }
 

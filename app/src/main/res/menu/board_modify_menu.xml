@@ -2,6 +2,13 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <item
+        android:id="@+id/board_modify_menu_deletepic"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Upload"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/board_modify_menu_camera"
         android:icon="@android:drawable/ic_menu_camera"
@@ -21,4 +28,6 @@
         android:icon="@android:drawable/stat_sys_upload"
         android:title="Upload"
         app:showAsAction="always" />
+
+
 </menu>
