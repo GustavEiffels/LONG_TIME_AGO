@@ -41,6 +41,12 @@ public class FindServiceImpl implements FindService
         if(userRepository.emailCheck(email)==null ||  userRepository.duplicateId(id)==null)
         {
             result = "not";
+            log.info("result", "notSame");
+        }
+        else if(userRepository.getUserIdxById(id)!=userRepository.getUserIdxByEmail(email))
+        {
+            result = "not";
+            log.info("result", "notSame");
         }
         else
         {

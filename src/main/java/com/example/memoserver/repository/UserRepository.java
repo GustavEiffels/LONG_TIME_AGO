@@ -97,6 +97,12 @@ public interface UserRepository extends JpaRepository<User,Long>
     String getUserIdByEmail(@Param("email")String email);
 
 
+    @Query(value = "select user_idx from User where user_id=:id")
+    Long getUserIdxById(@Param("id")String id);
+
+    @Query(value = "select user_idx from User where user_Email=:email")
+    Long getUserIdxByEmail(@Param("email")String email);
+
 
 
 
