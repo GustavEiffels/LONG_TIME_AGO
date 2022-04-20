@@ -369,5 +369,8 @@ class BoardWriteFragment : Fragment() {
             }
 
         }
+        /**
+         * test
+         */
     }
 }
