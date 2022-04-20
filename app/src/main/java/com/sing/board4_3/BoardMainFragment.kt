@@ -427,11 +427,13 @@ class BoardMainFragment : Fragment() {
                 {
                     val obj = root.getJSONObject(i)
 
-                    contentIdxList.add(obj.getInt("content_idx"))
-                    contentWriterList.add( obj.getString("content_nick_name") )
-                    contentWriteDateList.add( obj.getString("content_write_date") )
-                    contentSubjectList.add( obj.getString("content_subject") )
-                    contentImageUrl.add( obj.getString("content_image_url") )
+
+                        contentIdxList.add(obj.getInt("content_idx"))
+                        contentWriterList.add(obj.getString("content_nick_name"))
+                        contentWriteDateList.add(obj.getString("content_write_date"))
+                        contentSubjectList.add(obj.getString("content_subject"))
+                        contentImageUrl.add(obj.getString("content_image_url"))
+
                 }
 
 

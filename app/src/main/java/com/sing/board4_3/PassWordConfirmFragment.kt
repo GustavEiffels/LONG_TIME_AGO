@@ -3,6 +3,7 @@ package com.sing.board4_3
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,8 @@ class PassWordConfirmFragment : Fragment() {
     //ViewBinding
     lateinit var passWordConfirmFragmentBinding : FragmentPassWordConfirmBinding
 
+    lateinit var resignOrChange:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,14 +32,24 @@ class PassWordConfirmFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+
+        val act = activity as BoardMainActivity
+
+        resignOrChange = act.resignOrChange
 
         passWordConfirmFragmentBinding = FragmentPassWordConfirmBinding.inflate(layoutInflater)
 
-        passWordConfirmFragmentBinding.PasswordConfirmToolbar.title="Please enter your password for change"
-
-
-
+        if(resignOrChange.equals("change"))
+        {
+            passWordConfirmFragmentBinding.PasswordConfirmToolbar.title =
+                "Please enter your password for change"
+        }
+        else
+        {
+            passWordConfirmFragmentBinding.PasswordConfirmToolbar.title =
+                "Please enter your password for resign"
+        }
 
         val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
@@ -122,9 +135,17 @@ class PassWordConfirmFragment : Fragment() {
                     //비밀번호가 맞다면
                     else
                     {
-                        val act = activity as BoardMainActivity
-                        act.fragmentController("change_password",true, true)
-                        // 현재 fragment 는 삭제한다
+
+                        if( resignOrChange=="change" )
+                        {
+                            Log.i("resignOrChange ",resignOrChange)
+                            act.fragmentController("change_password", true, true)
+                        }
+                        else
+                        {
+                            act.fragmentController("resign", true, true)
+                            act.fragmentRemoveBackStack("password_confirm")
+                        }
                     }
                 }
             }

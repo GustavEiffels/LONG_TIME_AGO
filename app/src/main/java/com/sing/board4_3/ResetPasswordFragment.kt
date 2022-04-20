@@ -2,7 +2,6 @@ package com.sing.board4_3
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.net.http.SslError
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

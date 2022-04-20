@@ -66,6 +66,8 @@ class BoardSettingFragment : Fragment() {
 
         val loginUserNick = pref.getString("login_user_nick","")
 
+        val act = activity as BoardMainActivity
+
 
 
         boardSettingFragmentBinding.baordSettingToolbar.title=loginUserNick
@@ -170,11 +172,12 @@ class BoardSettingFragment : Fragment() {
          *  비밀번호가 변경되면 다시 로그인 하게 만들자
          */
         boardSettingFragmentBinding.boardSettingPasswordChange.setOnClickListener {
-
-            val act = activity as BoardMainActivity
-
             act.fragmentController("password_confirm", true, true)
 
+        }
+
+        boardSettingFragmentBinding.boardSettingResign.setOnClickListener {
+            act.fragmentController("password_resign", true, true)
         }
 
 
@@ -301,7 +304,7 @@ class BoardSettingFragment : Fragment() {
 
             builder1.add("user_idx", loginUserIdx.toString())
 
-            Log.i("user_idx","$loginUserIdx")
+
             val formbody = builder1.build()
 
             val request = Request.Builder().url(site).post(formbody).build()

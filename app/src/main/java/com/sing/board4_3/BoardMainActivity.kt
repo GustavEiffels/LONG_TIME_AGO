@@ -54,6 +54,8 @@ class BoardMainActivity : AppCompatActivity() {
     // 검색어 저장
     var query = ""
 
+    var resignOrChange=""
+
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -140,16 +142,24 @@ class BoardMainActivity : AppCompatActivity() {
             }
             "password_confirm"->
             {
+                resignOrChange  = "change"
                 currentFragment= PassWordConfirmFragment()
             }
             "change_password"->
             {
                 currentFragment= ChangePasswordFragment()
-                Log.i("test","come here")
             }
             "search_result"->
             {
                 currentFragment=SearchResultFragment()
+            }
+            "password_resign"->
+            {   resignOrChange = "resign"
+                currentFragment= PassWordConfirmFragment()
+            }
+            "resign"->
+            {
+                currentFragment= ResignFragment()
             }
 
         }
