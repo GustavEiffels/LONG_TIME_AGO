@@ -18,8 +18,10 @@
         <entry key="app/src/main/res/layout/fragment_board_write.xml" value="0.1671195652173913" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.35723771580345287" />
         <entry key="app/src/main/res/layout/fragment_email.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/fragment_find_account.xml" value="0.2406886339279941" />
+        <entry key="app/src/main/res/layout/fragment_find_password.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/layout/fragment_join.xml" value="0.2708333333333333" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2205814214497352" />
         <entry key="app/src/main/res/layout/fragment_nick.xml" value="0.22181896162539494" />
         <entry key="app/src/main/res/layout/fragment_pass_word_confirm.xml" value="0.19592459221158132" />
         <entry key="app/src/main/res/layout/fragment_search_result.xml" value="0.1734375" />
