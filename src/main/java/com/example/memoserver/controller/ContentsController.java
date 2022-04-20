@@ -69,9 +69,10 @@ public class ContentsController
                     .content_writer_idx(user)
                     .content_write_date(LocalDateTime.now())
                     .content_image("empty")
-                    .content_image_url("/Users/mac/Desktop/Desktop-SungMak/00And/memoServer/src/main/resources/static/upload/images.jpg")
+                    .content_image_url("empty")
                     .content_board_idx(board)
                     .build();
+//            "/Users/mac/Desktop/Desktop-SungMak/00And/memoServer/src/main/resources/static/upload/images.jpg"
             contentRepository.save(content);
 
         }

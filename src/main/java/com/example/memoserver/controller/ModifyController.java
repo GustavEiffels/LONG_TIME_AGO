@@ -36,8 +36,7 @@ public class ModifyController
 
     @PatchMapping("/modify")
     public String modify(HttpServletRequest request) throws IOException {
-        MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
-        MultipartFile file = multi.getFile("content_image");
+
 
         return modifyService.updateContent(request,uploadPath);
     }
