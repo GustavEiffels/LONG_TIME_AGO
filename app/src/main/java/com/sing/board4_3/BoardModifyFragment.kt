@@ -326,8 +326,6 @@ class BoardModifyFragment : Fragment()
             {
                 val resultText = response.body?.string()!!.trim()
 
-
-
                 val obj = JSONObject(resultText)
 
                 // activity 위에서 Thread 수행
