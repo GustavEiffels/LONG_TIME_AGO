@@ -85,6 +85,6 @@ public class ModifyServiceImpl implements ModifyService
         int result = contentRepository.getMaxContentIdx(boar);
 
         // content_board_idx를 입력받아서 현재 가장 마지막에 생성된 content_idx 를 return 받는다
-        return  String.valueOf(result);
+        return  request.getParameter("content_idx");
     }
 }
