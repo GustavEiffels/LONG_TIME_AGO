@@ -157,9 +157,14 @@ public class ContentsController
 
     @PostMapping("/getImage")
     public byte[] getImage(String content_image_url) throws IOException {
-        File file = new File(content_image_url);
-        byte[] fileContent = Files.readAllBytes(file.toPath());
-        return fileContent;
+
+        if(!content_image_url.equals("empty")) {
+            File file = new File(content_image_url);
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            return fileContent;
+        }
+        return null;
+
     }
 
     /**

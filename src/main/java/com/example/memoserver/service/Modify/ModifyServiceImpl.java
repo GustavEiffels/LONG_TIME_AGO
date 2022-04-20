@@ -35,22 +35,28 @@ public class ModifyServiceImpl implements ModifyService
         MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
         MultipartFile file = multi.getFile("content_image");
 
+        String delete = request.getParameter("Delete");
+        String change = request.getParameter("Change");
+
+        log.info("delete ={}", delete);
+        log.info("change ={}", change);
+
         Board board = Board.builder()
                 .board_idx(Long.valueOf(request.getParameter("content_board_idx")))
                 .build();
 
-        if( file==null )
+        if( delete.equals("delete"))
         {
             contentRepository.contentUpdate(
                     request.getParameter("content_subject"),
                     request.getParameter("content_text"),
-                    "",
-                    "",
+                    "empty",
+                    "empty",
                     board,
                     Long.valueOf(request.getParameter("content_idx"))
             );
         }
-        else
+        else if( change.equals("change") )
         {
             String url = fileService.transToImage(file, uploadPath);
             contentRepository.contentUpdate(
@@ -61,6 +67,16 @@ public class ModifyServiceImpl implements ModifyService
                     board,
                     Long.valueOf(request.getParameter("content_idx")));
         }
+        else if( change.equals("not"))
+        {
+            contentRepository.contentUpdateNoImage(
+                    request.getParameter("content_subject"),
+                    request.getParameter("content_text"),
+                    board,
+                    Long.valueOf(request.getParameter("content_idx")));
+        }
+
+
         Board boar = Board.builder()
                 .board_idx(Long.valueOf(request.getParameter("content_board_idx")))
                 .build();

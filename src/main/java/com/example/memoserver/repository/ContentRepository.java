@@ -107,6 +107,17 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                       @Param("content_idx")Long content_idx);
 
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Content set content_subject=:content_subject," +
+            "content_text=:content_text, " +
+            "content_board_idx=:content_board_idx where content_idx=:content_idx")
+    int contentUpdateNoImage(@Param("content_subject")String content_subject,
+                      @Param("content_text")String content_text,
+                      @Param("content_board_idx")Board content_board_idx,
+                      @Param("content_idx")Long content_idx);
+
+
 
     /**
      *  검색어를 이용해서 board 를 가져온다.
