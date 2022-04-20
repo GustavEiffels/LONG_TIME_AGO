@@ -164,8 +164,21 @@ class BoardWriteFragment : Fragment() {
                         dialogBuilder.show()
                         return@setOnMenuItemClickListener true
                     }
+                    else if(boardWriteSubject.length<2)
+                    {
+                        val dialogBuilder = AlertDialog.Builder(requireContext())
+                        dialogBuilder.setTitle("Title is too short")
+                        dialogBuilder.setMessage("Title must be at least 2 characters long")
+                        dialogBuilder.setPositiveButton("confirm"){
+                                dialogInterface: DialogInterface, i: Int ->
+                            boardWriteFragmentBinding.boardWriteSubject.requestFocus()
 
-                    if( boardWriteText==null || boardWriteText.length == 0 )
+                        }
+                        dialogBuilder.show()
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    if( boardWriteText.isNullOrEmpty() )
                     {
                         val dialogBuilder = AlertDialog.Builder(requireContext())
                         dialogBuilder.setTitle("Contents Input Error")

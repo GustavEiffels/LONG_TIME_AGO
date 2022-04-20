@@ -277,7 +277,7 @@ class BoardMainFragment : Fragment() {
 
             holder.boardMainItemSubject.text =contentSubjectList[position]
 
-            if(!contentImageUrl[position].equals(""))
+            if(!contentImageUrl[position].equals("empty"))
             {
                 holder.boardImage.visibility = View.VISIBLE
                 /** 이미지의 url 을 사용해서 SERVER 절대 경로에 있는 해당 이미지를 가져와서 구현 -------------
@@ -305,6 +305,10 @@ class BoardMainFragment : Fragment() {
                         holder.boardImage.setImageBitmap(bitmap)
                     }
                 }
+            }
+            else
+            {
+                holder.boardImage.visibility = View.GONE
             }
 
 

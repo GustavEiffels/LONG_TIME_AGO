@@ -62,6 +62,11 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
+            <ImageView
+                android:id="@+id/board_write_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@android:mipmap/sym_def_app_icon" />
 
             <TextView
                 android:id="@+id/textView"
@@ -80,11 +85,7 @@
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
 
-            <ImageView
-                android:id="@+id/board_write_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@android:mipmap/sym_def_app_icon" />
+
 
 
         </LinearLayout>

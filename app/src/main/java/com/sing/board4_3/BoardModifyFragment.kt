@@ -144,9 +144,22 @@ class BoardModifyFragment : Fragment()
                         dialogBuilder.show()
                         return@setOnMenuItemClickListener true
                     }
+                    else if(boardModifySubject.length<2)
+                    {
+                        val dialogBuilder = AlertDialog.Builder(requireContext())
+                        dialogBuilder.setTitle("Title is too short")
+                        dialogBuilder.setMessage("Title must be at least 2 characters long")
+                        dialogBuilder.setPositiveButton("confirm"){
+                                dialogInterface: DialogInterface, i: Int ->
+                            boardModifyFragmentBinding.boardModifySubject.requestFocus()
+
+                        }
+                        dialogBuilder.show()
+                        return@setOnMenuItemClickListener true
+                    }
 
 
-                    if( boardModifyText.isNullOrEmpty() )
+                    if( boardModifyText.isNullOrEmpty())
                     {
                         val dialogBuilder = AlertDialog.Builder(requireContext())
                         dialogBuilder.setTitle("Contents is Empty")
