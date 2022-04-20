@@ -25,6 +25,11 @@ public class FindServiceImpl implements FindService
      {
          result= "not";
      }
+     else
+     {
+         String userId = userRepository.getUserIdByEmail(email);
+         log.info("userId = {} ", userId);
+     }
 
      return  result;
     }

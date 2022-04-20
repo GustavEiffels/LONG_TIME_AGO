@@ -92,9 +92,9 @@ public interface UserRepository extends JpaRepository<User,Long>
     @Query(value = "update User set user_auto_login=:login where user_Email=:email")
     void googleAutoLogin(@Param("login")int login, @Param("email")String email);
 
-    /**
-     * finding user password
-     */
+
+    @Query(value = "select user_id from User where user_Email=:email")
+    String getUserIdByEmail(@Param("email")String email);
 
 
 
