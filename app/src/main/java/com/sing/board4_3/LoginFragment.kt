@@ -304,9 +304,19 @@ class LoginFragment : Fragment(){
         }
 
 
+        /** Find User Account
+         */
         loginFragmentBinding.findAccount.setOnClickListener {
          activity.fragmentController("find_account",true,true)
         }
+
+        /** Reset User Password
+         */
+        loginFragmentBinding.resetPassword.setOnClickListener {
+            activity.fragmentController("reset_password",true, true)
+
+        }
+
 
 
         return loginFragmentBinding.root

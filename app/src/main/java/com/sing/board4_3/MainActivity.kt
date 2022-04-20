@@ -142,6 +142,10 @@ class MainActivity : AppCompatActivity()
             {
                 currentFragment=FindAccountFragment()
             }
+            "reset_password"->
+            {
+                currentFragment=ResetPasswordFragment()
+            }
         }
 
         val trans = supportFragmentManager.beginTransaction()
