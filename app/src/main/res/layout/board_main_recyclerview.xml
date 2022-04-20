@@ -5,42 +5,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="nick"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:id="@+id/board_main_item_nickname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
 
-    <TextView
-        android:id="@+id/board_main_item_write_date"
-        android:text="writed date"
-        android:textStyle="bold"
+    <androidx.legacy.widget.Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
 
-    <TextView
-        android:id="@+id/board_main_item_subject"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:text="Title"
-        android:textStyle="bold"
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/board_main_item_subject"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:singleLine="true"
+            android:focusableInTouchMode="true"
+            android:textSize="38sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/board_main_item_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="nick"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/board_main_item_write_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="writed date"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
 
 
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"
         android:layout_height="10dp">
     </androidx.legacy.widget.Space>
+
+    <TextView
+        android:background="#669900"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
 
     <ImageView
         android:id="@+id/main_imageView"
@@ -51,8 +83,41 @@
 
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"
-        android:layout_height="10dp">
+        android:layout_height="20dp">
     </androidx.legacy.widget.Space>
+
+    <TextView
+        android:id="@+id/show_context"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        android:text="Show contents ..."
+        android:textColor="#669900" />
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
+
+
+    <TextView
+        android:id="@+id/contents_content_text"
+        android:visibility="gone"
+        android:text="content"
+        android:textStyle="italic"
+        android:textSize="15sp"
+        android:maxLines="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
+
 
 
 </LinearLayout>

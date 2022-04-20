@@ -113,7 +113,8 @@ class BoardModifyFragment : Fragment()
                  true
                 }
 
-                R.id.board_modify_menu_camera ->{
+                R.id.board_modify_menu_camera ->
+                {
                     val filePath = requireContext().getExternalFilesDir(null).toString()
 
                     val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -141,7 +142,8 @@ class BoardModifyFragment : Fragment()
                     true
                 }
 
-                R.id.board_modify_menu_gallery ->{
+                R.id.board_modify_menu_gallery ->
+                {
                     val albumIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     // 이미지만 가져오게 설정
                     albumIntent.type = "image/*"

@@ -67,7 +67,19 @@
         android:text="Password Change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <Button
+                android:id="@+id/board_setting_resign"
+                android:text="Resign This App"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
+
 </ScrollView>
 
 

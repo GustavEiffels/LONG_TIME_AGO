@@ -2,8 +2,6 @@ package com.sing.board4_3
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
-import android.content.Intent.getIntent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,12 +20,12 @@ import com.sing.board4_3.databinding.FragmentBoardMainBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import org.json.JSONArray
 import kotlin.concurrent.thread
 
 
 class BoardMainFragment : Fragment() {
+
 
     // Binding
     lateinit var boardMainFragmentBinding : FragmentBoardMainBinding
@@ -45,7 +44,10 @@ class BoardMainFragment : Fragment() {
 
 
 
+
     lateinit var googleNick:String
+
+    lateinit var show:TextView
 
 
 
@@ -225,6 +227,8 @@ class BoardMainFragment : Fragment() {
 
 
 
+
+
         // 기져오게 설정하기
         getContentList(true)
 
@@ -238,6 +242,8 @@ class BoardMainFragment : Fragment() {
             //계속해서 회전하지 않게 사용
             boardMainFragmentBinding.boardMainSwipe.isRefreshing = false
         }
+
+
 
         return boardMainFragmentBinding.root
     }
@@ -277,6 +283,13 @@ class BoardMainFragment : Fragment() {
 
             holder.boardMainItemSubject.text =contentSubjectList[position]
 
+
+            holder.boardMainItemSubject.isSelected = true
+
+
+
+            /**  게시글에 이미지가 포함되어있을 때
+             * */
             if(!contentImageUrl[position].equals("empty"))
             {
                 holder.boardImage.visibility = View.VISIBLE
@@ -332,11 +345,23 @@ class BoardMainFragment : Fragment() {
             val boardMainItemNickname = boardMainRecyclerItemBinding.boardMainItemNickname
             val boardMainItemSubject = boardMainRecyclerItemBinding.boardMainItemSubject
             val boardMainItemWriteDate = boardMainRecyclerItemBinding.boardMainItemWriteDate
-
             val boardImage = boardMainRecyclerItemBinding.mainImageView
+            val boardContentsText = boardMainRecyclerItemBinding.contentsContentText
+
+
+
+
+
+
+
+
+
 
             override fun onClick(p0: View?)
             {
+
+
+
                 // BoardMainActivity Instance
                 val act = activity as BoardMainActivity
 
@@ -407,9 +432,9 @@ class BoardMainFragment : Fragment() {
                     contentWriteDateList.add( obj.getString("content_write_date") )
                     contentSubjectList.add( obj.getString("content_subject") )
                     contentImageUrl.add( obj.getString("content_image_url") )
-
-
                 }
+
+
 
                 // page를 가져온 것이 없다면 존재하지 않는 페이지를 가져오려하기 때문에
                 // page를 하나 빼준다.
