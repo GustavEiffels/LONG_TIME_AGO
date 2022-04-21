@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.MainFragment
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.sing.board4_3.Activity.MainActivity
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.FragmentNickBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient

@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.BoardFragment
 
 import android.content.Context
 import android.content.Intent
@@ -17,6 +17,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sing.board4_3.Activity.BoardMainActivity
+import com.sing.board4_3.Activity.MainActivity
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.BoardSettingRecyclerviewBinding
 import com.sing.board4_3.databinding.FragmentSettingBinding
 import okhttp3.FormBody

@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.BoardFragment
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -15,6 +15,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sing.board4_3.Activity.BoardMainActivity
+import com.sing.board4_3.R
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.BoardMainRecyclerviewBinding
 import com.sing.board4_3.databinding.FragmentBoardMainBinding
 import okhttp3.FormBody
@@ -68,8 +71,6 @@ class BoardMainFragment : Fragment() {
 
         // BoardMainActivity 를 불러옴
         val act = activity as BoardMainActivity
-
-
 
 
 
@@ -160,7 +161,6 @@ class BoardMainFragment : Fragment() {
                 else
                 {
                     Toast.makeText(requireContext(),"Please enter at least 2 characters", Toast.LENGTH_SHORT).show()
-
                 }
 
                 return true
@@ -351,17 +351,8 @@ class BoardMainFragment : Fragment() {
 
 
 
-
-
-
-
-
-
             override fun onClick(p0: View?)
             {
-
-
-
                 // BoardMainActivity Instance
                 val act = activity as BoardMainActivity
 
@@ -371,6 +362,9 @@ class BoardMainFragment : Fragment() {
                 // Fragment 가 실행되도록 설정
                 act.fragmentController("board_read", true , true )
             }
+
+
+
         }
     }
 
@@ -427,13 +421,11 @@ class BoardMainFragment : Fragment() {
                 {
                     val obj = root.getJSONObject(i)
 
-
                         contentIdxList.add(obj.getInt("content_idx"))
                         contentWriterList.add(obj.getString("content_nick_name"))
                         contentWriteDateList.add(obj.getString("content_write_date"))
                         contentSubjectList.add(obj.getString("content_subject"))
                         contentImageUrl.add(obj.getString("content_image_url"))
-
                 }
 
 
@@ -452,6 +444,9 @@ class BoardMainFragment : Fragment() {
                     // recyclerView 갱신
                     boardMainFragmentBinding.boardMainRecycler.adapter?.notifyDataSetChanged()
                 }
+
+
+
             }
         }
     }

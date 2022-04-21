@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.Activity
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,9 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.sing.board4_3.MainFragment.*
+import com.sing.board4_3.R
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.ActivityMainBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -78,22 +81,17 @@ class MainActivity : AppCompatActivity()
                 val request= Request.Builder().url(url).post(builder1.build()).build()
 
 
-                Log.d("before Response", "------------------ ")
-
                 val response = client.newCall(request).execute()
 
 
-                Log.d("afterResponse", "------------------ ")
                 if(response.isSuccessful)
                 {
                     val result_text = response.body?.string()!!.trim()
 
-                    Log.d("result_text","$result_text")
 
                     val loginCheck = Integer.parseInt(result_text)
 
 
-                    Log.d("loginCheck","$loginCheck")
 
                     if(loginCheck == 1)
                     {
@@ -140,11 +138,11 @@ class MainActivity : AppCompatActivity()
             }
             "find_account"->
             {
-                currentFragment=FindAccountFragment()
+                currentFragment= FindAccountFragment()
             }
             "reset_password"->
             {
-                currentFragment=ResetPasswordFragment()
+                currentFragment= ResetPasswordFragment()
             }
         }
 

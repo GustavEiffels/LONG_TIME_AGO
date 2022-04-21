@@ -1,8 +1,6 @@
-package com.sing.board4_3
+package com.sing.board4_3.BoardFragment
 
 import android.app.AlertDialog
-import android.app.appsearch.SearchResult
-import android.content.Context
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.Color
@@ -19,6 +17,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sing.board4_3.Activity.BoardMainActivity
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.*
 import okhttp3.FormBody
 import okhttp3.OkHttpClient

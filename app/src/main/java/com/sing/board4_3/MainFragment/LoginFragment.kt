@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.MainFragment
 
 import android.content.Context
 import android.content.DialogInterface
@@ -13,24 +13,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.*
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.sing.board4_3.databinding.FragmentLoginBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
-import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.internal.GoogleApiAvailabilityCache
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.AuthResult
+import com.sing.board4_3.Activity.BoardMainActivity
+import com.sing.board4_3.Activity.MainActivity
+import com.sing.board4_3.R
+import com.sing.board4_3.Support.ServerIP
 import org.json.JSONObject
 
 

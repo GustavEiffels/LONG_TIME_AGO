@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.BoardFragment
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sing.board4_3.Activity.BoardMainActivity
+import com.sing.board4_3.R
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.FragmentBoardReadBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient

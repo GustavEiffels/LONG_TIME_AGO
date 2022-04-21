@@ -24,10 +24,10 @@
         android:theme="@style/Theme.Board4_3"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.sing.board4_3.BoardMainActivity"
+            android:name="com.sing.board4_3.Activity.BoardMainActivity"
             android:exported="false" />
         <activity
-            android:name="com.sing.board4_3.MainActivity"
+            android:name="com.sing.board4_3.Activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Splash" >
             <intent-filter>

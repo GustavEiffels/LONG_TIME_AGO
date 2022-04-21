@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.BoardFragment
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -21,6 +21,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.sing.board4_3.Activity.BoardMainActivity
+import com.sing.board4_3.R
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.FragmentBoardWriteBinding
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient

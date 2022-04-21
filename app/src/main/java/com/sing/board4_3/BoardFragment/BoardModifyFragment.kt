@@ -1,4 +1,4 @@
-package com.sing.board4_3
+package com.sing.board4_3.BoardFragment
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +19,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.content.FileProvider
+import com.sing.board4_3.Activity.BoardMainActivity
+import com.sing.board4_3.R
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.FragmentBoardModifyBinding
 import okhttp3.FormBody
 import okhttp3.MultipartBody
@@ -91,7 +93,7 @@ class BoardModifyFragment : Fragment()
 
             when(it.itemId)
             {
-                R.id.board_modify_menu_deletepic->
+                R.id.board_modify_menu_deletepic ->
                 {
                     val dialog = AlertDialog.Builder(requireContext())
                     dialog.setTitle("Current Image Delete")
@@ -182,6 +184,7 @@ class BoardModifyFragment : Fragment()
                         dialogBuilder.show()
                         return@setOnMenuItemClickListener true
                     }
+
                     else if(boardModifySubject.length<2)
                     {
                         val dialogBuilder = AlertDialog.Builder(requireContext())
@@ -476,6 +479,9 @@ class BoardModifyFragment : Fragment()
                                 act.uploadImage = uploadImage
                             }
                         }
+
+
+
                     }
                 }
             }

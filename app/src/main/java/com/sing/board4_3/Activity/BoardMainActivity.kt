@@ -1,14 +1,16 @@
-package com.sing.board4_3
+package com.sing.board4_3.Activity
 
 import android.Manifest
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.sing.board4_3.BoardFragment.*
+import com.sing.board4_3.R
+import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.ActivityBoardMainBinding
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -16,6 +18,7 @@ import org.json.JSONArray
 import kotlin.concurrent.thread
 
 class BoardMainActivity : AppCompatActivity() {
+
     // Binding
     lateinit var boardMainActivityBinding: ActivityBoardMainBinding
 
@@ -71,7 +74,7 @@ class BoardMainActivity : AppCompatActivity() {
             requestPermissions(permissionList, 0)
         }
 
-        boardNameList.add("전체 게시판")
+        boardNameList.add("Total Board")
         boardIndexList.add(0)
 
         thread{
@@ -151,7 +154,7 @@ class BoardMainActivity : AppCompatActivity() {
             }
             "search_result"->
             {
-                currentFragment=SearchResultFragment()
+                currentFragment= SearchResultFragment()
             }
             "password_resign"->
             {   resignOrChange = "resign"
