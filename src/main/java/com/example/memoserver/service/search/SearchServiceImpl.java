@@ -26,7 +26,7 @@ public class SearchServiceImpl implements SearchService
 
         PageRequest pageRequest = PageRequest.of(limit-1, 10 , Sort.Direction.DESC, "content_idx");
 
-        result = contentRepository.getContentBySearch(query,pageRequest);
+        result = contentRepository.getContentBySearch(query,pageRequest,"available");
 
         for(Object info:result)
         {

@@ -134,9 +134,9 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                     "c.content_image, " +
                     "c.content_board_idx  " +
                     "from Content c,  User u \n" +
-                    "where c.content_writer_idx = u.user_idx\n " +
+                    "where c.content_writer_idx = u.user_idx\n and u.user_status=:status " +
                     "and c.content_subject LIKE %:query% \n ", nativeQuery = true)
-    List<Object> getContentBySearch(@Param("query")String query, Pageable pageable);
+    List<Object> getContentBySearch(@Param("query")String query, Pageable pageable, @Param("status")String status);
 
 
 
