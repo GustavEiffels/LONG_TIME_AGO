@@ -1,7 +1,9 @@
 package com.example.memoserver.controller;
 
 import com.example.memoserver.service.Content.ContentService;
+import com.example.memoserver.service.Login.LoginService;
 import com.example.memoserver.service.Modify.ModifyService;
+import com.example.memoserver.service.User.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +27,12 @@ public class ModifyController
     @Autowired
     private ModifyService modifyService;
 
+
+
     @Value("${uploadlocation}")
     private String uploadPath;
+
+
 
     @PostMapping("/getContent")
     public String getContent(Long read_content_idx)
@@ -39,5 +45,12 @@ public class ModifyController
 
 
         return modifyService.updateContent(request,uploadPath);
+    }
+
+
+    @PatchMapping("changePw")
+    public void updatePw(String newPw, Long user_idx)
+    {
+        modifyService.changePw(0, newPw, user_idx);
     }
 }

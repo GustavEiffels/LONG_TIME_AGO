@@ -23,7 +23,8 @@ public class BoardController
     @Autowired
     private BoardService boardService;
 
-
+    /** 모든 게시판 목록들 들고오는 method
+     */
     @GetMapping("")
     public String getAllBoard()
     {

@@ -20,8 +20,7 @@ public interface LoginService
   // get User Pw
   String getUserPassword(Long user_idx);
 
-  // change pw
-  int changePw(int userAuto, String newPw, Long userIdx);
+
 
   //  Email Check
   String emailCheck(String user_email);

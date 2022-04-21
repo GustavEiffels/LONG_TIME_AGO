@@ -26,7 +26,6 @@ public class LoginServiceImpl implements LoginService
          *  Object[0] = userPw
          *  Object[1] = user_nick_name
          */
-
         Map<String,Object> result = new HashMap<>();
 
 
@@ -87,11 +86,7 @@ public class LoginServiceImpl implements LoginService
 
 
 
-    @Override
-    public int changePw(int userAuto, String newPw, Long userIdx)
-    {
-        return userRepository.updatePw(0, newPw, userIdx);
-    }
+
 
     /** --- true ---> email 사용 불가능
      *  --- false ---> email 사용 가능

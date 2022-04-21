@@ -3,16 +3,11 @@ package com.example.memoserver.controller;
 
 import com.example.memoserver.service.Login.LoginService;
 import lombok.extern.slf4j.Slf4j;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
@@ -26,51 +21,63 @@ public class LoginController
     private LoginService loginService;
 
 
+    /** Login 을 위한 method  ----------------------------------------------------------------
+     */
     @PostMapping("")
-    public void loginController(HttpServletRequest request, HttpServletResponse response) throws IOException
+    public String login(String userId, String userPw, int user_autologin) throws IOException
     {
-        /** return Map<String, Object></>
-         */
-        Map<String,Object> result =
-                loginService.login(request.getParameter("userId"),request.getParameter("userPw"));
+        // 입력한 정보가 알맞을 경우, userIdx 를 반환
+        // 입력한 정보가 알맞지 않을 경우 , ErrorMessage 를 반환
+        Map<String,Object> result = loginService.login(userId,userPw);
 
-        loginService.autoUpdate(Integer.parseInt(request.getParameter("user_autologin")), request.getParameter("userId"));
+        // auto Login 값을 변경
+        loginService.autoUpdate(user_autologin, userId);
+
+        String answer = "";
 
 
-        /** 로그인이 정상적으로 되었을 때,
-         */
-        if(result.get("errorMessage")==null)
+        // 에러 message 가 없는 경우 ---> 정상적으로 로그인
+        if( result.get("errorMessage")==null )
         {
-            response.getWriter().write(String.valueOf(result.get("userIdx")));
+            answer = String.valueOf(result.get("userIdx"));
         }
+        // 에러 message 가 존재하는 경우 ----> 없는 아이디 이거나 비밀번호 틀렸을 경우
         else
         {
-            response.getWriter().write(String.valueOf(result.get("errorMessage")));
+            answer = String.valueOf(result.get("errorMessage"));
         }
+        return  answer;
     }
 
+
+    /** 해당 user 의 자동로그인 여부를 return 받음 ----------------------------------------------------------------------------
+     */
     @PostMapping("/getAutoLoginInfo")
-    public void getAutoLoginInfo(HttpServletRequest request, HttpServletResponse response) throws IOException
+    public String getAutoLoginInfo(String userIdx) throws IOException
     {
 
-        Long result = Long.valueOf(request.getParameter("userIdx"));
-
-        response.getWriter().write(loginService.getUserAutoInfo(result));
+        return loginService.getUserAutoInfo( Long.valueOf(userIdx) );
     }
+
+
+    /** 로그인 성공시 해당 로그인한 user 의 nickname 을 받아오는 method ----------------------------------------------------------
+     */
     @PostMapping("getUserNick")
     public String getUserNick(String user_idx)
     {
-
         return loginService.getUserNick(Long.valueOf(user_idx));
     }
 
 
+
+    /** Logout method --------------------------------------------------------------------------------------------------
+     */
     @PostMapping("logout")
-    public void logout(String user_idx, int user_auto_login)
-    {   log.info("user_idx = {}" ,user_idx);
-        log.info("user_auto_login = {}", user_auto_login);
-        loginService.logout(Long.valueOf(user_idx), user_auto_login);
-    }
+    public void logout(String user_idx, int user_auto_login) { loginService.logout(Long.valueOf(user_idx), user_auto_login); }
+
+
+
+
 
     @PostMapping("getPassword")
     public String getUserPassword(String user_idx, String get_password)
@@ -82,11 +89,7 @@ public class LoginController
         return "collect";
     }
 
-    @PatchMapping("changePw")
-    public void updatePw(String newPw, Long user_idx)
-    {
-        loginService.changePw(0, newPw, user_idx);
-    }
+
 
 
     @PostMapping("emailCheck")

@@ -6,4 +6,7 @@ import java.io.IOException;
 public interface ModifyService
 {
     String updateContent(HttpServletRequest request, String uploadPath) throws IOException;
+
+    // change pw
+    int changePw(int userAuto, String newPw, Long userIdx);
 }

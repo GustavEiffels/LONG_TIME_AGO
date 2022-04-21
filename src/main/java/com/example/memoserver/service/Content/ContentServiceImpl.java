@@ -22,12 +22,16 @@ public class ContentServiceImpl implements ContentService
 
     private final ContentRepository contentRepository;
 
+    /** 게시글 저장하는 method ---> client content upload 에 사용
+     */
     @Override
     public void saveContent(ContentDto dto)
     {
      contentRepository.save(dtoToEntity(dto));
     }
 
+    /** 하나의 게시글에 대한 정보를 가져오는 것 ---> client read 에 사용
+     */
     @Override
     public JSONObject getContentInfo(Long content_idx)
     {
@@ -54,6 +58,8 @@ public class ContentServiceImpl implements ContentService
         return obj;
     }
 
+    /** 게시판의 종류에 따라 게시글을 가져오는 method
+     */
     @Override
     public JSONArray getContentByBoard(Long content_board_idx,  int limit)
     {

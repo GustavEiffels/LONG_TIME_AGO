@@ -15,6 +15,9 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService
 {
     private final BoardRepository boardRepository;
+
+    /** Board List 를 가져오는 method 
+     */
     @Override
     public List<Board> getAllBoard() {
 

@@ -2,6 +2,7 @@ package com.example.memoserver.service.Modify;
 
 import com.example.memoserver.entity.Board;
 import com.example.memoserver.repository.ContentRepository;
+import com.example.memoserver.repository.UserRepository;
 import com.example.memoserver.service.Content.ContentService;
 import com.example.memoserver.service.File.FileService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,10 @@ public class ModifyServiceImpl implements ModifyService
 
     private final ContentRepository contentRepository;
 
-    private  final ContentService contentService;
 
     private final FileService fileService;
+
+    private final UserRepository userRepository;
 
 
 
@@ -67,7 +69,7 @@ public class ModifyServiceImpl implements ModifyService
                     board,
                     Long.valueOf(request.getParameter("content_idx")));
         }
-        else if( change.equals("not"))
+        else if( change.equals("not") )
         {
             contentRepository.contentUpdateNoImage(
                     request.getParameter("content_subject"),
@@ -86,5 +88,11 @@ public class ModifyServiceImpl implements ModifyService
 
         // content_board_idx를 입력받아서 현재 가장 마지막에 생성된 content_idx 를 return 받는다
         return  request.getParameter("content_idx");
+    }
+
+    @Override
+    public int changePw(int userAuto, String newPw, Long userIdx)
+    {
+        return userRepository.updatePw(0, newPw, userIdx);
     }
 }

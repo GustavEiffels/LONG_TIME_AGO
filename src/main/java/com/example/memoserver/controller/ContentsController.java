@@ -44,6 +44,8 @@ public class ContentsController
     @Autowired
     private FileService fileService;
 
+    /** 게시글을 저장하는 method ------------------------------
+     */
     @PostMapping(value = "")
     public void saveContent(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
@@ -61,6 +63,7 @@ public class ContentsController
                 .board_idx( Long.valueOf(request.getParameter("content_board_idx")) )
                 .build();
 
+        // 게시글에 사진이 포함되지 않았을 때
         if( file==null )
         {
             Content content = Content.builder()
@@ -75,6 +78,7 @@ public class ContentsController
             contentRepository.save(content);
 
         }
+        // 게시글에 사진이 포함되었을 때
         else
         {
             // 저장할 파일
@@ -97,7 +101,6 @@ public class ContentsController
             file.transferTo(savePath);
 
 
-
             Content content = Content.builder()
                     .content_subject(request.getParameter("content_subject"))
                     .content_text(request.getParameter("content_text"))
@@ -108,7 +111,6 @@ public class ContentsController
                     .content_image_url(imageSavePath)
                     .build();
 
-            log.debug("content", "content");
             contentRepository.save(content);
         }
 
@@ -116,62 +118,57 @@ public class ContentsController
                 .board_idx(Long.valueOf(request.getParameter("content_board_idx")))
                 .build();
 
-
+        // 제일 최근에 올라온 content_idx 를 받아온다.
         int result = contentRepository.getMaxContentIdx(boar);
 
-        // content_board_idx를 입력받아서 현재 가장 마지막에 생성된 content_idx 를 return 받는다
+
         response.getWriter().write(String.valueOf(result));
 
 
     }
 
 
-
+    /** 게시글을 읽기 위한 Method -------------------------------
+     */
     @PostMapping("/read")
-    public String getContentInfo(Long read_content_idx)
-    {
-        return contentService.getContentInfo(read_content_idx).toString();
-    }
+    public String readContentInfo(Long read_content_idx) { return contentService.getContentInfo(read_content_idx).toString();}
 
+    /** 게시글 가져오기 위한 method -----------------------------
+     */
     @PostMapping("/bring")
     public String getBoardContent(Long content_board_idx, int limit)
     {
         JSONArray result = contentService.getContentByBoard(content_board_idx, limit);
-        System.out.println("happy");
-        System.out.println(limit);
         return result.toString();
     }
 
+    /** 사용자가 작성한 게시글 가져오기 ----------------------------------
+     */
     @PostMapping("/personal")
     public String getPrivateContentInfo(String user_idx)
     {
         Long userId = Long.valueOf(user_idx);
-        log.info("userid = {}", userId);
-        System.out.println(user_idx);
-        System.out.println(userId);
         JSONArray result = contentService.getPrivateUserContent(userId);
         return result.toString();
     }
 
 
+
+    /** 게시글의 이미지가 존재할 경우 해당 이미지를 바이트 배열로 변환해서 가져오기 ----------------------------------
+     */
     @PostMapping("/getImage")
     public byte[] getImage(String content_image_url) throws IOException {
-
-        if(!content_image_url.equals("empty")) {
+        if(!content_image_url.equals("empty"))
+        {
             File file = new File(content_image_url);
             byte[] fileContent = Files.readAllBytes(file.toPath());
             return fileContent;
         }
         return null;
-
     }
 
-    /**
-     *
-     * @param content_idx
+    /** 게시글을 삭제하는 method -------------------------
      */
-    /**/
-
     @DeleteMapping("/delete")
     public void deleteContent(Long content_idx)
     {
