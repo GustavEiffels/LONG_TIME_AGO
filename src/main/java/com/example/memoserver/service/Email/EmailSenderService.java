@@ -11,9 +11,9 @@ import java.util.Properties;
 @Service
 public class EmailSenderService {
     public void sendMail(String title, String sendTo, String content) throws MessagingException {
-        final String user = "";
-        final String password = "";
-        final String sender ="";
+        final String user = "sibuk9315@naver.com";
+        final String password = "illsuccess5950";
+        final String sender ="sibuk9315@naver.com";
         String smtpMailLocate = "smtp.naver.com";
 
         Properties prop = new Properties();
@@ -30,7 +30,7 @@ public class EmailSenderService {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sender));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(sendTo, sender, "UTF-8"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(sendTo, "sibuk9315@naver.com", "UTF-8"));
             message.setSubject(title);
             message.setText(content);
             Transport.send(message);
