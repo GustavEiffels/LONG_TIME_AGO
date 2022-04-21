@@ -138,13 +138,11 @@ class PassWordConfirmFragment : Fragment() {
 
                         if( resignOrChange=="change" )
                         {
-                            Log.i("resignOrChange ",resignOrChange)
-                            act.fragmentController("change_password", true, true)
+                            act.fragmentController("change_password", true,true)
                         }
                         else
                         {
                             act.fragmentController("resign", true, true)
-                            act.fragmentRemoveBackStack("password_confirm")
                         }
                     }
                 }
