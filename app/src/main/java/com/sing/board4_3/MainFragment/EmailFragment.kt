@@ -173,8 +173,10 @@ class EmailFragment : Fragment() {
 
                                 isTimerRunning = true
 
+                                var timeStop = false
 
-                                countDownThread(email, authCode, binding, isResend)
+
+                                countDownThread(email, authCode, binding, isResend, timeStop)
 
 
                                 var tryTime = 3
@@ -194,7 +196,7 @@ class EmailFragment : Fragment() {
 
                                         isTimerRunning  = true
 
-                                        countDownThread(email, authCode, binding, isResend)
+                                        countDownThread(email, authCode, binding, isResend, timeStop)
 
                                     }
                                     else
@@ -230,9 +232,10 @@ class EmailFragment : Fragment() {
     }
 
 
-    fun countDownThread(email:String, authCode:String, binding:FragmentEmailBinding, isResend: Boolean )
+    fun countDownThread(email:String, authCode:String, binding:FragmentEmailBinding, isResend: Boolean, timeStop: Boolean )
     {
 
+        var timeStop = false
         if(isTimerRunning)
         {
             countdown = object : CountDownTimer(leftTime, 1000) {
@@ -246,12 +249,15 @@ class EmailFragment : Fragment() {
 
                     isTimerRunning = false
 
-                    DialogEx().makeDialog(
-                        requireContext(),
-                        "Time Out",
-                        "Please try again",
-                        "confirm"
-                    )
+                    if (!timeStop)
+                    {
+                        DialogEx().makeDialog(
+                            requireContext(),
+                            "Time Out",
+                            "Please try again",
+                            "confirm"
+                        )
+                    }
 
                     binding.leftTime.text = "Time Out"
                 }
@@ -297,6 +303,8 @@ class EmailFragment : Fragment() {
                         if (authCode.equals(resultCode) && isTimerRunning)
                         {
                             isTimerRunning = false
+
+                            timeStop = true
 
                             activity?.runOnUiThread {
 
