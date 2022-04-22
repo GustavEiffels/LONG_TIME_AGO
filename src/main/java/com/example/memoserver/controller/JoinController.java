@@ -33,6 +33,8 @@ public class JoinController
     @PostMapping("emailCheck")
     public String emailCheck(String email)
     {
+
+        log.info("emailCheck result = {}", loginService.emailCheck(email));
         return loginService.emailCheck(email);
     }
 

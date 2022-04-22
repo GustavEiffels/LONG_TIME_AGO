@@ -49,22 +49,29 @@ public class FindServiceImpl implements FindService
      return  result;
     }
 
+
+    /** 비밀번호를 재설정하는 Method */
+    /** FindAccountFragment */
     @Override
     public String findPassword(String email, String id) throws MessagingException {
-        String result = "exist";
+        String result = "Exist";
+
+        // user id , 혹은 email 둘중 하나가 null 일 때
         if(userRepository.emailCheck(email)==null ||  userRepository.duplicateId(id)==null)
         {
-            result = "not";
-            log.info("result", "notSame");
+            result = "NotExist";
         }
+        // user id 와 user email 이 서로 맞지 않을 때
         else if(userRepository.getUserIdxById(id)!=userRepository.getUserIdxByEmail(email))
         {
-            result = "not";
-            log.info("result", "notSame");
+            result = "NotExist";
+        }
+        else if(userRepository.emailCheck(email).equals("NotAvailable"))
+        {
+            result = "NotAvailable";
         }
         else
         {
-
             String newPw = forFindPw.excuteGenerate();
             userRepository.updatePwByEmail(newPw, email);
             emailSenderService.sendMail("Hello this is Board4_3",email, String.format("Your New Password is :{}", newPw));

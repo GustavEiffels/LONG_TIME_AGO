@@ -18,6 +18,8 @@ public class LoginServiceImpl implements LoginService
 {
     private final UserRepository userRepository;
 
+    /** Login 을 위한 method  */
+    /** LoginFragment ----> login */
     @Override
     public Map<String,Object> login(String userId, String userPw)
     {
@@ -34,16 +36,26 @@ public class LoginServiceImpl implements LoginService
         Object[] loginArr = (Object[]) loginRes;
 
 
-        if(loginArr==null || loginArr[2].equals("NotAvailable") )
+        // 로그인 결과가 없을 때
+        if(loginArr==null)
         {
             result.put("errorMessage","Not Exist Account");
         }
+        // 계정 상태가 탈퇴 상태일 때,
+        else if( loginArr[2].equals("NotAvailable") )
+        {
+            result.put("errorMessage", "NotAvailable");
+        }
+
+        // 계정이 존재할 때
         else
         {
+            // 입력한 비밀번호가 맞을 때 ,
             if(  ( loginArr[0] ).equals(userPw) )
             {
                 result.put("userIdx",loginArr[1]);
             }
+            // 입력한 비밀번호가 맞지 않을 때 ,
             else
             {
                 result.put("errorMessage","password is different");
@@ -90,9 +102,13 @@ public class LoginServiceImpl implements LoginService
     @Override
     public String emailCheck(String user_email)
     {
+        /** available ---> 이미 누군가 사용중이다
+         *  null -----> 아무도 사용하지 않는 이메일이다
+         *  NotAvailable ------> 탈퇴한 이메일이다.
+         */
         String result =  userRepository.emailCheck(user_email);
 
-
+        /** 해당 이메일을 사용하는 사람이 없다 = 사용할 수 있다.*/
         if(result==null)
         {
             result="null";
@@ -136,6 +152,15 @@ public class LoginServiceImpl implements LoginService
 
 
         return jsonObject;
+    }
+
+    /** user id 로 user email 을 가져오는 Method */
+    /** login 했을 때, 계정이 탈퇴 계정일 경우 id 를 사용해서 user Email 을 가져옴 */
+    /** LoginFragment ------> notAvailable*/
+    @Override
+    public String notAvailable(String id)
+    {
+        return userRepository.notAvailable(id);
     }
 
 

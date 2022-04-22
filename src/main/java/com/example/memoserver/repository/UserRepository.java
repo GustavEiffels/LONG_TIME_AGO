@@ -11,8 +11,18 @@ import javax.transaction.Transactional;
 public interface UserRepository extends JpaRepository<User,Long>
 {
 
+    /** Login 을 위한 method  */
+    /** LoginFragment ----> login */
     @Query(value ="select user_pw, user_idx, user_status from User where user_id=:userId")
     Object login(@Param("userId")String userId);
+
+
+    /** login 했을 때, 계정이 탈퇴 계정일 경우 id 를 사용해서 user Email 을 가져옴 */
+    /** LoginFragment ------> notAvailable*/
+    @Query(value = "select user_Email from User where user_id=:id")
+    String notAvailable(@Param("id")String id);
+
+
 
     @Query(value = "select user_id from User where user_id=:userId")
     String duplicateId(@Param("userId")String userId);

@@ -20,8 +20,8 @@ public class LoginController
     private LoginService loginService;
 
 
-    /** Login 을 위한 method  ----------------------------------------------------------------*/
-    /** LoginFragment */
+    /** Login 을 위한 method  */
+    /** LoginFragment ----> login */
     @PostMapping("")
     public String login(String userId, String userPw, int user_autologin) throws IOException
     {
@@ -94,6 +94,15 @@ public class LoginController
     public String googleAccount(String email)
     {
         return loginService.googleAccount(email).toString();
+    }
+
+    /** user id 로 user email 을 가져오는 Method */
+    /** login 했을 때, 계정이 탈퇴 계정일 경우 id 를 사용해서 user Email 을 가져옴 */
+    /** LoginFragment ------> notAvailable*/
+    @PostMapping("notAvailable")
+    public String notAvailable(String id)
+    {
+        return loginService.notAvailable(id);
     }
 
 

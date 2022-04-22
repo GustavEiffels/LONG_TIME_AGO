@@ -21,12 +21,16 @@ public class FindController
     /** 자신의 계정을 찾는 Method */
     /** FindAccountFragment */
     @PostMapping("account")
-    public String findAccount(String email) throws MessagingException {
+    public String findAccount(String email) throws MessagingException
+    {
         return findService.findAccount(email);
     }
 
+    /** 비밀번호를 재설정하는 Method */
+    /** FindAccountFragment */
     @PostMapping("password")
-    public String findPassword(String email , String id) throws MessagingException {
+    public String findPassword(String email , String id) throws MessagingException
+    {
         return findService.findPassword(email, id);
     }
 }
