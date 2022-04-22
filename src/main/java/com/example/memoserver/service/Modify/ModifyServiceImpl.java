@@ -124,6 +124,9 @@ public class ModifyServiceImpl implements ModifyService
         // 새로운 비밀번호 생성
         String newPw = forFindPw.excuteGenerate();
 
+        log.info("new Password = {} ", newPw);
+        log.info("restoring User Email = {}", email);
+
         // 복구하려는 계정 정보 변경
         userRepository.restore(email, "available", newPw);
 

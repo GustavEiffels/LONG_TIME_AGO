@@ -59,8 +59,8 @@ public class ContentServiceImpl implements ContentService
         return obj;
     }
 
-    /** 게시글 가져오기 위한 method  */
-    /** BoardFragment. MainFragment ----> bring */
+    /** 게시글 가져오기 위한 method ----------------------------- */
+    /** BoardFragment. MainFragment ----> bring: bringContent */
     @Override
     public JSONArray getContentByBoard(Long content_board_idx,  int limit)
     {
@@ -83,17 +83,19 @@ public class ContentServiceImpl implements ContentService
         System.out.println(limit);
 
 
-
+        // board 번호가 0 인 경우 ---> 전체 게시판인 경우
         if(content_board_idx==0)
         {
             result = contentRepository.getContentByContent_board_idx_T(pageRequest,"available");
             System.out.println("test");
         }
+        // 그렇지 않은 경우 ------> 각 게시판 마다 글 가져오기
         else
         {
             result = contentRepository.getContentByContent_board_idx(board, pageRequest,"available");
         }
 
+        // JSON Object 로 변환
         for(Object r:result)
         {
             JSONObject json = new JSONObject();

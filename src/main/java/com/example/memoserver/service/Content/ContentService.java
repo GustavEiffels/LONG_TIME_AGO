@@ -64,7 +64,7 @@ public interface ContentService
 
 
     /** 게시글 가져오기 위한 method ----------------------------- */
-    /** BoardFragment. MainFragment ----> bring */
+    /** BoardFragment. MainFragment ----> bring: bringContent */
     JSONArray getContentByBoard(Long content_board_idx, int limit);
 
 

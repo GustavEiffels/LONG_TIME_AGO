@@ -49,10 +49,10 @@ public class LoginController
     }
 
 
-    /** 해당 user 의 자동로그인 여부를 return 받음 ----------------------------------------------------------------------------*/
+    /** 해당 user 의 자동로그인 여부를 return 받음
     /** LoginFragment */
     @PostMapping("/getAutoLoginInfo")
-    public String getAutoLoginInfo(String userIdx) throws IOException
+    public String getAutoLoginInfo(String userIdx)
     {
         return loginService.getUserAutoInfo( Long.valueOf(userIdx) );
     }

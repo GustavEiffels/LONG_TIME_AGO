@@ -137,9 +137,9 @@ public class ContentsController
 
 
     /** 게시글 가져오기 위한 method ----------------------------- */
-    /** BoardFragment. MainFragment ----> bring */
+    /** BoardFragment. MainFragment ----> bring: bringContent */
     @PostMapping("/bring")
-    public String getBoardContent(Long content_board_idx, int limit)
+    public String bringContent(Long content_board_idx, int limit)
     {
         JSONArray result = contentService.getContentByBoard(content_board_idx, limit);
         return result.toString();

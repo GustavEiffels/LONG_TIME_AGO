@@ -27,7 +27,7 @@ public class FindController
     }
 
     /** 비밀번호를 재설정하는 Method */
-    /** FindAccountFragment */
+    /** FindAccountFragment :  */
     @PostMapping("password")
     public String findPassword(String email , String id) throws MessagingException
     {

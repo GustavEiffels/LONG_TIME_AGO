@@ -28,22 +28,19 @@ public class JoinController
     // -----------------------------------------------------------------------------------------------------------------
 
 
-    /** 이메일 중복 확인 ---------------------------------------------------------------------------------------------------
-     */
+    /** 이메일 중복 확인 */
+    /** EmailFragment : emailCheck */
     @PostMapping("emailCheck")
     public String emailCheck(String email)
     {
 
-        log.info("emailCheck result = {}", loginService.emailCheck(email));
-        return loginService.emailCheck(email);
+        log.info("emailCheck result = {}", dupCheckService.emailCheck(email));
+        return dupCheckService.emailCheck(email);
     }
 
 
-
-
-    /** Id 중복확인 method -----------------------------------------------------------------------------------------------
-     *  IdAndPwFragment
-     */
+    /** Id 중복확인 method
+     *  IdAndPwFragment : idDuplicate -----> */
     @PostMapping("/idDuplicate")
     private String idDuplicateCheck(String userId)
     {
@@ -63,9 +60,8 @@ public class JoinController
 
     }
 
-    /** Nick 중복확인 method -----------------------------------------------------------------------------------------------
-     *  JoinFragment
-     */
+    /** Nick 중복확인 method
+     *  JoinFragment */
     @PostMapping("/nickDuplicate")
     private String nickDuplicateCheck(String userNick)
     {
@@ -80,9 +76,8 @@ public class JoinController
     }
 
 
-    /** 회원가입 완료 method ------------------------------------------------------------------------
-     * JoinFragment
-     */
+    /** 회원가입 완료 method
+     * JoinFragment */
     @PostMapping("")
     public String saveTest(String userId, String userPw, String userNick, String userEmail)
     {

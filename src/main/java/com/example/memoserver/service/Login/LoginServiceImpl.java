@@ -94,28 +94,6 @@ public class LoginServiceImpl implements LoginService
 
 
 
-
-
-    /** --- true ---> email 사용 불가능
-     *  --- false ---> email 사용 가능
-     */
-    @Override
-    public String emailCheck(String user_email)
-    {
-        /** available ---> 이미 누군가 사용중이다
-         *  null -----> 아무도 사용하지 않는 이메일이다
-         *  NotAvailable ------> 탈퇴한 이메일이다.
-         */
-        String result =  userRepository.emailCheck(user_email);
-
-        /** 해당 이메일을 사용하는 사람이 없다 = 사용할 수 있다.*/
-        if(result==null)
-        {
-            result="null";
-        }
-        return result;
-    }
-
     @Override
     public String googleCheck(String email)
     {

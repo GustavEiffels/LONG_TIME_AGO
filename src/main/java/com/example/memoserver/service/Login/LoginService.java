@@ -22,11 +22,11 @@ public interface LoginService
 
 
 
-  //  Email Check
-  String emailCheck(String user_email);
+
 
   // Google Account check
   String googleCheck(String email);
+
 
   // Get Google Account
   JSONObject googleAccount(String email);
