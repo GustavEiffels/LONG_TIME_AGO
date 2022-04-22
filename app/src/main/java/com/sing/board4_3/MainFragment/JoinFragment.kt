@@ -117,9 +117,7 @@ class JoinFragment : Fragment() {
                         builder1.add("userNick", act.userNick)
                         builder1.add("userEmail",act.email)
 
-                        /**
-                         * JoinController
-                         */
+                        /** JoinController ----------> join: join*/
                         val response = UseOkHttp().useThread("join",builder1)
 
                         if (response.isSuccessful)

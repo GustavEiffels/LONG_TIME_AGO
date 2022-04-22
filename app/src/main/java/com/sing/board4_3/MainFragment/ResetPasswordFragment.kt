@@ -2,6 +2,7 @@ package com.sing.board4_3.MainFragment
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,17 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.sing.board4_3.Support.DialogEx
 import com.sing.board4_3.Activity.MainActivity
-import com.sing.board4_3.Support.ServerIP
+import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.FragmentResetPasswordBinding
 import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
 
 
 class ResetPasswordFragment : Fragment() {
 
+    // Binding
     lateinit var  binding : FragmentResetPasswordBinding
 
 
@@ -33,14 +33,16 @@ class ResetPasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        // binding initialize
         binding = FragmentResetPasswordBinding.inflate(layoutInflater)
 
-
+        // binding toolbar title setting
         binding.resetPasswordToolbar.title = "Reset Password"
 
         val act = activity as MainActivity
 
 
+        // init dialog
         DialogEx().makeDialog(
             requireContext(),
             "Notification",
@@ -49,13 +51,16 @@ class ResetPasswordFragment : Fragment() {
             "confirm"
         )
 
+        /** restButton */
         binding.restButton.setOnClickListener {
+
+            // restButton.setOnClickListener -------------------
 
             val email = binding.resetPasswordEmail.text.toString()
 
             val id = binding.resetPasswordId.text.toString()
 
-
+            /** email 유효성 검사 */
             if(!Pattern.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$",email) )
             {
                 val dialog = AlertDialog.Builder(requireContext())
@@ -66,6 +71,7 @@ class ResetPasswordFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            /** id 유효성 검사 */
             if(!Pattern.matches("^[a-zA-Z]{2}[a-zA-Z0-9_]{4,11}$",id))
             {
 
@@ -98,28 +104,27 @@ class ResetPasswordFragment : Fragment() {
 
 
             thread{
-                val resetPassword = OkHttpClient()
+                // thread 1 -------------------------
 
-                val url = "http://${ServerIP.serverIp}/find/password"
 
                 val builder = FormBody.Builder()
-
                 builder.add("email",email)
                 builder.add("id",id)
 
-                val complete = builder.build()
+                /** FindController ---> findPassword */
+                val response = UseOkHttp().useThread("find/password",builder)
 
-                val request = Request.Builder().url(url).post(complete).build()
-
-                val response = resetPassword.newCall(request).execute()
-
+                /** netWorking Success */
                 if(response.isSuccessful)
-                {
+                { // netWorking Success ---------------------
+
                     val result = response.body?.string()!!.trim()
 
-                    if(result.equals("not"))
+                    /** 계정이 존재하지 않을 때 */
+                    if(result.equals("NotExist"))
                     {
                         activity?.runOnUiThread {
+                            // runOnUiThread -------------------
 
                             binding.resetPasswordId.setText("")
                             binding.resetPasswordEmail.setText("")
@@ -131,22 +136,40 @@ class ResetPasswordFragment : Fragment() {
                                 "confirm"
                             )
 
-                        }
+                        } // runOnUiThread -------------------
+
+                    }  // 계정이 존재하지 않을 때 ---------------------
+
+
+
+                    /** 탈퇴한 계정일 경우 */
+                    // 계정 복구 Fragment 로 이동
+                    else if(result.equals("NotAvailable"))
+                    {
+
+                        act.email = email
+                        act.fragmentController("restore",true,true)
                     }
+
                     else
                     {
                         activity?.runOnUiThread {
+                            // runOnUiThread -----------------------------
 
                             DialogEx().makeDialogNoPositiveButton(
                                 requireContext(),
                                 "Password change complete",
                             "The changed password has been sent to the registered email")
-
-                            act.fragmentController("login",false,false)
-                            act.fragmentRemoveBackStack("reset_password")
                         }
-                    }
-                }
+
+                        val mainIntent = Intent(requireContext(), MainActivity::class.java)
+                        startActivity(mainIntent)
+                        activity?.finish()
+
+                    }// runOnUiThread -----------------------------
+
+
+                }// netWorking Success ---------------------
 
                 else
                 {
@@ -155,10 +178,10 @@ class ResetPasswordFragment : Fragment() {
                     }
 
                 }
-            }
 
+            }// thread 1 -------------------------
 
-        }
+        } // restButton.setOnClickListener -------------------
 
 
         return binding.root

@@ -101,7 +101,7 @@ class LoginFragment : Fragment(){
         loginFragmentBinding.loginLoginBtn.setOnClickListener {
 
 
-            // Id 정보
+            // Id
             val loginId = loginFragmentBinding.loginId.text.toString()
 
             // Password
@@ -178,7 +178,6 @@ class LoginFragment : Fragment(){
                     }
                     dialogBuilder.show()
 
-                    // lambda
                     return@setOnClickListener
                 }
 
@@ -210,7 +209,7 @@ class LoginFragment : Fragment(){
                     activity?.runOnUiThread{
                         // runOnUiThread 1 ----------
 
-                        /** 비밀번호 입력 오류  */
+                        /** 존재하는 계정이 없거나 비밀번호가 틀렸을 경우 */
                         if(result_text.equals("password is different") || result_text.equals("Not Exist Account"))
                         {
                             val dialogBuilder = AlertDialog.Builder(requireContext())
@@ -224,6 +223,36 @@ class LoginFragment : Fragment(){
                                 loginFragmentBinding.loginId.requestFocus()
                             }
                             dialogBuilder.show()
+                        }
+
+                        /** 탈퇴한 계정으로 로그인하려던 경우 */
+                        else if( result_text.equals("NotAvailable") )
+                        {
+                            val act = activity as MainActivity
+
+                            thread {
+                                // thread 2 --------------
+                                val builder = FormBody.Builder()
+                                builder.add("id",loginId)
+
+                                /** LoginController ----> notAvailable */
+                                val response = UseOkHttp().useThread("login/notAvailable",builder)
+
+                                if(response.isSuccessful)
+                                {
+                                    act.email = response.body?.string()!!.trim()
+                                    act.fragmentController("restore",true,true)
+                                }
+                                /** net Working connect Error */
+                                else
+                                {
+                                    activity?.runOnUiThread {
+                                        DialogEx().netWork(requireContext())
+                                    }
+                                }
+                            }// thread 2 --------------
+
+
                         }
 
                         /** 로그인 성공 */
@@ -268,7 +297,7 @@ class LoginFragment : Fragment(){
                                         activity?.finish()
 
                                     }
-                                    /** Fail */
+                                    /** NetWorking Fail */
                                     else
                                     {
                                         activity?.runOnUiThread{
@@ -374,9 +403,16 @@ class LoginFragment : Fragment(){
                         if( result.equals("NotExist") )
                         {
 
+                            act.email = googleEmail
                             act.fragmentController("join",true,true)
 
                         }
+                        /** 구글로그인 계정이 탈퇴한 계정일 경우 */
+                        else if(result.equals("NotAvailable"))
+                        {
+                            act.fragmentController("restore",true,true)
+                        }
+
                         /** 닉네임이 존재한다는 것은 이미 계정이 있다는 뜻임으로 BoardMain으로 이동  */
                         else
                         {

@@ -124,6 +124,7 @@ class RestoreFragment : Fragment() {
                                 "Restoration complete!! A new password has been sent to your email")
                         }
 
+                        act.email = ""
                         val mainIntent = Intent(requireContext(), MainActivity::class.java)
                         startActivity(mainIntent)
                         activity?.finish()

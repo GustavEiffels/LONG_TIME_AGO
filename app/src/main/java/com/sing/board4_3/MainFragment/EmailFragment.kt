@@ -48,13 +48,11 @@ class EmailFragment : Fragment() {
     lateinit var  countdown : CountDownTimer
 
 
-
-
+    /** 시간이 지날 때 마다 , 시간을 표현하기 위한 method */
     fun updateText()
     {
         var minute = (leftTime/1000)/60
         var second = (leftTime/1000)%60
-
 
         newtext.text= String.format(Locale.getDefault(),"%02d:%02d",minute,second)
     }
@@ -72,7 +70,7 @@ class EmailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
+        // binding
         binding = FragmentEmailBinding.inflate(layoutInflater)
 
         binding.emailFragmentToolBar.title = "Enter your Email"
@@ -123,8 +121,10 @@ class EmailFragment : Fragment() {
 
                     val formBody = FormBody.Builder()
                     formBody.add("email",email).build()
+
+
                     /** JoinController */
-                    val response = UseOkHttp().useThread("login/emailCheck", formBody)
+                    val response = UseOkHttp().useThread("join/emailCheck", formBody)
 
                     if(response.isSuccessful)
                     {
@@ -132,7 +132,7 @@ class EmailFragment : Fragment() {
 
                         val result = response.body?.string()!!.trim()
 
-                        if(!result.equals("null"))
+                        if(result.equals("available"))
                         {
                             activity?.runOnUiThread{
                                 val dialog = AlertDialog.Builder(requireContext())
@@ -145,6 +145,13 @@ class EmailFragment : Fragment() {
                                 }
                                 dialog.show()
                             }
+                        }
+                         /** 탈퇴한 경우 */
+                         else if(result.equals("NotAvailable"))
+                        {
+                            val act = activity as MainActivity
+                            act.email = email
+                            act.fragmentController("restore",true, true )
                         }
 
                         /** 아이디가 중복 없고 사용 가능할 때 해당 이메일로 인증번호 보내기 -------------------------
@@ -234,7 +241,9 @@ class EmailFragment : Fragment() {
                     /** NetWorking Fail*/
                     else
                     {
-                        DialogEx().netWork(requireContext())
+                        activity?.runOnUiThread {
+                            DialogEx().netWork(requireContext())
+                        }
                     }
                 }
 
