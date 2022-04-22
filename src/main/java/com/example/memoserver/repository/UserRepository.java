@@ -72,7 +72,7 @@ public interface UserRepository extends JpaRepository<User,Long>
 
     /**  google Account Check
      */
-    @Query(value = "select user_nick_name from User where user_Email=:user_email")
+    @Query(value = "select user_status from User where user_Email=:user_email")
     String googleCheck(@Param("user_email")String user_email);
 
 

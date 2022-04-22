@@ -41,6 +41,11 @@ dependencies {
     // 파일 업로드 의존성
     implementation 'commons-io:commons-io:2.8.0'
     implementation 'commons-fileupload:commons-fileupload:1.4'
+
+
+    // swearger
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
 }
 
 tasks.named('test') {

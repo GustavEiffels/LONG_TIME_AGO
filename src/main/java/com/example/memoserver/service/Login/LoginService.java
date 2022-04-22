@@ -17,8 +17,7 @@ public interface LoginService
   // LogOut
   void logout(Long user_idx, int user_auto_login);
 
-  // get User Pw
-  String getUserPassword(Long user_idx);
+
 
 
 
@@ -31,5 +30,5 @@ public interface LoginService
   // Get Google Account
   JSONObject googleAccount(String email);
 
-  int resignUser(Long idx);
+
 }

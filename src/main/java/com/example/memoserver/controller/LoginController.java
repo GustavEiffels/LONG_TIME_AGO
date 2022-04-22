@@ -4,7 +4,6 @@ package com.example.memoserver.controller;
 import com.example.memoserver.service.Login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,7 +54,6 @@ public class LoginController
     @PostMapping("/getAutoLoginInfo")
     public String getAutoLoginInfo(String userIdx) throws IOException
     {
-
         return loginService.getUserAutoInfo( Long.valueOf(userIdx) );
     }
 
@@ -79,49 +77,25 @@ public class LoginController
 
 
 
-    @PostMapping("getPassword")
-    public String getUserPassword(String user_idx, String get_password)
-    {
-        if( !get_password.equals( loginService.getUserPassword( Long.valueOf(user_idx) ) ) )
-        {
-            return "Wrong Password";
-        }
-        return "collect";
-    }
 
-
-
-
-    @PostMapping("emailCheck")
-    public String emailCheck(String email)
-    {
-        return loginService.emailCheck(email);
-    }
-
+    /** Google 계정이 존재하는지 확인하는 Method ---------------------------------------------------------------------------- */
+    // nickName 을 반환
+    /** LoginFragment */
     @PostMapping("googleCheck")
     public String googleCheck(String email)
     {
         return loginService.googleCheck(email);
     }
 
-
+    /** Google 계정이 존재할 때, 계정 정보를 반환하는 method */
+    /** LoginFragment */
     @PostMapping("googleAccount")
     public String googleAccount(String email)
     {
         return loginService.googleAccount(email).toString();
     }
 
-    @PatchMapping("resign")
-    public String resignUser(String idx)
-    {
-        String result = "N";
-        if(loginService.resignUser(Long.valueOf(idx)) >0 )
-        {
-            result = "Y";
-        }
 
-        return result;
-    }
 
 
 

@@ -95,4 +95,16 @@ public class ModifyServiceImpl implements ModifyService
     {
         return userRepository.updatePw(0, newPw, userIdx);
     }
+
+    @Override
+    public String getUserPassword(Long user_idx)
+    {
+        return userRepository.getUserPassword(user_idx);
+    }
+
+    @Override
+    public int resignUser(Long idx)
+    {
+        return userRepository.resignUser("NotAvailable",idx);
+    }
 }

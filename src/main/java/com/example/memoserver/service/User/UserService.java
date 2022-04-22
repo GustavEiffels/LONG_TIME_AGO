@@ -37,7 +37,8 @@ public interface UserService
     }
 
 
-    // user 정보 저장
+    /** User 의 정보 저장 ------------
+     */
     void saveUser(String id, String pw, String nick, String email);
 
 

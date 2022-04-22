@@ -78,11 +78,7 @@ public class LoginServiceImpl implements LoginService
         userRepository.logout(user_auto_login, user_idx);
     }
 
-    @Override
-    public String getUserPassword(Long user_idx)
-    {
-        return userRepository.getUserPassword(user_idx);
-    }
+
 
 
 
@@ -108,12 +104,13 @@ public class LoginServiceImpl implements LoginService
     public String googleCheck(String email)
     {
 
-        String result = "Y";
+        String result = "Exist";
+
 
         // 이미 계정이 존재하는 경우
-        if( userRepository.googleCheck(email) != null )
+        if( userRepository.googleCheck(email) == null || userRepository.googleCheck(email).equals("NotAvailable") )
         {
-            result = "N";
+            result = "NotExist";
         }
 
         return result;
@@ -138,9 +135,5 @@ public class LoginServiceImpl implements LoginService
         return jsonObject;
     }
 
-    @Override
-    public int resignUser(Long idx)
-    {
-        return userRepository.resignUser("NotAvailable",idx);
-    }
+
 }
