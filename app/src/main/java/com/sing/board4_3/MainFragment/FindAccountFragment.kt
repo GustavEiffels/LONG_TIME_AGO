@@ -38,14 +38,13 @@ class FindAccountFragment : Fragment() {
         val act = activity as MainActivity
 
 
-        val initDial = AlertDialog.Builder(requireContext())
-        initDial.setTitle("Notification")
-        initDial.setMessage("If you have account in this app, we will sent you message about your account information")
-        initDial.setPositiveButton("confirm",null)
-        initDial.show()
+        DialogEx().makeDialog(
+            requireContext(),
+            "Notification",
+            "If you have account in this app, we will sent you message about your account information",
+            "confirm")
 
         binding.findAccountEmail.requestFocus()
-
 
         binding.findButton.setOnClickListener {
 
@@ -114,14 +113,6 @@ class FindAccountFragment : Fragment() {
                 }
             }
         }
-
-
-
-
-
-
-
-
 
         return binding.root
     }

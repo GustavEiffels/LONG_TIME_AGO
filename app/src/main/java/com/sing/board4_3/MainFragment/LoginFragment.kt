@@ -17,26 +17,29 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sing.board4_3.databinding.FragmentLoginBinding
 import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
 import com.sing.board4_3.Activity.BoardMainActivity
 import com.sing.board4_3.Activity.MainActivity
 import com.sing.board4_3.R
-import com.sing.board4_3.Support.ServerIP
+import com.sing.board4_3.Support.DialogEx
+import com.sing.board4_3.Support.UseOkHttp
 import org.json.JSONObject
 
 
 class LoginFragment : Fragment(){
 
-    // Binding 을 설정
+    /** ViewBinding */
     lateinit var loginFragmentBinding: FragmentLoginBinding
 
+    /**  FireBaseAuth  */
     var auth:FirebaseAuth? = null
 
+
     var googleSignInClient : GoogleSignInClient? = null
+
     var GOOGLE_LOGIN_CODE = 9000
+
 
 
 
@@ -53,36 +56,39 @@ class LoginFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View?
     {
-        // Inflate the layout for this fragment
 
         val activity = activity as MainActivity
 
 
 
-        //Binding
+        // Binding 초기화
         loginFragmentBinding = FragmentLoginBinding.inflate(inflater)
 
+
+        // toolbar title setting
         loginFragmentBinding.loginToolbar.title="LOGIN"
 
 
+        // auth 초기화
         auth = FirebaseAuth.getInstance()
 
+
+        /** signInButton 누르면 Google Login 이 실행되게 설정 */
         loginFragmentBinding.signInButton.setOnClickListener {
             googleLogin()
         }
+
 
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
-        // options 에 google SignIn 에 등록
+        /**  options 에 google SignIn 에 등록 */
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 
 
-
-
-
+        /** join Button 누르면 Join Fragment 로 이동하도록 설정 */
         loginFragmentBinding.loginJoinBtn.setOnClickListener {
 
             // 해당 Fragment 를 소유하고 있는 Activity 를 추출할 수 있다
@@ -91,19 +97,18 @@ class LoginFragment : Fragment(){
         }
 
 
-
-
+        /** Login Button 눌렀을 때 */
         loginFragmentBinding.loginLoginBtn.setOnClickListener {
 
 
-            // login
+            // Id 정보
             val loginId = loginFragmentBinding.loginId.text.toString()
 
-            // loginPw
+            // Password
             val loginPw = loginFragmentBinding.loginPw.text.toString()
 
 
-            // 자동 login에 체크가 되었는지 확인
+            // 자동 로그인에 체크 했는지 확인
             val loginCheck = loginFragmentBinding.loginAutoLogin.isChecked
 
 
@@ -115,12 +120,9 @@ class LoginFragment : Fragment(){
             }
 
 
-            /**
-             *
-             *  유효성 체크 ---------------------------------------------------------------
-             */
+            /** Id 유효성 검사 */
             if(!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$",loginId))
-            {
+            { //Id Valid Check ------
 
                 val dialogBuilder = AlertDialog.Builder(requireContext())
                 if (loginId == null || loginId.length == 0) {
@@ -146,11 +148,13 @@ class LoginFragment : Fragment(){
                     // lambda
                     return@setOnClickListener
                 }
-            }
-            /** 비밀번호 유효성 설정하기 ------
-             */
+            }// Id Valid Check ------
+
+
+
+            /** 비밀번호 유효성 검사 */
             if(!Pattern.matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}",loginPw))
-            {
+            { // PasswordValidCheck ------
 
                 val dialogBuilder = AlertDialog.Builder(requireContext())
                 if (loginPw == null || loginPw.length == 0) {
@@ -163,6 +167,7 @@ class LoginFragment : Fragment(){
                     dialogBuilder.show()
                     return@setOnClickListener
                 }
+
                 else
                 {
                     dialogBuilder.setTitle("Password Error!")
@@ -176,42 +181,36 @@ class LoginFragment : Fragment(){
                     // lambda
                     return@setOnClickListener
                 }
-            }
 
-            // TEST
-            Log.d("test",loginId)
-            Log.d("test",loginPw)
-            Log.d("test","$loginAutoLogin")
+            }// PasswordValidCheck ------
+
 
 
             thread{
-                val client =OkHttpClient()
-
-
-                val site = "http://${ServerIP.serverIp}/login"
+                // Thread 1 ----------
 
                 val builder1 = FormBody.Builder();
-
                 builder1.add("userId",loginId)
                 builder1.add("userPw",loginPw)
                 builder1.add("user_autologin", "$loginAutoLogin")
 
-                val formBody = builder1.build()
+                /** LoginController --- login */
+                val response = UseOkHttp().useThread("login",builder1)
 
-                val request = Request.Builder().url(site).post(formBody).build()
 
-                val response = client.newCall(request).execute()
-
-                /** 결과 추출
-                 */
+                /** Success */
                 if(response.isSuccessful)
-                {
+                {  // login response success ----------
+
                     val result_text = response.body?.string()!!.trim()
-                    Log.d("test",result_text)
 
                     var userNick = ""
 
+
                     activity?.runOnUiThread{
+                        // runOnUiThread 1 ----------
+
+                        /** 비밀번호 입력 오류  */
                         if(result_text.equals("password is different") || result_text.equals("Not Exist Account"))
                         {
                             val dialogBuilder = AlertDialog.Builder(requireContext())
@@ -226,26 +225,31 @@ class LoginFragment : Fragment(){
                             }
                             dialogBuilder.show()
                         }
+
+                        /** 로그인 성공 */
                         else
-                        {
+                        { // 로그인 성공 ----------
                             activity?.runOnUiThread{
+                                // runOnUiThread ----------
+
                                 Toast.makeText(requireContext(), "LoginSuccess", Toast.LENGTH_SHORT).show()
 
                                 thread{
-                                    val client = OkHttpClient()
-                                    val site = "http://${ServerIP.serverIp}/login/getUserNick"
+                                    // thread 2 ------------
+
                                     val builder1 = FormBody.Builder()
                                     builder1.add("user_idx",result_text)
-                                    val formBody = builder1.build()
-                                    val request = Request.Builder().url(site).post(formBody).build()
-                                    val response = client.newCall(request).execute()
+
+                                    /** LoginController ----> getUserNick */
+                                    val response = UseOkHttp().useThread("login/getUserNick",builder1)
 
 
-
+                                    /** Success */
                                     if(response.isSuccessful)
                                     {
                                         userNick= response.body?.string()!!.trim()
-                                        // 사용자 정보 preferences 에 저장
+
+                                        // sharedReference 에 User  정보 저장 ---------------
                                         val pref = activity?.getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
                                         val editor = pref?.edit()
@@ -254,135 +258,133 @@ class LoginFragment : Fragment(){
                                         editor?.putInt("login_auto_login",loginAutoLogin)
                                         editor?.putString("login_user_nick",userNick)
                                         editor?.commit()
-                                        Log.i("Login_user_nick", userNick)
-                                        Log.i("login_user_idx","${Integer.parseInt(result_text)}")
 
+
+
+                                        // sharedReference 에 User  정보 저장 ---------------
 
                                         val boardMainIntent = Intent(requireContext(), BoardMainActivity::class.java)
                                         startActivity(boardMainIntent)
                                         activity?.finish()
 
                                     }
+                                    /** Fail */
                                     else
                                     {
                                         activity?.runOnUiThread{
-                                            val dialogBuilder = AlertDialog.Builder(requireContext())
-                                            dialogBuilder.setTitle("Net Work Erorr")
-                                            dialogBuilder.setPositiveButton("confirm",null)
-                                            dialogBuilder.show()
+                                            DialogEx().netWork(requireContext())
                                         }
                                     }
-                                }
-                            }
-                        }
-                    }
 
 
-                }
-                /**
-                 *  통신이 좋지 않아 실패했을 때
-                 */
+                                }// thread 2 ------------
+
+                            }// runOnUiThread ----------
+
+                        } // 로그인 성공 ----------
+
+                    }// runOnUiThread 1 ----------
+
+
+                } // login response success ----------
+
+                /** Fail */
                 else
                 {
                     activity?.runOnUiThread{
-                        val dialogBuilder = AlertDialog.Builder(requireContext())
-                        dialogBuilder.setTitle("NetWork Error")
-                        dialogBuilder.setMessage("It's something Wrong Try Again")
-                        dialogBuilder.setPositiveButton("confirm",null)
-                        dialogBuilder.show()
+                        DialogEx().netWork(requireContext())
                     }
                 }
-            }
-        }
+
+            }// Thread 1 ----------
 
 
-        /** Find User Account
-         */
+        }// loginLoginBtn.setOnClickListener -----------
+
+
+
+        /** 유저 정보를 찾는 Fragment로 이동  */
         loginFragmentBinding.findAccount.setOnClickListener {
          activity.fragmentController("find_account",true,true)
         }
 
-        /** Reset User Password
-         */
+        /** 유저의 비밀번호를 재설정하는 Fragment로 이동  */
         loginFragmentBinding.resetPassword.setOnClickListener {
             activity.fragmentController("reset_password",true, true)
 
         }
 
 
-
         return loginFragmentBinding.root
-    }
+    } /** OnCreateView */
 
+
+
+    /** Google Login 을 위한 method */
     fun googleLogin(){
         var signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
     }
 
+    /** Google Login 값 반환 했을 때 처리하는 method */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     {
         super.onActivityResult(requestCode, resultCode, data)
 
+
         if(requestCode == GOOGLE_LOGIN_CODE)
         {
             var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+
 
             if(result!!.isSuccess)
             {
                 var account = result.signInAccount
                 firebaseAuthWithGoogle(account)
 
+                // 반환받은 정보에서 email 추출하기
                 var googleEmail = account!!.email.toString()
-                Log.i("google Email",googleEmail)
+
+
 
                 val act = activity as MainActivity
 
+                // activity 의 Email 에 googleEmail 저장하기
                 act.email = googleEmail
 
                 thread{
-                    val client = OkHttpClient()
-
-                    val site = "http://${ServerIP.serverIp}/login/googleCheck"
+                    // thread 1 ----------
 
                     val builder1 = FormBody.Builder()
                     builder1.add("email",googleEmail)
 
-
-                    Log.i("google Email!!!!!",googleEmail)
-
-                    val form = builder1.build()
-
-                    val request  = Request.Builder().url(site).post(form).build()
-
-                    val response = client.newCall(request).execute()
+                    /** LoginController ----------- googleCheck */
+                    val response = UseOkHttp().useThread("login/googleCheck",builder1)
 
 
-                    /** response.isSuccessful ----> 통신이 됐을 때
-                     */
+                    /** Success */
                     if(response.isSuccessful)
-                    {
+                    { // response.isSuccessful ------------
+
                         // 닉네임 존재 여부
                         val result = response.body?.string()!!.trim()
 
 
-                        // 닉네임이 존재하지 않는 경우
-                        if( result.equals("Y") )
+                        /** 닉네임이 존재하지 않을 때 join Fragment 로 이동 */
+                        if( result.equals("NotExist") )
                         {
-                            // 회원가입 하게 만듬
+
                             act.fragmentController("join",true,true)
 
                         }
+                        /** 닉네임이 존재한다는 것은 이미 계정이 있다는 뜻임으로 BoardMain으로 이동  */
                         else
                         {
                             // 계정이 존재함으로 main page 로 이동
                             thread{
 
-                                val client2 = OkHttpClient()
-                                val site = "http://${ServerIP.serverIp}/login/googleAccount"
-
-                                val request1 = Request.Builder().url(site).post(form).build()
-
-                                val response1 = client2.newCall(request1).execute()
+                                /** LoginController ----- googleAccount */
+                                val response1 = UseOkHttp().useThread("login/googleAccount",builder1)
 
                                 if(response1.isSuccessful)
                                 {
@@ -390,7 +392,6 @@ class LoginFragment : Fragment(){
 
                                     val json = JSONObject(account)
 
-                                    Log.i("LoginFragment Google",json.getString("login_user_nick"))
 
                                     val pref = activity?.getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
@@ -412,11 +413,7 @@ class LoginFragment : Fragment(){
                                 else
                                 {
                                     activity?.runOnUiThread{
-                                        val dialogBuilder = AlertDialog.Builder(requireContext())
-                                        dialogBuilder.setTitle("NetWork Error")
-                                        dialogBuilder.setMessage("It's something Wrong Try Again")
-                                        dialogBuilder.setPositiveButton("confirm",null)
-                                        dialogBuilder.show()
+                                        DialogEx().netWork(requireContext())
                                     }
                                 }
 
@@ -425,20 +422,15 @@ class LoginFragment : Fragment(){
                         }
 
                     }
-                    /** 통신이 안됐을 때
-                     */
+                    /** Fail */
                     else
                     {
                         activity?.runOnUiThread{
-                            val dialogBuilder = AlertDialog.Builder(requireContext())
-                            dialogBuilder.setTitle("NetWork Error")
-                            dialogBuilder.setMessage("It's something Wrong Try Again")
-                            dialogBuilder.setPositiveButton("confirm",null)
-                            dialogBuilder.show()
+                            DialogEx().netWork(requireContext())
                         }
                     }
-                }
 
+                }// thread 1 ----------
             }
         }
     }

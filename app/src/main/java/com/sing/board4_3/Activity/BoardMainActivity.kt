@@ -121,36 +121,36 @@ class BoardMainActivity : AppCompatActivity() {
 
             "board_main" ->
             {
-             currentFragment= BoardMainFragment()
+             currentFragment= MainFragment()
             }
 
             // name 이 board_read 일 때 BoardReadFragment 실행
             "board_read"->
             {
-                currentFragment= BoardReadFragment()
+                currentFragment= ReadFragment()
             }
 
             "board_write"->
             {
-                currentFragment= BoardWriteFragment()
+                currentFragment= WriteFragment()
             }
 
             "board_modify"->
             {
-                currentFragment= BoardModifyFragment()
+                currentFragment= ModifyFragment()
             }
             "board_setting"->
             {
-                currentFragment= BoardSettingFragment()
+                currentFragment= SettingFragment()
             }
             "password_confirm"->
             {
                 resignOrChange  = "change"
-                currentFragment= PassWordConfirmFragment()
+                currentFragment= PwCheckFragment()
             }
             "change_password"->
             {
-                currentFragment= ChangePasswordFragment()
+                currentFragment= PwChangeFragment()
             }
             "search_result"->
             {
@@ -158,7 +158,7 @@ class BoardMainActivity : AppCompatActivity() {
             }
             "password_resign"->
             {   resignOrChange = "resign"
-                currentFragment= PassWordConfirmFragment()
+                currentFragment= PwCheckFragment()
             }
             "resign"->
             {

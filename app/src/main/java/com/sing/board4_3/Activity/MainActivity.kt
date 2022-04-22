@@ -20,7 +20,7 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity()
 {
-    lateinit var mainAcitivityBindg: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     // Fragment 를 담을 변수 생성
     lateinit var currentFragment : Fragment
@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity()
 
         Log.i("Email Main Activity", email)
 
-        mainAcitivityBindg = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mainAcitivityBindg.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         /**
          * pref 값 가져오기
@@ -125,12 +125,12 @@ class MainActivity : AppCompatActivity()
 
             "join"->
             {
-                currentFragment = JoinFragment()
+                currentFragment = IdAndPwFragment()
             }
 
             "nick"->
             {
-                currentFragment = NickFragment()
+                currentFragment = JoinFragment()
             }
             "email"->
             {

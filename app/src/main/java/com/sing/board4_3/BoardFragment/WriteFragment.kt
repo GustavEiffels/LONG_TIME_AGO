@@ -33,7 +33,7 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.concurrent.thread
 
-class BoardWriteFragment : Fragment() {
+class WriteFragment : Fragment() {
 
     //Binding 설정
     lateinit var boardWriteFragmentBinding: FragmentBoardWriteBinding

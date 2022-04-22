@@ -33,7 +33,7 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.concurrent.thread
 
-class BoardModifyFragment : Fragment()
+class ModifyFragment : Fragment()
 {
 
     // Binding

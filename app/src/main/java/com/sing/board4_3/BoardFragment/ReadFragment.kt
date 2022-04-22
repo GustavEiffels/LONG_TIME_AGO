@@ -21,7 +21,7 @@ import okhttp3.Request
 import org.json.JSONObject
 import kotlin.concurrent.thread
 
-class BoardReadFragment : Fragment() {
+class ReadFragment : Fragment() {
 
     /** Binding 설정 -------------------------------
      */

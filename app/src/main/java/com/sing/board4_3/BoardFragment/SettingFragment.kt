@@ -28,7 +28,7 @@ import okhttp3.Request
 import org.json.JSONArray
 import kotlin.concurrent.thread
 
-class BoardSettingFragment : Fragment() {
+class SettingFragment : Fragment() {
 
 
     //ViewBinding
@@ -107,18 +107,11 @@ class BoardSettingFragment : Fragment() {
 
 
         /**
-         *  Logout 버튼 구현 -------------------------------------__---------------------____--------
-         *
-         *  로그아웃 시 자동 로그인 해제
-         *  MainActivity 시작
-         *  BoardActivity 종료
-         *  현재 Fragment 종료
          */
         boardSettingFragmentBinding.boardSettingLogout.setOnClickListener {
 
             val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
-            // AutoLogin 정보를 0 으로 변경
 
 
 
@@ -129,7 +122,6 @@ class BoardSettingFragment : Fragment() {
 
             val userIdx = pref.getInt("login_user_idx",-1)
 
-            // Database 에 자동 로그인 정보 변경하기
 
             thread{
                 val client = OkHttpClient()

@@ -19,7 +19,7 @@ import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
 
-class ChangePasswordFragment : Fragment() {
+class PwChangeFragment : Fragment() {
 
     // ViewBinding
     lateinit var changePasswordFragmentBinding: FragmentChangePasswordBinding
@@ -96,7 +96,7 @@ class ChangePasswordFragment : Fragment() {
             // 비밀번호 입력에 이상이 없는 경우
             thread {
                 val client = OkHttpClient()
-                val site = "http://${ServerIP.serverIp}/login/changePw"
+                val site = "http://${ServerIP.serverIp}/modify/changePw"
 
                 val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
 

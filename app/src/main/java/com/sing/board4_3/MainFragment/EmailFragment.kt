@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.sing.board4_3.Activity.MainActivity
 import com.sing.board4_3.Support.DialogEx
 import com.sing.board4_3.Support.ServerIP
-import com.sing.board4_3.Support.ThreadMethod
+import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.FragmentEmailBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -24,25 +24,30 @@ import kotlin.concurrent.thread
 
 class EmailFragment : Fragment() {
 
+    /** viewBinding
+     */
     lateinit var binding : FragmentEmailBinding
 
+    /** 타이머 작동여부 확인 Boolean
+     */
     var isTimerRunning  = false
 
+    /** 초기화 할 TEXT View
+     */
     lateinit var newtext: TextView
 
-    // 총 소요 시간
+    /** 인증을 위한 총 시간
+     */
     val totalTime:Long = 20000;
 
-    // 남은 시간 --> 계속 변경될 거라 var 사용
+    /** 인증번호 만료까지 남은 시간
+     */
     var leftTime = totalTime
 
     var timeView=""
 
-
-
-
-
-
+    /** CountDownTimer Class 를 받을 변수
+     */
     lateinit var  countdown : CountDownTimer
 
 
@@ -76,19 +81,21 @@ class EmailFragment : Fragment() {
         binding.emailFragmentToolBar.title = "Enter your Email"
 
 
-
-
         newtext = binding.leftTime
 
 
         var emailAuthResult = true
 
+        /** 이메일 인증 버튼 눌렀을 경우
+         */
         binding.emailAuth.setOnClickListener {
 
             // 입력받은 Email 값을 저장할 변수
             val email = binding.getEmail.text.toString()
 
 
+            /** 이메일 인증을 받지 않았을 경우 --------------------
+             */
             if( !emailAuthResult )
             {
                 DialogEx().makeDialog(
@@ -119,13 +126,15 @@ class EmailFragment : Fragment() {
 
                     val formBody = FormBody.Builder()
                     formBody.add("email",email).build()
-
-                    val response = ThreadMethod().useThread("login/emailCheck", formBody)
+                    /**
+                     * JoinController
+                     */
+                    val response = UseOkHttp().useThread("login/emailCheck", formBody)
 
                     if(response.isSuccessful)
                     {
 
-                            // true ---> 사용가능
+
                         val result = response.body?.string()!!.trim()
 
                         if(!result.equals("null"))
@@ -164,25 +173,29 @@ class EmailFragment : Fragment() {
                                 binding.leftTime.visibility = View.VISIBLE
 
 
-                                var resultCode = ""
 
-                                var authCode = ""
-
+                                // Resend Button 활성화 여부
                                 var isResend = false
 
 
+                                // Timer 작동 여부
                                 isTimerRunning = true
 
+                                // Timer 가 정지 여부
                                 var timeStop = false
 
 
-                                countDownThread(email, authCode, binding, isResend, timeStop)
+                                countDownThread(email, binding, isResend, timeStop)
 
-
+                                // 인증번호 요청 3번 초과 시 LoginFragment 로 돌아가게 하기 위함 -----
                                 var tryTime = 3
+
+
+
                                 /** 인증 번호 다시 보낼 때 ------------------------------------------------
                                  */
                                 binding.authResend.setOnClickListener {
+                                    // authResend.setOnClickListener -----
 
                                     isResend = true
 
@@ -190,15 +203,19 @@ class EmailFragment : Fragment() {
 
                                     countdown.cancel()
 
+                                    /**  3번 초과하지 않았을 때,
+                                     */
                                     if(tryTime>0)
                                     {
                                         leftTime = totalTime
 
                                         isTimerRunning  = true
 
-                                        countDownThread(email, authCode, binding, isResend, timeStop)
+                                        countDownThread(email, binding, isResend, timeStop)
 
                                     }
+                                    /**  3번 초과 했을 경우
+                                     */
                                     else
                                     {
                                         DialogEx().makeDialog(
@@ -211,7 +228,9 @@ class EmailFragment : Fragment() {
                                         act.fragmentRemoveBackStack("email")
                                     }
 
-                                }
+                                }// authResend.setOnClickListener -----
+
+
                             }
                         }
 
@@ -232,7 +251,7 @@ class EmailFragment : Fragment() {
     }
 
 
-    fun countDownThread(email:String, authCode:String, binding:FragmentEmailBinding, isResend: Boolean, timeStop: Boolean )
+    fun countDownThread(email:String,  binding:FragmentEmailBinding, isResend: Boolean, timeStop: Boolean )
     {
 
         var timeStop = false
@@ -255,8 +274,7 @@ class EmailFragment : Fragment() {
                             requireContext(),
                             "Time Out",
                             "Please try again",
-                            "confirm"
-                        )
+                            "confirm" )
                     }
 
                     binding.leftTime.text = "Time Out"
@@ -298,9 +316,9 @@ class EmailFragment : Fragment() {
 
                     binding.authSubmit.setOnClickListener {
 
-                        val resultCode = binding.getSerial.text.toString()
+                        val userInputCode = binding.getSerial.text.toString()
 
-                        if (authCode.equals(resultCode) && isTimerRunning)
+                        if (authCode.equals(userInputCode) && isTimerRunning)
                         {
                             isTimerRunning = false
 
@@ -329,7 +347,9 @@ class EmailFragment : Fragment() {
                                 }
 
                             }
-                        } else {
+                        }
+                        else
+                        {
 
                             DialogEx().makeDialog(
                                 requireContext(),

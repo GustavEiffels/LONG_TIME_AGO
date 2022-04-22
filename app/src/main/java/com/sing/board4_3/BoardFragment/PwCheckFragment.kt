@@ -17,7 +17,7 @@ import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
 
-class PassWordConfirmFragment : Fragment() {
+class PwCheckFragment : Fragment() {
 
     //ViewBinding
     lateinit var passWordConfirmFragmentBinding : FragmentPassWordConfirmBinding

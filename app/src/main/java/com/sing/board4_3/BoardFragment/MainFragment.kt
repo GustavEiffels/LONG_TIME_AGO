@@ -27,7 +27,7 @@ import org.json.JSONArray
 import kotlin.concurrent.thread
 
 
-class BoardMainFragment : Fragment() {
+class MainFragment : Fragment() {
 
 
     // Binding
