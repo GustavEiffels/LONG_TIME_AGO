@@ -24,5 +24,5 @@ public interface BoardService
         return boardDto;
     }
 
-    List<Board> getAllBoard();
+    List<Board> board();
 }

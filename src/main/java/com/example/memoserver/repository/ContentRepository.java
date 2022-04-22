@@ -33,26 +33,23 @@ public interface ContentRepository extends JpaRepository<Content,Long>
     Object getContentInfo(@Param("content_idx")Long content_idx);
 
 
+
+    /** 사용자가 작성한 게시글 가져오기  */
+    /** SettingFragment -----> personal*/
     @Query(value =
-            "select c.content_subject, \n" +
-                    "date_format(c.content_write_date,'%Y-%m-%d') as content_write_date,\n" +
-                    "c.content_text, " +
-                    "c.content_image, \n" +
-                    "c.content_image_url, " +
-                    "c.content_writer_idx, " +
-                    "c.content_board_idx, " +
-                    "c.content_idx " +
+            "select c.content_idx, \n" +
+                    "date_format(c.content_write_date,'%Y-%m-%d') as content_write_date, \n" +
+                    "c.content_subject " +
                     "from Content c  \n" +
                     "where c.content_writer_idx=:user_idx " +
                     "order by c.content_idx desc", nativeQuery = true)
     List<Object> getPrivateUserContent(@Param("user_idx")Long user_idx);
 
 
+    // --------------- 무한 스크롤 관련 method ----------------------------------------------------------------------------
 
-
-    /**
-     *  선택한 게시판 조회 ------------
-     */
+    /** 게시글 가져오기 위한 method ----------------------------- */
+    /** BoardFragment. MainFragment ----> bring */
     @Query(value =
             "select c.content_idx,\n" +
                     "u.user_nick_name as content_nick_name, \n" +
@@ -70,9 +67,8 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                                                @Param("status")String status);
 
 
-    /**
-     * 전체 게시판 조회 -------------
-     */
+    /** 게시글 가져오기 위한 method ----------------------------- */
+    /** BoardFragment. MainFragment ----> bring */
     @Query(value =
             "select c.content_idx, \n" +
                     "u.user_nick_name as content_nick_name, \n" +
@@ -86,9 +82,10 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                     "where c.content_writer_idx = u.user_idx\n and u.user_status=:status", nativeQuery = true)
     List<Object> getContentByContent_board_idx_T(Pageable pageable, @Param("status")String status);
 
-    /**
-     *  글을 삭제하기 위한 method
-     */
+
+    // --------------- 게시글 삭제 관련  method ----------------------------------------------------------------------------
+    /** 게시글을 삭제하는 method */
+    /** ReadFragment */
     @Transactional
     @Modifying
     @Query(value = "delete from Content where content_idx=:content_idx")

@@ -21,13 +21,23 @@ public class FindServiceImpl implements FindService
     private final EmailSenderService emailSenderService;
 
 
+    /** 자신의 계정을 찾는 Method */
+    /** FindAccountFragment */
     @Override
-    public String findAccount(String email) throws MessagingException {
-
+    public String findAccount(String email) throws MessagingException
+    {
         String result = "exist";
+
+        log.info("findAccount = {}", userRepository.emailCheck(email));
+
      if(userRepository.emailCheck(email)==null)
      {
+
          result= "not";
+     }
+     else if( userRepository.emailCheck(email).equals("NotAvailable") )
+     {
+         result = "NotAvailable";
      }
      else
      {

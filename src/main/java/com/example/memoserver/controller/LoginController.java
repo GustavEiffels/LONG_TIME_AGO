@@ -20,8 +20,8 @@ public class LoginController
     private LoginService loginService;
 
 
-    /** Login 을 위한 method  ----------------------------------------------------------------
-     */
+    /** Login 을 위한 method  ----------------------------------------------------------------*/
+    /** LoginFragment */
     @PostMapping("")
     public String login(String userId, String userPw, int user_autologin) throws IOException
     {
@@ -49,8 +49,8 @@ public class LoginController
     }
 
 
-    /** 해당 user 의 자동로그인 여부를 return 받음 ----------------------------------------------------------------------------
-     */
+    /** 해당 user 의 자동로그인 여부를 return 받음 ----------------------------------------------------------------------------*/
+    /** LoginFragment */
     @PostMapping("/getAutoLoginInfo")
     public String getAutoLoginInfo(String userIdx) throws IOException
     {
@@ -58,8 +58,8 @@ public class LoginController
     }
 
 
-    /** 로그인 성공시 해당 로그인한 user 의 nickname 을 받아오는 method ----------------------------------------------------------
-     */
+    /** 로그인 성공 시 해당 로그인한 user 의 nickname 을 받아오는 method ---------------------------------------------------------- */
+    /** LoginFragment */
     @PostMapping("getUserNick")
     public String getUserNick(String user_idx)
     {
@@ -68,8 +68,8 @@ public class LoginController
 
 
 
-    /** Logout method --------------------------------------------------------------------------------------------------
-     */
+    /** Logout method -------------------------------------------------------------------------------------------------- */
+    /** settingFragment */
     @PostMapping("logout")
     public void logout(String user_idx, int user_auto_login) { loginService.logout(Long.valueOf(user_idx), user_auto_login); }
 
@@ -79,13 +79,14 @@ public class LoginController
 
 
     /** Google 계정이 존재하는지 확인하는 Method ---------------------------------------------------------------------------- */
-    // nickName 을 반환
     /** LoginFragment */
     @PostMapping("googleCheck")
     public String googleCheck(String email)
     {
         return loginService.googleCheck(email);
     }
+
+
 
     /** Google 계정이 존재할 때, 계정 정보를 반환하는 method */
     /** LoginFragment */

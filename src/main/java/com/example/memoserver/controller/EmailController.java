@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.mail.MessagingException;
 
 @RestController
-@RequestMapping("/email/")
+@RequestMapping("email")
 @Slf4j
 public class EmailController
 {
@@ -22,7 +22,8 @@ public class EmailController
     private EmailSenderService emailSenderService;
 
 
-
+    /** 인증 번호를 Email 로 보내는 method */
+    /** EmailFragment ----> auth */
     @PostMapping("auth")
     public String emailAuth(String email) throws MessagingException {
         String result =forJoin.excuteGenerate();

@@ -22,16 +22,17 @@ public class ContentServiceImpl implements ContentService
 
     private final ContentRepository contentRepository;
 
-    /** 게시글 저장하는 method ---> client content upload 에 사용
-     */
+    /** 게시글을 저장하기 위한 method */
+    /** WriteFragment */
     @Override
     public void saveContent(ContentDto dto)
     {
      contentRepository.save(dtoToEntity(dto));
     }
 
-    /** 하나의 게시글에 대한 정보를 가져오는 것 ---> client read 에 사용
-     */
+
+    /** 게시글을 읽기 위한 Method  */
+    /** readFragment */
     @Override
     public JSONObject getContentInfo(Long content_idx)
     {
@@ -58,8 +59,8 @@ public class ContentServiceImpl implements ContentService
         return obj;
     }
 
-    /** 게시판의 종류에 따라 게시글을 가져오는 method
-     */
+    /** 게시글 가져오기 위한 method  */
+    /** BoardFragment. MainFragment ----> bring */
     @Override
     public JSONArray getContentByBoard(Long content_board_idx,  int limit)
     {
@@ -114,7 +115,8 @@ public class ContentServiceImpl implements ContentService
     }
 
 
-
+    /** 사용자가 작성한 게시글 가져오기  */
+    /** SettingFragment -----> personal*/
     @Override
     public JSONArray getPrivateUserContent(Long user_idx)
     {
@@ -130,14 +132,10 @@ public class ContentServiceImpl implements ContentService
             JSONObject json = new JSONObject();
             Object[] rArr = (Object[]) info;
 
-            json.put("content_subject",rArr[0]);
+
+            json.put("content_idx",rArr[0]);
             json.put("content_write_date",rArr[1]);
-            json.put("content_text",rArr[2]);
-            json.put("content_image",rArr[3]);
-            json.put("content_image_url",rArr[4]);
-            json.put("content_writer_idx",rArr[5]);
-            json.put("content_board_idx",rArr[6]);
-            json.put("content_idx",rArr[7]);
+            json.put("content_subject",rArr[2]);
 
             array.put(json);
         }

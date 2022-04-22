@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 public interface ContentService
 {
+    /** dto 를 Entity 로 변환하는 method */
     default Content dtoToEntity(ContentDto dto)
     {
         User user  = User.builder()
@@ -35,6 +36,7 @@ public interface ContentService
     }
 
 
+    /** Entity 를 Dto 로 변환하는 method */
     default ContentDto entityToDto(User user, Board board, Content content)
     {
 
@@ -50,12 +52,23 @@ public interface ContentService
         return contentDto;
     }
 
+
+    /** 게시글을 저장하기 위한 method */
+    /** WriteFragment */
     void saveContent(ContentDto dto);
 
 
+    /** 게시글을 읽기 위한 Method ------------------------------- */
+    /** readFragment */
     JSONObject getContentInfo(Long content_board_idx);
 
+
+    /** 게시글 가져오기 위한 method ----------------------------- */
+    /** BoardFragment. MainFragment ----> bring */
     JSONArray getContentByBoard(Long content_board_idx, int limit);
 
+
+    /** 사용자가 작성한 게시글 가져오기  */
+    /** SettingFragment -----> personal*/
     JSONArray getPrivateUserContent(Long user_idx);
 }

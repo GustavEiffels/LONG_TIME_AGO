@@ -16,11 +16,10 @@ public class BoardServiceImpl implements BoardService
 {
     private final BoardRepository boardRepository;
 
-    /** Board List 를 가져오는 method 
-     */
+    /** 모든 board 의 list 를 가져오는 method  */
     @Override
-    public List<Board> getAllBoard() {
-
+    public List<Board> board()
+    {
         return boardRepository.getAllBoard();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.memoserver.service.Modify;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -16,4 +17,7 @@ public interface ModifyService
 
 
     int resignUser(Long idx);
+
+    /** 유저 계정 복구 하는 method : RestoreFragment ---------------> restore: restore*/
+    void restore(String email) throws MessagingException;
 }

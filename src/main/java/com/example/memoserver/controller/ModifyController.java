@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;;import java.io.IOException;
 
 @RestController
@@ -93,5 +94,13 @@ public class ModifyController
             result = "Y";
         }
         return result;
+    }
+
+
+    /** 유저 계정 복구 하는 method : RestoreFragment ---------------> restore: restore*/
+    @PatchMapping("restore")
+    public void restore(String email) throws MessagingException
+    {
+        modifyService.restore(email);
     }
 }

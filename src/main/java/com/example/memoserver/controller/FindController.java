@@ -18,6 +18,8 @@ public class FindController
     @Autowired
     private FindService findService;
 
+    /** 자신의 계정을 찾는 Method */
+    /** FindAccountFragment */
     @PostMapping("account")
     public String findAccount(String email) throws MessagingException {
         return findService.findAccount(email);

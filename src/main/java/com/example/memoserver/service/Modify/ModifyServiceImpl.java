@@ -4,6 +4,8 @@ import com.example.memoserver.entity.Board;
 import com.example.memoserver.repository.ContentRepository;
 import com.example.memoserver.repository.UserRepository;
 import com.example.memoserver.service.Content.ContentService;
+import com.example.memoserver.service.Email.EmailSenderService;
+import com.example.memoserver.service.Email.ForFindPw;
 import com.example.memoserver.service.File.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
@@ -29,6 +32,10 @@ public class ModifyServiceImpl implements ModifyService
     private final FileService fileService;
 
     private final UserRepository userRepository;
+
+    private final EmailSenderService emailSenderService;
+
+    private final ForFindPw forFindPw;
 
 
 
@@ -107,4 +114,22 @@ public class ModifyServiceImpl implements ModifyService
     {
         return userRepository.resignUser("NotAvailable",idx);
     }
+
+
+
+    /** 유저 계정 복구 하는 method : RestoreFragment ---------------> restore: restore*/
+    @Override
+    public void restore(String email) throws MessagingException
+    {
+        // 새로운 비밀번호 생성
+        String newPw = forFindPw.excuteGenerate();
+
+        // 복구하려는 계정 정보 변경
+        userRepository.restore(email, "available", newPw);
+
+        // 변경된 비밀번호 email 로 전송
+        emailSenderService.sendMail("Hello this is Board4_3",email, String.format("Your New Password is :{}", newPw));
+    }
+
+
 }

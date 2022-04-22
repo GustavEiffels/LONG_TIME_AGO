@@ -64,26 +64,23 @@ public interface UserRepository extends JpaRepository<User,Long>
     int updatePwByEmail(@Param("newPw")String newPw, @Param("email")String email);
 
 
-    /**  Email Duplicate Check
-     */
-    @Query(value = "select user_Email from User where user_Email=:user_email")
+    /** 자신의 계정을 찾는 Method */
+    /** FindAccountFragment */
+    @Query(value = "select user_status from User where user_Email=:user_email")
     String emailCheck(@Param("user_email")String user_email);
 
 
-    /**  google Account Check
-     */
+    /**  google Account Check */
     @Query(value = "select user_status from User where user_Email=:user_email")
     String googleCheck(@Param("user_email")String user_email);
 
 
-    /** get GoogleAccount
-     */
+    /** get GoogleAccount */
     @Query(value ="select user_idx, user_nick_name, user_auto_login from User where user_Email=:email")
     Object googleAccount(@Param("email")String email);
 
 
-    /** Change user_auto_login
-     */
+    /** Change user_auto_login */
 
 
 
@@ -108,6 +105,12 @@ public interface UserRepository extends JpaRepository<User,Long>
     @Modifying
     @Query(value = "update User set user_status=:status where user_idx=:idx")
     int resignUser(@Param("status")String status, @Param("idx")Long idx);
+
+    /** 계정 복구 ---- RestoreFragment :restore */
+    @Transactional
+    @Modifying
+    @Query(value = "update User set user_status=:status, user_pw=:pw where user_Email=:email")
+    int restore(@Param("email")String email, @Param("status")String status, @Param("pw")String pw);
 
 
 

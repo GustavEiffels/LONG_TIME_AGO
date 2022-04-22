@@ -44,8 +44,10 @@ public class ContentsController
     @Autowired
     private FileService fileService;
 
-    /** 게시글을 저장하는 method ------------------------------
-     */
+    // -----------------------------------------------------------------------------------------------------------------
+
+    /** 게시글을 저장하는 method ------------------------------ */
+    /** WriteFragment */
     @PostMapping(value = "")
     public void saveContent(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
@@ -128,13 +130,14 @@ public class ContentsController
     }
 
 
-    /** 게시글을 읽기 위한 Method -------------------------------
-     */
+    /** 게시글을 읽기 위한 Method ------------------------------- */
+    /** readFragment */
     @PostMapping("/read")
     public String readContentInfo(Long read_content_idx) { return contentService.getContentInfo(read_content_idx).toString();}
 
-    /** 게시글 가져오기 위한 method -----------------------------
-     */
+
+    /** 게시글 가져오기 위한 method ----------------------------- */
+    /** BoardFragment. MainFragment ----> bring */
     @PostMapping("/bring")
     public String getBoardContent(Long content_board_idx, int limit)
     {
@@ -142,10 +145,12 @@ public class ContentsController
         return result.toString();
     }
 
-    /** 사용자가 작성한 게시글 가져오기 ----------------------------------
-     */
+
+
+    /** 사용자가 작성한 게시글 가져오기  */
+    /** SettingFragment -----> personal*/
     @PostMapping("/personal")
-    public String getPrivateContentInfo(String user_idx)
+    public String getPersonalContent(String user_idx)
     {
         Long userId = Long.valueOf(user_idx);
         JSONArray result = contentService.getPrivateUserContent(userId);
@@ -154,8 +159,8 @@ public class ContentsController
 
 
 
-    /** 게시글의 이미지가 존재할 경우 해당 이미지를 바이트 배열로 변환해서 가져오기 ----------------------------------
-     */
+    /** 게시글의 이미지가 존재할 경우 해당 이미지를 바이트 배열로 변환해서 가져오기  */
+    /** ReadFragment ----> getImage */
     @PostMapping("/getImage")
     public byte[] getImage(String content_image_url) throws IOException {
         if(!content_image_url.equals("empty"))
@@ -167,8 +172,10 @@ public class ContentsController
         return null;
     }
 
-    /** 게시글을 삭제하는 method -------------------------
-     */
+
+
+    /** 게시글을 삭제하는 method */
+    /** ReadFragment ---> delete*/
     @DeleteMapping("/delete")
     public void deleteContent(Long content_idx)
     {

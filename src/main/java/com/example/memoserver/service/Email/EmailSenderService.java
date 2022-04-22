@@ -10,6 +10,8 @@ import java.util.Properties;
 
 @Service
 public class EmailSenderService {
+    /** 인증 번호를 Email 로 보내는 method */
+    /** EmailFragment ----> auth */
     public void sendMail(String title, String sendTo, String content) throws MessagingException {
         final String user = "/";
         final String password = "/";

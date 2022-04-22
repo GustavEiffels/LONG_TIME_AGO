@@ -23,16 +23,16 @@ public class BoardController
     @Autowired
     private BoardService boardService;
 
-    /** 모든 게시판 목록들 들고오는 method
-     */
+    /** 모든 게시판 목록들 들고오는 method ------------------- */
+    /** BoardMainActivity */
     @GetMapping("")
-    public String getAllBoard()
+    public String board()
     {
-        boardService.getAllBoard();
+        boardService.board();
 
         JSONArray jsonArray = new JSONArray();
 
-        List<Board> boardList = boardService.getAllBoard();
+        List<Board> boardList = boardService.board();
         for(Board board:boardList)
         {
             JSONObject obj = new JSONObject();

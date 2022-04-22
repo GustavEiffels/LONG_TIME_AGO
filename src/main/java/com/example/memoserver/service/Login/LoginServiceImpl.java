@@ -107,10 +107,13 @@ public class LoginServiceImpl implements LoginService
         String result = "Exist";
 
 
-        // 이미 계정이 존재하는 경우
-        if( userRepository.googleCheck(email) == null || userRepository.googleCheck(email).equals("NotAvailable") )
+        if( userRepository.googleCheck(email) == null )
         {
             result = "NotExist";
+        }
+        else if(userRepository.googleCheck(email).equals("NotAvailable"))
+        {
+            result = "NotAvailable";
         }
 
         return result;
