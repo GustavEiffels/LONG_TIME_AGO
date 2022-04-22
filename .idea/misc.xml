@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_pass_word_confirm.xml" value="0.19592459221158132" />
         <entry key="app/src/main/res/layout/fragment_reset_password.xml" value="0.18541666666666667" />
         <entry key="app/src/main/res/layout/fragment_resign.xml" value="0.2251824472513383" />
+        <entry key="app/src/main/res/layout/fragment_restore.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_search_result.xml" value="0.1734375" />
         <entry key="app/src/main/res/layout/fragment_search_result_recylerview.xml" value="0.26885998452740795" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2598958333333333" />

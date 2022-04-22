@@ -144,6 +144,10 @@ class MainActivity : AppCompatActivity()
             {
                 currentFragment= ResetPasswordFragment()
             }
+            "restore"->
+            {
+                currentFragment=RestoreFragment()
+            }
         }
 
         val trans = supportFragmentManager.beginTransaction()
@@ -154,8 +158,6 @@ class MainActivity : AppCompatActivity()
 
         if(add)
         {
-            // name = Fragment 이름을 넣어줌
-            // name 을 가지고 BackStack 에서 제거 할수 있는 기능구현 가능
             trans.addToBackStack(name)
         }
         if(animate)

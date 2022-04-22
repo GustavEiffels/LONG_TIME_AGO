@@ -111,9 +111,7 @@ class BoardMainActivity : AppCompatActivity() {
         fragmentController("board_main", false ,false)
     }
 
-    /**
-     *  fragment Controller ------------------------
-     */
+    /** fragment Controller  */
     fun fragmentController(name:String , add:Boolean, animate:Boolean)
     {
         when(name)

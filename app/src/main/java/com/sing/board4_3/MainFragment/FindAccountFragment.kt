@@ -9,16 +9,16 @@ import android.view.ViewGroup
 import com.sing.board4_3.Support.DialogEx
 import com.sing.board4_3.Activity.MainActivity
 import com.sing.board4_3.Support.ServerIP
+import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.FragmentFindAccountBinding
 import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
 
 
 class FindAccountFragment : Fragment() {
 
+    /** Binding */
     lateinit var binding : FragmentFindAccountBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +29,7 @@ class FindAccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
         binding = FragmentFindAccountBinding.inflate(layoutInflater)
 
@@ -61,19 +62,16 @@ class FindAccountFragment : Fragment() {
                 return@setOnClickListener
             }
 
+
             thread{
-                val findAccount = OkHttpClient()
+                // thread 1 ----------
 
                 val url = "http://${ServerIP.serverIp}/find/account"
-
                 val builder = FormBody.Builder()
+                builder.add("email",email)
 
-
-                val complete = builder.add("email",email).build()
-
-                val request = Request.Builder().url(url).post(complete).build()
-
-                val response = findAccount.newCall(request).execute()
+                /** FindController -----> account : FindAccount */
+                val response = UseOkHttp().useThread("find/account",builder)
 
                 if(response.isSuccessful)
                 {
@@ -90,6 +88,15 @@ class FindAccountFragment : Fragment() {
                         act.fragmentController("login",false,false)
                         act.fragmentRemoveBackStack("find_account")
 
+                    }
+                    /** 해당 계정의 user_status 상태가 NotAvailable 일 때 */
+
+                    else if( result.equals("NotAvailable") )
+                    {
+                        act.fragmentController("restore",false,false )
+
+                        // main Activity 에 email 저장
+                        act.email = email
                     }
                     else
                     {
@@ -111,7 +118,8 @@ class FindAccountFragment : Fragment() {
                         DialogEx().netWork(requireContext())
                     }
                 }
-            }
+
+            }// thread 1 ----------
         }
 
         return binding.root

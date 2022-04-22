@@ -2,7 +2,6 @@ package com.sing.board4_3.MainFragment
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +9,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import com.sing.board4_3.Activity.MainActivity
 import com.sing.board4_3.Support.DialogEx
-import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.FragmentJoinBinding
 import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
 

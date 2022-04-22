@@ -11,12 +11,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.sing.board4_3.Activity.MainActivity
 import com.sing.board4_3.Support.DialogEx
-import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.FragmentEmailBinding
 import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.concurrent.thread
@@ -126,9 +123,7 @@ class EmailFragment : Fragment() {
 
                     val formBody = FormBody.Builder()
                     formBody.add("email",email).build()
-                    /**
-                     * JoinController
-                     */
+                    /** JoinController */
                     val response = UseOkHttp().useThread("login/emailCheck", formBody)
 
                     if(response.isSuccessful)
@@ -236,7 +231,7 @@ class EmailFragment : Fragment() {
 
 
                     }
-                    // 통신 실패
+                    /** NetWorking Fail*/
                     else
                     {
                         DialogEx().netWork(requireContext())
@@ -283,18 +278,13 @@ class EmailFragment : Fragment() {
             }.start()
 
             thread {
-                val clientForAuthCheck = OkHttpClient()
 
-                val site = "http://${ServerIP.serverIp}/email/auth"
 
                 val authBuilder = FormBody.Builder()
                 authBuilder.add("email", email)
 
-                val authForEmail = authBuilder.build()
-
-                val authEmail = Request.Builder().url(site).post(authForEmail).build()
-
-                val authResponse = clientForAuthCheck.newCall(authEmail).execute()
+                /** EmailController ----> auth : emailAuth */
+                val authResponse = UseOkHttp().useThread("email/auth",authBuilder)
 
                 if (authResponse.isSuccessful) {
 
@@ -326,10 +316,10 @@ class EmailFragment : Fragment() {
 
                             activity?.runOnUiThread {
 
-                                val authComplete = AlertDialog.Builder(requireContext())
-                                authComplete.setTitle("authentication is complete")
-                                authComplete.setPositiveButton("confirm", null)
-                                authComplete.show()
+                                DialogEx().makeDialog(requireContext(),
+                                    "authentication is complete",
+                                "",
+                                "confirm")
 
                                 binding.authSubmit.visibility = View.GONE
                                 binding.getSerial.visibility = View.GONE

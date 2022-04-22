@@ -101,7 +101,7 @@ class PwCheckFragment : Fragment() {
             thread{
                 val client = OkHttpClient()
 
-                val site = "http://${ServerIP.serverIp}/login/getPassword"
+                val site = "http://${ServerIP.serverIp}/modify/getPassword"
 
                 val builder1 = FormBody.Builder()
                 builder1.add("user_idx", userIdx.toString())

@@ -8,7 +8,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,36 +18,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sing.board4_3.Activity.BoardMainActivity
 import com.sing.board4_3.Activity.MainActivity
-import com.sing.board4_3.Support.ServerIP
+import com.sing.board4_3.Support.DialogEx
+import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.BoardSettingRecyclerviewBinding
 import com.sing.board4_3.databinding.FragmentSettingBinding
 import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.json.JSONArray
 import kotlin.concurrent.thread
 
 class SettingFragment : Fragment() {
 
 
-    //ViewBinding
-    lateinit var boardSettingFragmentBinding: FragmentSettingBinding
+    /** View Binding */
+    lateinit var binding: FragmentSettingBinding
 
-    // LIST 생성 --- 목록에 삽입하기 위해서 사용
+    /** 게시글 번호 list */
     val contentIdxList = ArrayList<Int>()
 
-    val contentWriterList = ArrayList<String>()
-
+    /** 게시글 작성일 list */
     val contentWriteDateList = ArrayList<String>()
 
+    /** 게시글 제목 list */
     val contentSubjectList = ArrayList<String>()
-
-
-    val contentImageUrl = ArrayList<String>()
-
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -61,84 +52,78 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
-        boardSettingFragmentBinding = FragmentSettingBinding.inflate(layoutInflater)
+        /**  binding initialize */
+        binding = FragmentSettingBinding.inflate(layoutInflater)
 
+        // SharedReference 에서 User Data 가져오기
         val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
         val loginUserNick = pref.getString("login_user_nick","")
 
         val act = activity as BoardMainActivity
 
+        /**  Toolbar title 을 userNick 으로 생성 */
+        binding.baordSettingToolbar.title=loginUserNick
 
 
-        boardSettingFragmentBinding.baordSettingToolbar.title=loginUserNick
-
-
-        // drawable 객체 생성
+        // BackButton  --------------------------------
         val navIcon = requireActivity().getDrawable(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
 
-        boardSettingFragmentBinding.baordSettingToolbar.navigationIcon = navIcon
-
-        // 색상을 변경 --- android 10 버전일 경우와 그렇지 않을경우 둘다 고려
+        binding.baordSettingToolbar.navigationIcon = navIcon
 
 
-        // Q
+        // 색상을 변경 --- android 10 버전일 경우와 그렇지 않을 경우 둘다 고려
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
         {
-            boardSettingFragmentBinding.
+            binding.
             baordSettingToolbar.
             navigationIcon?.
             colorFilter= BlendModeColorFilter(Color.parseColor("#FFFFFF"), BlendMode.SRC_ATOP)
         }
         else
         {
-            boardSettingFragmentBinding.baordSettingToolbar.navigationIcon?.setColorFilter(
+            binding.baordSettingToolbar.navigationIcon?.setColorFilter(
                 Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP
             )
         }
 
-        boardSettingFragmentBinding.baordSettingToolbar.setNavigationOnClickListener {
+
+
+        // backButton 누르면 Backstack 에서 Fragment 삭제
+        binding.baordSettingToolbar.setNavigationOnClickListener {
             val act = activity as BoardMainActivity
             act.fragmentRemoveBackStack("board_setting")
-
         }
 
 
-        /**
-         */
-        boardSettingFragmentBinding.boardSettingLogout.setOnClickListener {
-
-            val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
+        // BackButton  --------------------------------
 
 
 
+        /** Logout Button 눌렀을 때 */
+        binding.boardSettingLogout.setOnClickListener {
 
 
+            // 자동 로그인 정보
             val autoLogin = pref.getInt("login_auto_login",-1)
 
-            Log.i("login_user_auto", "$autoLogin")
-
+            // 사용자 번호
             val userIdx = pref.getInt("login_user_idx",-1)
 
-
+            /** Logout 실행 */
             thread{
-                val client = OkHttpClient()
-                val site = "http://${ServerIP.serverIp}/login/logout"
+                // thread 1 ----------
 
                 val builder1 = FormBody.Builder()
                 builder1.add("user_idx",userIdx.toString())
                 builder1.add("user_auto_login",autoLogin.toString())
 
-                val form = builder1.build()
-
-                val request = Request.Builder().url(site).post(form).build()
-
-                val response = client.newCall(request).execute()
+                /** LoginController ----------> logout */
+                val response = UseOkHttp().useThread("login/logout",builder1)
 
                 if(response.isSuccessful)
-                {
+                { // response.isSuccessful 1 ----------
 
                     val editor = pref?.edit()
                     editor?.clear()
@@ -152,42 +137,41 @@ class SettingFragment : Fragment() {
                         startActivity(mainActivity)
                         activity?.finish()
                     }
-                }
-            }
 
-        }
-        /**
-         *  ========= 비밀번호 변경 기능 구현
-         *
-         *  비밀번호 두개 입력 받는다
-         *  다른 Fragment 에서 수행 하도록 할 예정
-         *  Fragment 2개 생성
-         *  비밀번호 변경시 현재 비밀번호를 입력받게 만든다
-         *  유효성 검사 적용
-         *  비밀번호가 변경되면 다시 로그인 하게 만들자
-         */
-        boardSettingFragmentBinding.boardSettingPasswordChange.setOnClickListener {
+                }
+                /** netWork Connecting fail*/
+                else { activity?.runOnUiThread{DialogEx().netWork(requireContext())}
+
+                } // response.isSuccessful 1 ----------
+
+
+            }// thread 1 ----------
+
+        } // boardSettingLogout.setOnClickListener  ------
+
+
+
+        /** 비밀번호 변경 버튼 */
+        binding.boardSettingPasswordChange.setOnClickListener {
             act.fragmentController("password_confirm", true, true)
 
         }
 
-        boardSettingFragmentBinding.boardSettingResign.setOnClickListener {
+
+        /** 회원 탈퇴 버튼  */
+        binding.boardSettingResign.setOnClickListener {
             act.fragmentController("password_resign", true, true)
         }
 
 
 
-        /** RecyclerView 설정 ----
-         */
+        /** RecyclerView 설정 */
         val boardSettingRecyclerAdapter = BoardSettingRecyclerAdapter()
-        boardSettingFragmentBinding.boardSettingRecycler.adapter = boardSettingRecyclerAdapter
+        binding.boardSettingRecycler.adapter = boardSettingRecyclerAdapter
 
-        boardSettingFragmentBinding.boardSettingRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.boardSettingRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-        // 가로 세로 구분자 설정
-        // 1 --> 가로방향으로
-        // 0 ---> 세로 방향으로
-        boardSettingFragmentBinding.boardSettingRecycler.addItemDecoration(DividerItemDecoration(requireContext(), 1))
+        binding.boardSettingRecycler.addItemDecoration(DividerItemDecoration(requireContext(), 1))
 
 
         // 기져오게 설정하기
@@ -195,20 +179,16 @@ class SettingFragment : Fragment() {
 
 
 
-        return boardSettingFragmentBinding.root
+        return binding.root
     }
 
 
-    /**
-     *  RecyclerViewAdapter -----------------------------------------
-     */
+    /** RecyclerViewAdapter  */
     inner class BoardSettingRecyclerAdapter: RecyclerView.Adapter<BoardSettingRecyclerAdapter.ViewHolderClass>()
     {
 
 
-        /**
-         *  ViewHolder Class--------------
-         */
+        /** ViewHolder Class-------------- */
         inner class ViewHolderClass(boardSettingRecyclerItemBinding: BoardSettingRecyclerviewBinding)
             : RecyclerView.ViewHolder(boardSettingRecyclerItemBinding.root), View.OnClickListener
         {
@@ -217,23 +197,22 @@ class SettingFragment : Fragment() {
             val boardSettingItemSubject = boardSettingRecyclerItemBinding.boardSettingItemSubject
             val boardSettingItemWriteDate = boardSettingRecyclerItemBinding.boardSettingItemWriteDate
 
-
+            /** recycler view item 누를 때 */
             override fun onClick(p0: View?)
             {
-                // BoardMainActivity Instance
+
                 val act = activity as BoardMainActivity
 
                 // 해당 글 번호 setting
                 act.readContentidx =contentIdxList[adapterPosition]
 
-                // Fragment 가 실행되도록 설정
+                // 게시글을 읽을 수 있도록 설정
                 act.fragmentController("board_read", true , true )
             }
         }
 
 
-        /** ViewHolder Create ------
-         */
+        /** ViewHolder Create  */
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass
         {
             val boardSettingRecyclerItemBinding = BoardSettingRecyclerviewBinding.inflate(layoutInflater)
@@ -272,40 +251,35 @@ class SettingFragment : Fragment() {
         }
     }
 
-    /** 함수 생성
-     */
+    /** 스크롤을 위한 함수 생성 */
     fun getContentList(clear:Boolean)
     {
         if(clear)
         {
             contentIdxList.clear()
-            contentWriterList.clear()
             contentSubjectList.clear()
             contentWriteDateList.clear()
         }
 
         thread{
-            val client = OkHttpClient()
-
-            val site = "http://${ServerIP.serverIp}/content/personal"
-
+            // thread 1 -----------
 
             val builder1 = FormBody.Builder()
 
+
             val pref = requireContext().getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
-            // 초기값은 -1
+            // SharedReference 에서 회원번호 가져오기
             val loginUserIdx = pref.getInt("login_user_idx", -1)
 
             builder1.add("user_idx", loginUserIdx.toString())
 
 
-            val formbody = builder1.build()
+            /** contentsController ----------> getPersonalContent  */
+            val response = UseOkHttp().useThread("content/personal", builder1)
 
-            val request = Request.Builder().url(site).post(formbody).build()
 
-            val response = client.newCall(request).execute()
-
+            /** Network connecting success */
             if(response.isSuccessful)
             {
                 val resultText = response.body?.string()!!.trim()
@@ -319,15 +293,14 @@ class SettingFragment : Fragment() {
                     contentIdxList.add(obj.getInt("content_idx"))
                     contentWriteDateList.add( obj.getString("content_write_date") )
                     contentSubjectList.add( obj.getString("content_subject") )
-                    contentImageUrl.add( obj.getString("content_image_url") )
                 }
-
 
                 activity?.runOnUiThread {
                     // recyclerView 갱신
-                    boardSettingFragmentBinding.boardSettingRecycler.adapter?.notifyDataSetChanged()
+                    binding.boardSettingRecycler.adapter?.notifyDataSetChanged()
                 }
             }
+            else { activity?.runOnUiThread { DialogEx().netWork(requireContext()) } }
         }
     }
 

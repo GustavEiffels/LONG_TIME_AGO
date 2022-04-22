@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.sing.board4_3.Activity.MainActivity
+import com.sing.board4_3.Support.DialogEx
 import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.FragmentChangePasswordBinding
 import okhttp3.FormBody
@@ -127,10 +128,7 @@ class PwChangeFragment : Fragment() {
                 else
                 {
                     activity?.runOnUiThread{
-                        val dialogBuilder = AlertDialog.Builder(requireContext())
-                        dialogBuilder.setTitle("Net Work Error")
-                        dialogBuilder.setPositiveButton("confirm",null)
-                        dialogBuilder.show()
+                        DialogEx().netWork(requireContext())
                     }
                 }
 

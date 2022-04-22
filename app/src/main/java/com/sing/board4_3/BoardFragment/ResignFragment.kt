@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.sing.board4_3.Support.DialogEx
 import com.sing.board4_3.Activity.MainActivity
 import com.sing.board4_3.Support.ServerIP
+import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.FragmentResignBinding
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -58,15 +59,10 @@ class ResignFragment : Fragment() {
 
                 thread{
 
-                    val resign = OkHttpClient()
-                    val url = "http://${ServerIP.serverIp}/login/resign"
-
                     val builder = FormBody.Builder()
-                    val complete = builder.add("idx",loginUserIdx.toString()).build()
+                    builder.add("idx",loginUserIdx.toString()).build()
 
-                    val request = Request.Builder().url(url).patch(complete).build()
-
-                    val response = resign.newCall(request).execute()
+                    val response = UseOkHttp().useThreadPatch("modify/resign",builder)
 
                     if(response.isSuccessful)
                     {
@@ -85,7 +81,9 @@ class ResignFragment : Fragment() {
                     }
                     else
                     {
-                        DialogEx().netWork(requireContext())
+                        activity?.runOnUiThread {
+                            DialogEx().netWork(requireContext())
+                        }
                     }
 
                 }
