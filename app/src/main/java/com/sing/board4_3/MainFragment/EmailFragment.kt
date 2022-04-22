@@ -73,24 +73,26 @@ class EmailFragment : Fragment() {
         // binding
         binding = FragmentEmailBinding.inflate(layoutInflater)
 
+
+        // tool bar title setting
         binding.emailFragmentToolBar.title = "Enter your Email"
 
 
+        // 남은 시간
         newtext = binding.leftTime
 
 
+        // 이메일 인증 번호를 발생 가능 여부
         var emailAuthResult = true
 
-        /** 이메일 인증 버튼 눌렀을 경우
-         */
+        /** 이메일 인증 버튼 눌렀을 경우 */
         binding.emailAuth.setOnClickListener {
 
             // 입력받은 Email 값을 저장할 변수
             val email = binding.getEmail.text.toString()
 
 
-            /** 이메일 인증을 받지 않았을 경우 --------------------
-             */
+            /** 이메일 인증을 받지 않았을 경우 -------------------- */
             if( !emailAuthResult )
             {
                 DialogEx().makeDialog(
@@ -101,8 +103,10 @@ class EmailFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            /** 이메일 인증 받은 경우 유효성 검사 진행  */
             else
-            {
+            { // 이메일 인증 받은 경우 유효성 검사 --------
+
                 if(!Pattern.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$",email) )
                 {
 
@@ -117,23 +121,26 @@ class EmailFragment : Fragment() {
 
 
                 thread {
-
+                    // thread 1 -----------
 
                     val formBody = FormBody.Builder()
                     formBody.add("email",email).build()
 
 
-                    /** JoinController */
+                    /** JoinController -------> 회원 가입 시 Email 확인 */
                     val response = UseOkHttp().useThread("join/emailCheck", formBody)
 
-                    if(response.isSuccessful)
-                    {
 
+                    /** Net Working Success */
+                    if(response.isSuccessful)
+                    { // response.isSuccessful -------------
 
                         val result = response.body?.string()!!.trim()
 
-                        if(result.equals("available"))
-                        {
+                        /** 해당 Email을 이미 사용 중인 경우 */
+                        if( result.equals("available") )
+                        { // result.equals("available") -----------
+
                             activity?.runOnUiThread{
                                 val dialog = AlertDialog.Builder(requireContext())
                                 dialog.setTitle("Email Duplicate")
@@ -145,8 +152,10 @@ class EmailFragment : Fragment() {
                                 }
                                 dialog.show()
                             }
-                        }
-                         /** 탈퇴한 경우 */
+
+                        } // result.equals("available") -----------
+
+                         /** 탈퇴한 계정의 경우 */
                          else if(result.equals("NotAvailable"))
                         {
                             val act = activity as MainActivity
@@ -154,11 +163,11 @@ class EmailFragment : Fragment() {
                             act.fragmentController("restore",true, true )
                         }
 
-                        /** 아이디가 중복 없고 사용 가능할 때 해당 이메일로 인증번호 보내기 -------------------------
-                         */
+                        /** 이메일 중복 없고 사용 가능할 때 해당 이메일로 인증번호 보내기 -----------------------*/
                         else
-                        {
+                        { // 이메일 중복 없고 사용 가능할 때 해당 이메일로 인증번호 보내기 ------------
                             activity?.runOnUiThread{
+                                // activity?.runOnUiThread ---------------
 
                                 DialogEx().makeDialog(
                                     requireContext(),
@@ -176,7 +185,7 @@ class EmailFragment : Fragment() {
 
 
 
-                                // Resend Button 활성화 여부
+                                // 다시 보내기 Button 활성화 여부
                                 var isResend = false
 
 
@@ -184,18 +193,17 @@ class EmailFragment : Fragment() {
                                 isTimerRunning = true
 
                                 // Timer 가 정지 여부
-                                var timeStop = false
+                                var isTimerStop = false
 
-
-                                countDownThread(email, binding, isResend, timeStop)
+                                /** Timer 를 작동시키는 method */
+                                countDownThread(email, binding, isResend )
 
                                 // 인증번호 요청 3번 초과 시 LoginFragment 로 돌아가게 하기 위함 -----
                                 var tryTime = 3
 
 
 
-                                /** 인증 번호 다시 보낼 때 ------------------------------------------------
-                                 */
+                                /** 인증 번호 다시 보낼 때 -------------------------------------------- */
                                 binding.authResend.setOnClickListener {
                                     // authResend.setOnClickListener -----
 
@@ -204,20 +212,20 @@ class EmailFragment : Fragment() {
                                     tryTime--
 
                                     countdown.cancel()
+                                    // C
 
-                                    /**  3번 초과하지 않았을 때,
-                                     */
+                                    /**  3번 초과하지 않았을 때, */
                                     if(tryTime>0)
                                     {
                                         leftTime = totalTime
 
                                         isTimerRunning  = true
 
-                                        countDownThread(email, binding, isResend, timeStop)
+                                        countDownThread(email, binding, isResend )
 
                                     }
-                                    /**  3번 초과 했을 경우
-                                     */
+
+                                    /**  3번 초과 했을 경우 */
                                     else
                                     {
                                         DialogEx().makeDialog(
@@ -233,11 +241,13 @@ class EmailFragment : Fragment() {
                                 }// authResend.setOnClickListener -----
 
 
-                            }
-                        }
+                            }// activity?.runOnUiThread ---------------
+
+                        }// 이메일 중복 없고 사용 가능할 때 해당 이메일로 인증번호 보내기 ------------
 
 
-                    }
+                    }// response.isSuccessful -------------
+
                     /** NetWorking Fail*/
                     else
                     {
@@ -245,22 +255,28 @@ class EmailFragment : Fragment() {
                             DialogEx().netWork(requireContext())
                         }
                     }
-                }
+
+                } // thread 1 -----------
 
 
-            }
-        }
+            } // 이메일 인증 받은 경우 유효성 검사 --------
+
+        } // 이메일 인증 버튼 눌렀을 때
 
         return binding.root
     }
 
 
-    fun countDownThread(email:String,  binding:FragmentEmailBinding, isResend: Boolean, timeStop: Boolean )
+    /** 타이머가 작동 Method  */
+    fun countDownThread(email:String,  binding:FragmentEmailBinding, isResend: Boolean )
     {
+        // Timer가 멈추었는지 확인하는 member
+        var isTimerStop = false
 
-        var timeStop = false
+        /** timer 가 작동되었을 경우  : isTimerRunning = True */
         if(isTimerRunning)
-        {
+        { // timer 가 작동하는 경우 ------------
+
             countdown = object : CountDownTimer(leftTime, 1000) {
 
                 override fun onTick(p0: Long) {
@@ -272,7 +288,8 @@ class EmailFragment : Fragment() {
 
                     isTimerRunning = false
 
-                    if (!timeStop)
+                    // 타이머가 False 일 때만  Dialog 가 생성되도록 만든다.
+                    if (!isTimerStop)
                     {
                         DialogEx().makeDialog(
                             requireContext(),
@@ -287,6 +304,7 @@ class EmailFragment : Fragment() {
             }.start()
 
             thread {
+                // thread  타이머가 작동하면서 인증 번호를 부여 ------
 
 
                 val authBuilder = FormBody.Builder()
@@ -295,11 +313,15 @@ class EmailFragment : Fragment() {
                 /** EmailController ----> auth : emailAuth */
                 val authResponse = UseOkHttp().useThread("email/auth",authBuilder)
 
-                if (authResponse.isSuccessful) {
+                /** netWorking Success */
+                if (authResponse.isSuccessful)
+                {  // authResponse.isSuccessful -----------
 
+                    /** 재 전송 버튼을 한번이라도 실행 시킨적 있으면 True 로 변경 */
                     if(isResend)
                     {
-                        activity?.runOnUiThread {
+                        activity?.runOnUiThread{
+
 
                             DialogEx().makeDialog(
                                 requireContext(),
@@ -310,20 +332,26 @@ class EmailFragment : Fragment() {
                         }
                     }
 
+                    // Server 를 통해서 보낸 인증 번호
                     var authCode = authResponse.body?.string()!!.trim()
 
-
+                    /** 인증 번호 재전송 버튼을 눌렀을 경우 */
                     binding.authSubmit.setOnClickListener {
+                        //  인증 번호 재전송 버튼을 눌렀을 경우 ----------
 
+                        /** 사용자가 입력한 인증 번호 */
                         val userInputCode = binding.getSerial.text.toString()
 
+
+                        /** 입력한 인증 코드와 전송한 코드가 같고 타이머가 작동하고 있을 때, */
                         if (authCode.equals(userInputCode) && isTimerRunning)
                         {
                             isTimerRunning = false
 
-                            timeStop = true
+                            isTimerStop = true
 
                             activity?.runOnUiThread {
+                                // runOnUiThread -----------
 
                                 DialogEx().makeDialog(requireContext(),
                                     "authentication is complete",
@@ -345,8 +373,10 @@ class EmailFragment : Fragment() {
                                     act.fragmentController("join", true, true)
                                 }
 
-                            }
-                        }
+                            } // runOnUiThread -----------
+
+                        }// authCode.equals(userInputCode) && isTimerRunning -----------
+
                         else
                         {
 
@@ -359,11 +389,14 @@ class EmailFragment : Fragment() {
                         }
 
 
-                    }
-                }
+                    } //  인증 번호 재전송 버튼을 눌렀을 경우 ----------
+
+                } // authResponse.isSuccessful -----------
 
 
-            }
-        }
-    }
+            } // thread  타이머가 작동하면서 인증 번호를 부여 ------
+
+        } // timer 가 작동하는 경우 ------------
+
+    } // 타이머가 작동 Method ------
 }

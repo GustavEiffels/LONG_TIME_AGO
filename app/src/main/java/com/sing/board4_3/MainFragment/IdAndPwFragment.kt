@@ -126,9 +126,10 @@ class IdAndPwFragment : Fragment() {
                 val builderData = FormBody.Builder()
                 builderData.add("userId",joinId).build()
 
+                /** JoinController -------> idDuplicate : idDuplicateCheck */
                 val response = UseOkHttp().useThread("join/idDuplicate",builderData)
 
-
+                /** Email Connection Fail*/
                 if(response.isSuccessful)
                 {
                     val result_text = response.body?.string()!!.trim()
@@ -158,7 +159,7 @@ class IdAndPwFragment : Fragment() {
                     }
                 }
 
-                // 통신이 실패
+                /** Net Work Connection fail */
                 else
                 {
                     activity?.runOnUiThread{

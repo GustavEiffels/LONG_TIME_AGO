@@ -83,17 +83,14 @@ class JoinFragment : Fragment() {
                 val builderDup = FormBody.Builder()
                 builderDup.add("userNick", act.userNick)
 
-                /**
-                 * JoinController
-                 */
+                /** JoinController : nickDuplicateCheck -----> N*/
                 val dupResponse = UseOkHttp().useThread("join/nickDuplicate",builderDup)
 
 
                 val result = dupResponse.body?.string()!!.trim()
 
 
-                /** 정상적으로 통신 완료 ----------------------------------------------------------------
-                 */
+                /** NetWorking Connecting Success */
                 if ( dupResponse.isSuccessful )
                 {
 

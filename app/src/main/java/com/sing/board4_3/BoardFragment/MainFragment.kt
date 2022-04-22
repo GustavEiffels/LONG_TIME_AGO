@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sing.board4_3.Activity.BoardMainActivity
 import com.sing.board4_3.R
+import com.sing.board4_3.Support.DialogEx
 import com.sing.board4_3.Support.ServerIP
+import com.sing.board4_3.Support.UseOkHttp
 import com.sing.board4_3.databinding.BoardMainRecyclerviewBinding
 import com.sing.board4_3.databinding.FragmentBoardMainBinding
 import okhttp3.FormBody
@@ -372,6 +374,7 @@ class MainFragment : Fragment() {
      */
     fun getContentList(clear:Boolean)
     {
+        /** 들고오는 목록들을 초기화 해주는 method */
         if(clear)
         {
             contentIdxList.clear()
@@ -380,37 +383,25 @@ class MainFragment : Fragment() {
             contentWriteDateList.clear()
             contentImageUrl.clear()
 
-            // 다른 게시판을 고를 경우
 
-            // 현재 게시판 리스트를 초기화 해주고 나서
-
-            // page 번호도 초기화 해주어야 함
             val act = activity as BoardMainActivity
 
             act.nowPage = 1
         }
 
         thread{
-            val client = OkHttpClient()
+            // Paging 하여 recycler view 목록들을 가져오는 method --------------
 
-            val site = "http://${ServerIP.serverIp}/content/bring"
-
-            // activity 가져오기
             val act = activity as BoardMainActivity
 
             val builder1 = FormBody.Builder()
-
             builder1.add("content_board_idx", "${act.selectedBoardType}")
             builder1.add("limit","${act.nowPage}")
 
-            Log.i("현재페이지 = ", "${act.nowPage}" )
+            /** ContentsController --------------> bring: bringContent */
+            val response = UseOkHttp().useThread("content/bring", builder1 )
 
-            val formbody = builder1.build()
-
-            val request = Request.Builder().url(site).post(formbody).build()
-
-            val response = client.newCall(request).execute()
-
+            /** NetWorking Connection Success */
             if(response.isSuccessful)
             {
                 val resultText = response.body?.string()!!.trim()
@@ -430,9 +421,9 @@ class MainFragment : Fragment() {
 
 
 
-                // page를 가져온 것이 없다면 존재하지 않는 페이지를 가져오려하기 때문에
-                // page를 하나 빼준다.
 
+                // 마지막 페이지를 넘겼을 때 ,존재하지 않은 page 를 가져오려 하기 때문에
+                // Page -1 을 해준다
                 if(root.length() == 0 )
                 {
                     // 빠질 것이 없다면 마지막 PAGE 로 고정
@@ -448,7 +439,17 @@ class MainFragment : Fragment() {
 
 
             }
-        }
+            /** NetWorking connect Fail*/
+            else
+            {
+                activity?.runOnUiThread {
+                    DialogEx().netWork(requireContext())
+                }
+
+            }
+
+        }  // Paging 하여 recycler view 목록들을 가져오는 method --------------
+
     }
 
 }
