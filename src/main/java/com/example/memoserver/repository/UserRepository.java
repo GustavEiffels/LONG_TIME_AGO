@@ -11,6 +11,9 @@ import javax.transaction.Transactional;
 public interface UserRepository extends JpaRepository<User,Long>
 {
 
+    // -------------------- Login --------------------
+
+
     /** Login 을 위한 method  */
     /** LoginFragment ----> login */
     @Query(value ="select user_pw, user_idx, user_status from User where user_id=:userId")
@@ -23,12 +26,34 @@ public interface UserRepository extends JpaRepository<User,Long>
     String notAvailable(@Param("id")String id);
 
 
+    // -------------------- Login --------------------
 
+
+
+    // -------------------- DuplicateCheck  --------------------
+
+    /** 이메일 중복 확인 */
+    /** FindAccountFragment : FindAccount*/
+    /** EmailFragment : emailCheck */
+    @Query(value = "select user_status from User where user_Email=:user_email")
+    String emailCheck(@Param("user_email")String user_email);
+
+
+    /** Id 중복확인 method
+     *  IdAndPwFragment : idDuplicateCheck = idDuplicate -----> */
     @Query(value = "select user_id from User where user_id=:userId")
     String duplicateId(@Param("userId")String userId);
 
+
+    /** Nick 중복확인 method
+     *  JoinFragment : nickDuplicateCheck = nickDuplicate */
     @Query(value="select user_idx from User where user_nick_name=:nick")
     String duplicateNick(@Param("nick") String nick);
+
+
+    // -------------------- DuplicateCheck  --------------------
+
+
 
 
     /** 로그인 시 user 의 idx 로 auto login 값 들고오 기
@@ -37,9 +62,8 @@ public interface UserRepository extends JpaRepository<User,Long>
     String getAutoLogin(@Param("userIdx")Long userIdx);
 
 
-    /**
-     * 로그인 이후 유저의 Nick name 을 가져오는 method
-     */
+    /** 로그인 성공 시 해당 로그인한 user 의 nickname 을 받아오는 method  */
+    /** LoginFragment */
     @Query(value = "select user_nick_name from User where user_idx=:userIdx")
     String getUserNIck(@Param("userIdx")Long userIdx);
 
@@ -74,10 +98,7 @@ public interface UserRepository extends JpaRepository<User,Long>
     int updatePwByEmail(@Param("newPw")String newPw, @Param("email")String email);
 
 
-    /** 자신의 계정을 찾는 Method */
-    /** FindAccountFragment */
-    @Query(value = "select user_status from User where user_Email=:user_email")
-    String emailCheck(@Param("user_email")String user_email);
+
 
 
     /**  google Account Check */

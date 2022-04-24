@@ -19,11 +19,12 @@ public class LoginController
     @Autowired
     private LoginService loginService;
 
+    // ---------------------------------------------------------------
 
     /** Login 을 위한 method  */
     /** LoginFragment ----> login */
     @PostMapping("")
-    public String login(String userId, String userPw, int user_autologin) throws IOException
+    public String login(String userId, String userPw, int user_autologin)
     {
         // 입력한 정보가 알맞을 경우, userIdx 를 반환
         // 입력한 정보가 알맞지 않을 경우 , ErrorMessage 를 반환
@@ -58,8 +59,7 @@ public class LoginController
     }
 
 
-    /** 로그인 성공 시 해당 로그인한 user 의 nickname 을 받아오는 method ---------------------------------------------------------- */
-    /** LoginFragment */
+
     @PostMapping("getUserNick")
     public String getUserNick(String user_idx)
     {
@@ -68,7 +68,7 @@ public class LoginController
 
 
 
-    /** Logout method -------------------------------------------------------------------------------------------------- */
+    /** Logout method  */
     /** settingFragment */
     @PostMapping("logout")
     public void logout(String user_idx, int user_auto_login) { loginService.logout(Long.valueOf(user_idx), user_auto_login); }

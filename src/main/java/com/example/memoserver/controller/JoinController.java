@@ -40,7 +40,7 @@ public class JoinController
 
 
     /** Id 중복확인 method
-     *  IdAndPwFragment : idDuplicate -----> */
+     *  IdAndPwFragment : idDuplicateCheck = idDuplicate  */
     @PostMapping("/idDuplicate")
     private String idDuplicateCheck(String userId)
     {
@@ -61,7 +61,7 @@ public class JoinController
     }
 
     /** Nick 중복확인 method
-     *  JoinFragment */
+     *  JoinFragment : nickDuplicateCheck = nickDuplicate */
     @PostMapping("/nickDuplicate")
     private String nickDuplicateCheck(String userNick)
     {

@@ -18,6 +18,8 @@ public class FindController
     @Autowired
     private FindService findService;
 
+    // ------------------------------------------------------------------------------------------------------------------
+
     /** 자신의 계정을 찾는 Method */
     /** FindAccountFragment */
     @PostMapping("account")
@@ -27,7 +29,7 @@ public class FindController
     }
 
     /** 비밀번호를 재설정하는 Method */
-    /** FindAccountFragment :  */
+    /** ResetPasswordFragment :  */
     @PostMapping("password")
     public String findPassword(String email , String id) throws MessagingException
     {
