@@ -21,9 +21,6 @@ public interface LoginService
   void logout(Long user_idx, int user_auto_login);
 
 
-
-
-
   // Google Account check
   String googleCheck(String email);
 

@@ -48,9 +48,9 @@ class MemoServerApplicationTests {
     public void hundredSave()
     {
 
-        for(int i = 0 ; i < 101 ; i++) {
+        for(int i = 1 ; i <= 30 ; i++) {
             User user = User.builder()
-                    .user_idx(2L)
+                    .user_idx(1L)
                     .build();
 
             Board board = Board.builder()
@@ -58,12 +58,12 @@ class MemoServerApplicationTests {
                     .build();
 
             Content content = Content.builder()
-                    .content_subject("test subject" + i)
-                    .content_text("this sample text numbder ={}"+i)
+                    .content_subject("test"+ i)
+                    .content_text(String.format("this sample text numbder ={}", i))
                     .content_writer_idx(user)
                     .content_write_date(LocalDateTime.now())
-                    .content_image("")
-                    .content_image_url("")
+                    .content_image("empty")
+                    .content_image_url("empty")
                     .content_board_idx(board)
                     .build();
             contentRepository.save(content);

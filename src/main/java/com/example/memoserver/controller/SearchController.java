@@ -2,7 +2,6 @@ package com.example.memoserver.controller;
 
 import com.example.memoserver.service.search.SearchService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

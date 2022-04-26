@@ -77,7 +77,7 @@ public class ContentServiceImpl implements ContentService
         limit = (limit - 1);
         System.out.println(limit);
 
-        PageRequest pageRequest = PageRequest.of(limit,3, Sort.Direction.DESC,"content_idx");
+        PageRequest pageRequest = PageRequest.of(limit,10, Sort.Direction.DESC,"content_idx");
 
         log.info("limit = {}", limit);
         System.out.println(limit);
