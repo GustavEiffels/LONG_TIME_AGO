@@ -48,7 +48,7 @@ class MemoServerApplicationTests {
     public void hundredSave()
     {
 
-        for(int i = 1 ; i <= 30 ; i++) {
+        for(int i = 1 ; i <= 100 ; i++) {
             User user = User.builder()
                     .user_idx(1L)
                     .build();
@@ -59,7 +59,7 @@ class MemoServerApplicationTests {
 
             Content content = Content.builder()
                     .content_subject("test"+ i)
-                    .content_text(String.format("this sample text numbder ={}", i))
+                    .content_text("this is a simple test for paging , content number = "+i)
                     .content_writer_idx(user)
                     .content_write_date(LocalDateTime.now())
                     .content_image("empty")

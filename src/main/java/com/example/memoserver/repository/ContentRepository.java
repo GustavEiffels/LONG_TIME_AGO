@@ -56,8 +56,6 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                     "date_format(c.content_write_date,'%Y-%m-%d') as content_write_date, \n" +
                     "c.content_subject, " +
                     "c.content_image_url, " +
-                    "c.content_image, " +
-                    "c.content_board_idx,  " +
                     "c.content_text " +
                     "from Content c, User u \n" +
                     "where c.content_writer_idx = u.user_idx \n" +
@@ -75,8 +73,6 @@ public interface ContentRepository extends JpaRepository<Content,Long>
                     "date_format(c.content_write_date,'%Y-%m-%d') as content_write_date, \n" +
                     "c.content_subject, " +
                     "c.content_image_url, " +
-                    "c.content_image, " +
-                    "c.content_board_idx, " +
                     "c.content_text  " +
                     "from Content c,  User u \n" +
                     "where c.content_writer_idx = u.user_idx\n and u.user_status=:status", nativeQuery = true)

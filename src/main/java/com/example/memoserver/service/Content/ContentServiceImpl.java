@@ -106,9 +106,7 @@ public class ContentServiceImpl implements ContentService
             json.put("content_write_date",rArr[2]);
             json.put("content_subject",rArr[3]);
             json.put("content_image_url",rArr[4]);
-            json.put("content_image",rArr[5]);
-            json.put("content_board_idx",rArr[6]);
-            json.put("content_text",rArr[7]);
+            json.put("content_text",rArr[5]);
 
             array.put(json);
         }
