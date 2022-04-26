@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
 
-
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"
         android:layout_height="20dp">
@@ -96,6 +95,8 @@
         android:textColor="#669900" />
 
     <androidx.legacy.widget.Space
+            android:id="@+id/space2"
+            android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="20dp">
     </androidx.legacy.widget.Space>
@@ -115,6 +116,8 @@
 
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"
+        android:id="@+id/space1"
+            android:visibility="gone"
         android:layout_height="20dp">
     </androidx.legacy.widget.Space>
 
@@ -129,10 +132,7 @@
             android:textColor="#669900"
             android:text="close" />
 
-    <androidx.legacy.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp">
-    </androidx.legacy.widget.Space>
+
 
 
 

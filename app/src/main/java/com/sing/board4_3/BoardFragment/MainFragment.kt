@@ -309,12 +309,17 @@ class MainFragment : Fragment() {
                     holder.boardShowContext.visibility = View.GONE
                     holder.boardContext.visibility = View.VISIBLE
                     holder.boardClose.visibility = View.VISIBLE
+                    holder.space1.visibility = View.VISIBLE
+                    holder.space2.visibility = View.VISIBLE
+
 
                     holder.boardClose.setOnClickListener {
 
                         holder.boardShowContext.visibility = View.VISIBLE
                         holder.boardContext.visibility = View.GONE
                         holder.boardClose.visibility = View.GONE
+                        holder.space1.visibility = View.GONE
+                        holder.space2.visibility = View.GONE
                     }
 
                 }
@@ -373,6 +378,8 @@ class MainFragment : Fragment() {
             val boardShowContext = boardMainRecyclerItemBinding.showContext
             val boardContext = boardMainRecyclerItemBinding.contentsContentText
             val boardClose = boardMainRecyclerItemBinding.closeContext
+            val space1 = boardMainRecyclerItemBinding.space1
+            val space2 = boardMainRecyclerItemBinding.space2
 
 
 

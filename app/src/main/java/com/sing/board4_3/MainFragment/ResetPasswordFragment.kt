@@ -149,6 +149,7 @@ class ResetPasswordFragment : Fragment() {
                     {
 
                         act.email = email
+                        act.fragmentRemoveBackStack("reset_password")
                         act.fragmentController("restore",true,true)
                     }
 

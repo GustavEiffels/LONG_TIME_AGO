@@ -93,7 +93,9 @@ class FindAccountFragment : Fragment() {
 
                     else if( result.equals("NotAvailable") )
                     {
-                        act.fragmentController("restore",false,false )
+                        act.fragmentRemoveBackStack("find_account")
+                        act.fragmentController("restore",true,true )
+
 
                         // main Activity 에 email 저장
                         act.email = email

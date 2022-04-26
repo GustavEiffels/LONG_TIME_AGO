@@ -410,6 +410,7 @@ class LoginFragment : Fragment(){
                         /** 구글로그인 계정이 탈퇴한 계정일 경우 */
                         else if(result.equals("NotAvailable"))
                         {
+                            act.fragmentRemoveBackStack("login")
                             act.fragmentController("restore",true,true)
                         }
 

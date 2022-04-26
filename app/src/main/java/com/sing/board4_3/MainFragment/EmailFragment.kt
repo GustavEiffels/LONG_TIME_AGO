@@ -160,6 +160,7 @@ class EmailFragment : Fragment() {
                         {
                             val act = activity as MainActivity
                             act.email = email
+                            act.fragmentRemoveBackStack("reset_password")
                             act.fragmentController("restore",true, true )
                         }
 

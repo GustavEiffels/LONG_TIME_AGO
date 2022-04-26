@@ -18,9 +18,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.sing.board4_3.Activity.BoardMainActivity
 import com.sing.board4_3.R
+import com.sing.board4_3.Support.DialogEx
 import com.sing.board4_3.Support.ServerIP
 import com.sing.board4_3.databinding.FragmentBoardModifyBinding
 import okhttp3.FormBody
@@ -277,17 +279,10 @@ class ModifyFragment : Fragment()
                                 inputMethodManager.hideSoftInputFromWindow(boardModifyFragmentBinding.boardModifyText.windowToken,0 )
 
 
-                                val dialogBuilder = AlertDialog.Builder(requireContext())
-                                dialogBuilder.setTitle("Modify Complete")
-                                dialogBuilder.setMessage("Content Modify success")
-                                dialogBuilder.setPositiveButton("confirm"){
-                                    dialogInterface: DialogInterface, i: Int->
+                                Toast.makeText(requireContext(), "Modify Complete", Toast.LENGTH_SHORT).show()
 
-                                    //backStack 에서 제거
-                                    act.fragmentRemoveBackStack("board_modify")
-                                    act.fragmentController("board_read", true,true)
-                                }
-                                dialogBuilder.show()
+                                act.fragmentRemoveBackStack("board_modify")
+                                act.fragmentController("board_read", true,true)
                             }
                         }
                         /**
@@ -296,11 +291,7 @@ class ModifyFragment : Fragment()
                         else
                         {
                             activity?.runOnUiThread{
-                                val dialogBuilder = AlertDialog.Builder(requireContext())
-                                dialogBuilder.setTitle("Error")
-                                dialogBuilder.setMessage("Write Error Emerge")
-                                dialogBuilder.setPositiveButton("confirm", null)
-                                dialogBuilder.show()
+                                DialogEx().netWork(requireContext())
                             }
                         }
                     }
