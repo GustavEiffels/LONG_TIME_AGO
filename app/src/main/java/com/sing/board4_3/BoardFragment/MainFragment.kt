@@ -31,10 +31,26 @@ import kotlin.concurrent.thread
 
 class MainFragment : Fragment() {
 
+
+    /** 정해진 Paging size 보다 적은양의 데이터들을 들고왔을 경우
+     * 해당 page 가 마지막 page 이기 때문에 isPageMax 를 true 로 변경하여
+     * page 가 이후 증가하는 것을 방지한다.*/
     var isPageMax = false
 
-    /**  */
-    var pageUp = true
+    /** Page 변경 가능 여부 */
+    /**
+     *  paging 을 시도할 item 영역에서 벗어나지 못하면 ,  touch 했을 때 ,
+     *  paging 이 영역안에서의 터치 횟수만큼 호출되기 때문에 사실상
+     *  Paging의 의미가 사라진다.
+     *  Paging 이 일어나는 method 에 조건문을 추가해서
+     *  isPageUp 이 true 일 때만 paging 이 이루어지게 설정
+     *  만약 Paging 이 한번 일어나면 isPageUP 객체를 false 로 변환해서
+     *  이후 Paging 발생 영역안에서 여러번의 터치가 이루어진다고해도 호출되지 않는다.
+     *  Paging 발생 영역보다 초과할 경우 조건문을 만들어
+     *  isPageUp member 를 true 로 변경한다.
+     * */
+    var isPageUP = true
+
 
     // Binding
     lateinit var boardMainFragmentBinding : FragmentBoardMainBinding
@@ -50,6 +66,9 @@ class MainFragment : Fragment() {
 
 
     val contentImageUrl = ArrayList<String>()
+
+    /** 글 내용을 담을 변수 선언 */
+    val contentContext = ArrayList<String>()
 
 
     lateinit var googleNick:String
@@ -143,8 +162,7 @@ class MainFragment : Fragment() {
         }
 
 
-        /** Search view
-         */
+        /** Search view */
         boardMainFragmentBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener
         {
@@ -185,8 +203,7 @@ class MainFragment : Fragment() {
         boardMainFragmentBinding.boardMainRecycler.addItemDecoration(DividerItemDecoration(requireContext(), 1))
 
 
-        // Unlimited Scroll --> paging
-        // addOnScrollListener() --> 스크롤 발생시 동작
+        /** 스크롤 동작할 때 실행 */
         boardMainFragmentBinding.boardMainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener()
             {
 
@@ -204,33 +221,28 @@ class MainFragment : Fragment() {
 
                     if(index1%10==0)
                     {
-                        pageUp=true
+                        isPageUP=true
                     }
 
 
-                    if(pageUp&&!isPageMax)
+                    if(isPageUP&&!isPageMax)
                     {
                         if (index1 + 1 == count1)
                         {
                             // 같을 경우 page 를 +1 증가 시켜준다.
                             act.nowPage = act.nowPage + 1
 
-                            Log.i("현재 page = ", act.nowPage.toString())
-
-                            Toast.makeText(requireContext(), "${act.nowPage.toString()} Page", Toast.LENGTH_SHORT).show()
-
-
-                            pageUp = false
+                            isPageUP = false
 
                             getContentList(false)
+
+
+
                         }
                     }
 
                 }
             })
-
-
-
 
 
         // 기져오게 설정하기
@@ -251,15 +263,12 @@ class MainFragment : Fragment() {
     }
 
 
-    /**
-     *  RecyclerViewAdapter -----------------------------------------
-     */
+    /** RecyclerViewAdapter */
     inner class BoardMainRecyclerAdapter: RecyclerView.Adapter<BoardMainRecyclerAdapter.ViewHolderClass>()
     {
 
 
-        /** ViewHolder Create ------
-         */
+        /** ViewHolder Create */
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass
         {
             val boardMainRecyclerItemBinding = BoardMainRecyclerviewBinding.inflate(layoutInflater)
@@ -287,8 +296,29 @@ class MainFragment : Fragment() {
 
             holder.boardMainItemSubject.text =contentSubjectList[safePosition]
 
+            holder.boardContext.text = contentContext[safePosition]
 
             holder.boardMainItemSubject.isSelected = true
+
+
+
+
+                holder.boardShowContext.setOnClickListener {
+                    it.isClickable = true
+
+                    holder.boardShowContext.visibility = View.GONE
+                    holder.boardContext.visibility = View.VISIBLE
+                    holder.boardClose.visibility = View.VISIBLE
+
+                    holder.boardClose.setOnClickListener {
+
+                        holder.boardShowContext.visibility = View.VISIBLE
+                        holder.boardContext.visibility = View.GONE
+                        holder.boardClose.visibility = View.GONE
+                    }
+
+                }
+
 
 
 
@@ -340,7 +370,9 @@ class MainFragment : Fragment() {
             val boardMainItemSubject = boardMainRecyclerItemBinding.boardMainItemSubject
             val boardMainItemWriteDate = boardMainRecyclerItemBinding.boardMainItemWriteDate
             val boardImage = boardMainRecyclerItemBinding.mainImageView
-            val boardContentsText = boardMainRecyclerItemBinding.contentsContentText
+            val boardShowContext = boardMainRecyclerItemBinding.showContext
+            val boardContext = boardMainRecyclerItemBinding.contentsContentText
+            val boardClose = boardMainRecyclerItemBinding.closeContext
 
 
 
@@ -373,13 +405,14 @@ class MainFragment : Fragment() {
             contentSubjectList.clear()
             contentWriteDateList.clear()
             contentImageUrl.clear()
+            contentContext.clear()
 
 
             val act = activity as BoardMainActivity
 
             act.nowPage = 1
 
-            pageUp = true
+            isPageUP = true
 
             isPageMax = false
         }
@@ -412,9 +445,16 @@ class MainFragment : Fragment() {
                         contentWriteDateList.add(obj.getString("content_write_date"))
                         contentSubjectList.add(obj.getString("content_subject"))
                         contentImageUrl.add(obj.getString("content_image_url"))
+                        contentContext.add(obj.getString("content_text"))
                 }
 
-
+                if(root.length() == 10)
+                {
+                    activity?.runOnUiThread {
+                        Log.i("현재 page = ", act.nowPage.toString())
+                        Toast.makeText(requireContext(), "Current Page ${act.nowPage}", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
 
                 // 마지막 페이지를 넘겼을 때 ,존재하지 않은 page 를 가져오려 하기 때문에
@@ -423,26 +463,26 @@ class MainFragment : Fragment() {
                 {
                     // 빠질 것이 없다면 마지막 PAGE 로 고정
 
+                    isPageUP = false
+
+                    isPageMax = true
+
 
                     act.nowPage = act.nowPage -1
+
 
                     Log.i("Last Page", "This is last page")
                     activity?.runOnUiThread{
                         Toast.makeText(requireContext(), "This is Last Page", Toast.LENGTH_SHORT).show()
                     }
 
-                    pageUp = false
 
-                    isPageMax = true
                 }
-
 
                activity?.runOnUiThread {
                     // recyclerView 갱신
                     boardMainFragmentBinding.boardMainRecycler.adapter?.notifyDataSetChanged()
                 }
-
-
 
             }
             /** NetWorking connect Fail*/

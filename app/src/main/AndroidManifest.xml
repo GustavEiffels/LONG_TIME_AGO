@@ -15,9 +15,6 @@
         android:theme="@style/Theme.Board4_3"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".GoogleResultActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activity.BoardMainActivity"
             android:exported="false" />
         <activity
