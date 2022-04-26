@@ -353,7 +353,6 @@ class SearchResultFragment : Fragment() {
         else
         {
             Toast.makeText(requireContext(),"Please enter at least 2 characters", Toast.LENGTH_SHORT).show()
-
         }
     }
 

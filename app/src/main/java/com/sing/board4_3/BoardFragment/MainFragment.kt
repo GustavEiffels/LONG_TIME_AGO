@@ -31,6 +31,10 @@ import kotlin.concurrent.thread
 
 class MainFragment : Fragment() {
 
+    var isPageMax = false
+
+    /**  */
+    var pageUp = true
 
     // Binding
     lateinit var boardMainFragmentBinding : FragmentBoardMainBinding
@@ -48,9 +52,8 @@ class MainFragment : Fragment() {
     val contentImageUrl = ArrayList<String>()
 
 
-
-
     lateinit var googleNick:String
+
 
     lateinit var show:TextView
 
@@ -70,7 +73,6 @@ class MainFragment : Fragment() {
     ): View?
     {
         // Inflate the layout for this fragment
-
         // BoardMainActivity 를 불러옴
         val act = activity as BoardMainActivity
 
@@ -83,19 +85,16 @@ class MainFragment : Fragment() {
         boardMainFragmentBinding.boardToolbar.title= act.boardNameList[act.selectedBoardType]
 
 
-        /** Toolbar 에 Menu 적용
-         */
+        /** Toolbar 에 Menu 적용 */
         boardMainFragmentBinding.boardToolbar.inflateMenu(R.menu.board_main_menu)
 
 
-        /** Tool bar 의 menu 를 들고올 경우
-         */
+        /** Tool bar 의 menu 를 들고올 경우 */
         boardMainFragmentBinding.boardToolbar.setOnMenuItemClickListener {
 
             when(it.itemId)
             {
-                /** 다른 게시판 종류를 선택할 수 있는 spinner 를 눌렀을 경우 -----------------------------------
-                 */
+                /** 다른 게시판 종류를 선택할 수 있는 spinner 를 눌렀을 경우 */
                 R.id.board_main_menu_board_list ->
                 {
                     // Board Main Activity 를 부름
@@ -121,8 +120,7 @@ class MainFragment : Fragment() {
                     true
                 }
 
-                /** 메뉴에서 글쓰기 버튼을 눌렀을 경우 ------------------------------------------------------
-                 */
+                /** 메뉴에서 글쓰기 버튼을 눌렀을 경우 */
                 R.id.board_main_menu_write ->
                 {
 
@@ -132,8 +130,7 @@ class MainFragment : Fragment() {
                     true
                 }
 
-                /** 메뉴에서 세팅 버튼을 눌렀을 경우 --------------------------------------------------------
-                 */
+                /** 메뉴에서 세팅 버튼을 눌렀을 경우 */
                 R.id.board_main_setting ->
                 {
                     val act = activity as BoardMainActivity
@@ -174,10 +171,7 @@ class MainFragment : Fragment() {
             }
 
         })
-
-
-
-
+        
         /** RecyclerView 설정 ----
          */
         val boardMainRecyclerAdapter = BoardMainRecyclerAdapter()
@@ -195,34 +189,42 @@ class MainFragment : Fragment() {
         // addOnScrollListener() --> 스크롤 발생시 동작
         boardMainFragmentBinding.boardMainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener()
             {
-                // Scroll 이 완료되면 수행되는 method 를 선언
+
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    // scroll 이 끝나는 항목은 현재 화면에 보이는 항목중 제일 미자막 항목의 index 임으로
-                    // 제일 마지막 항목의 index 를 가져온다
+                    // 0 부터
                     val index1 = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                    Log.i("마지막 index : ", "$index1")
-
-                    // index view 는 0 부터 시작
 
 
                     // recycler view 가 관리하는 항목의 총 개수
                     val count1 = recyclerView.adapter?.itemCount
 
-                    Log.i("관리하는 항목의 개 : ", "$count1")
 
-                    // recycler view 가 관리하는 수와 마지막 항목의 index +1 한 값이 같으면
-                    // page 를 다 봤다고 할 수 있다.
-                    if( index1 + 1 == count1 )
+
+                    if(index1%10==0)
                     {
-                        // 같을 경우 page 를 +1 증가 시켜준다.
-                        act.nowPage = act.nowPage + 1
-
-
-                        getContentList(false)
+                        pageUp=true
                     }
-                    Log.i("현재 page : ", "${act.nowPage}")
+
+
+                    if(pageUp&&!isPageMax)
+                    {
+                        if (index1 + 1 == count1)
+                        {
+                            // 같을 경우 page 를 +1 증가 시켜준다.
+                            act.nowPage = act.nowPage + 1
+
+                            Log.i("현재 page = ", act.nowPage.toString())
+
+                            Toast.makeText(requireContext(), "${act.nowPage.toString()} Page", Toast.LENGTH_SHORT).show()
+
+
+                            pageUp = false
+
+                            getContentList(false)
+                        }
+                    }
 
                 }
             })
@@ -245,10 +247,9 @@ class MainFragment : Fragment() {
             boardMainFragmentBinding.boardMainSwipe.isRefreshing = false
         }
 
-
-
         return boardMainFragmentBinding.root
     }
+
 
     /**
      *  RecyclerViewAdapter -----------------------------------------
@@ -278,12 +279,13 @@ class MainFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int)
         {
+            var safePosition = holder.adapterPosition
             // data 를 holder 에 넣기
-            holder.boardMainItemNickname.text = contentWriterList[position]
+            holder.boardMainItemNickname.text = contentWriterList[safePosition]
 
-            holder.boardMainItemWriteDate.text= contentWriteDateList[position]
+            holder.boardMainItemWriteDate.text= contentWriteDateList[safePosition]
 
-            holder.boardMainItemSubject.text =contentSubjectList[position]
+            holder.boardMainItemSubject.text =contentSubjectList[safePosition]
 
 
             holder.boardMainItemSubject.isSelected = true
@@ -292,24 +294,19 @@ class MainFragment : Fragment() {
 
             /**  게시글에 이미지가 포함되어있을 때
              * */
-            if(!contentImageUrl[position].equals("empty"))
+            if(!contentImageUrl[safePosition].equals("empty"))
             {
                 holder.boardImage.visibility = View.VISIBLE
                 /** 이미지의 url 을 사용해서 SERVER 절대 경로에 있는 해당 이미지를 가져와서 구현 -------------
                  */
                 thread{
-                    val uploadClient = OkHttpClient()
-
-                    val uploadSite = "http://${ServerIP.serverIp}/content/getImage"
 
                     val urlBuilder = FormBody.Builder()
-                    urlBuilder.add("content_image_url",contentImageUrl[position])
+                    urlBuilder.add("content_image_url",contentImageUrl[safePosition])
 
-                    val urlForm = urlBuilder.build()
 
-                    val urlRequest = Request.Builder().url(uploadSite).post(urlForm).build()
+                    val uploadResponse = UseOkHttp().useThread("content/getImage",urlBuilder)
 
-                    val uploadResponse = uploadClient.newCall(urlRequest).execute()
 
                     val result = uploadResponse.body?.bytes()!!
 
@@ -326,12 +323,7 @@ class MainFragment : Fragment() {
                 holder.boardImage.visibility = View.GONE
             }
 
-
-
-
-
         }
-
 
         override fun getItemCount(): Int
         {
@@ -349,7 +341,6 @@ class MainFragment : Fragment() {
             val boardMainItemWriteDate = boardMainRecyclerItemBinding.boardMainItemWriteDate
             val boardImage = boardMainRecyclerItemBinding.mainImageView
             val boardContentsText = boardMainRecyclerItemBinding.contentsContentText
-
 
 
 
@@ -387,6 +378,10 @@ class MainFragment : Fragment() {
             val act = activity as BoardMainActivity
 
             act.nowPage = 1
+
+            pageUp = true
+
+            isPageMax = false
         }
 
         thread{
@@ -424,10 +419,21 @@ class MainFragment : Fragment() {
 
                 // 마지막 페이지를 넘겼을 때 ,존재하지 않은 page 를 가져오려 하기 때문에
                 // Page -1 을 해준다
-                if(root.length() == 0 )
+                if(root.length() < 10 )
                 {
                     // 빠질 것이 없다면 마지막 PAGE 로 고정
+
+
                     act.nowPage = act.nowPage -1
+
+                    Log.i("Last Page", "This is last page")
+                    activity?.runOnUiThread{
+                        Toast.makeText(requireContext(), "This is Last Page", Toast.LENGTH_SHORT).show()
+                    }
+
+                    pageUp = false
+
+                    isPageMax = true
                 }
 
 
