@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema({
     }
 })
 
-const User = mongoose.Mongoose.model('User',userSchema)
+const User = mongoose.model('User',userSchema)
 
 /** 다른 파일에서도 사용가능하게 만듬  */
-module.exports={}
+module.exports={User}
