@@ -13,6 +13,9 @@ const {User} = require("./models/User");
 /** body parser */
 const bodyParser = require('body-parser')
 
+/** config 에서 정보 가져오기  */
+const config = require('./config/key')
+
 
 /** body parser Option 주기 */
 
@@ -25,10 +28,10 @@ app.use(bodyParser.json());
 
 
 
+
 /** Mongoose 설정  */
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://samsung:1234@test-cluster.7eyzo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-{}).then(()=>console.log("Mongo DB Connected"))
+mongoose.connect(config.mongoURI,{}).then(()=>console.log("Mongo DB Connected"))
 // .catch(()=>console.log("Error Emerge"))
 
 
