@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 import com.example.supertest.Wrapper.Company_Info__c;
+import com.google.gson.Gson;
 import com.sap.conn.jco.AbapException;
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoDestinationManager;
@@ -57,15 +58,16 @@ public class JcoClient {
         if (function == null)
             throw new RuntimeException("Function을 찾을 수 없습니다.");
         try {
-            function.getImportParameterList().setValue("COMPANYCODEID", id);
+            function.getImportParameterList().setValue("COMPANYID", id);
             function.execute(destination);
         } catch (AbapException e) {
             System.out.println(e.toString());
             return null;
         }
-        JCoStructure detail = function.getExportParameterList().getStructure("COMPANYCODE_DETAIL");
+        JCoStructure detail = function.getExportParameterList().getStructure("COMPANY_DETAIL");
         JCoMetaData detailMeta = detail.getMetaData();
         Company_Info__c company = new Company_Info__c();
+        System.out.println(detail.toString());
         for(int i = 0; i < detailMeta.getFieldCount(); i++) {
             try {
                 company.setField(detailMeta.getName(i), detail.getString(detailMeta.getName(i)));
@@ -74,6 +76,15 @@ public class JcoClient {
             }
         }
         return company;
+    }
+
+    public static void main(String[] args) {
+        Gson gson = new Gson();
+        try {
+            System.out.println(gson.toJson(getCompany("1")));
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
 }

@@ -1,0 +1,10 @@
+#for tests only !
+#Fri Jul 08 14:13:58 KST 2022
+jco.client.lang=KO
+jco.client.passwd=thqpxpr2022~
+jco.client.sysnr=20
+jco.destination.pool_capacity=3
+jco.client.client=800
+jco.destination.peak_limit=10
+jco.client.user=SBTRMSDI
+jco.client.ashost=192.168.0.120

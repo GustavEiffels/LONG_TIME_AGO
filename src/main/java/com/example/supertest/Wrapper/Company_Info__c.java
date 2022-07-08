@@ -25,7 +25,7 @@ public class Company_Info__c {
         this.PO_BOX__c = PO_BOX;
         this.POSTL_COD1__c = POSTL_COD1;
         this.CITY__c = CITY;
-        this.CURRENCY__c = CURRENCY;
+        this.CURRENCY_ISO__c = CURRENCY;
         this.COUNTRY_ISO__c = COUNTRY_ISO;
         this.LANGU_ISO__c = LANGU_ISO;
     }
@@ -44,14 +44,15 @@ public class Company_Info__c {
     String PO_BOX__c;
     String POSTL_COD1__c;
     String CITY__c;
-    String CURRENCY__c;
+    String CURRENCY_ISO__c;
     String COUNTRY_ISO__c;
     String LANGU_ISO__c;
 
     String error;
 
     public void setField(String fieldName, String value) throws NoSuchFieldException, IllegalAccessException {
-        Field field = getClass().getDeclaredField(fieldName);
+        Field field = getClass().getDeclaredField(fieldName + "__c");
         field.set(this, value);
+        if (fieldName.equals("NAME1")) this.Name = value;
     }
 }
