@@ -31,6 +31,9 @@ dependencies
 
             // OkHttp
             implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+            // simple json
+            implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 tasks.named('test') {
