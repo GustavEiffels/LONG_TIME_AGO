@@ -2,6 +2,11 @@ package com.example.supertest.Client;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.example.supertest.Wrapper.Company_Info__c;
@@ -14,6 +19,7 @@ import com.sap.conn.jco.JCoException;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoMetaData;
 import com.sap.conn.jco.JCoStructure;
+import com.sap.conn.jco.JCoTable;
 import com.sap.conn.jco.ext.DestinationDataProvider;
 
 public class JcoClient {
@@ -67,12 +73,12 @@ public class JcoClient {
             return null;
         }
         JCoStructure detail = function.getExportParameterList().getStructure("COMPANY_DETAIL");
-        JCoMetaData detailMeta = detail.getMetaData();
+        JCoMetaData table = detail.getMetaData();
         Company_Info__c company = new Company_Info__c();
         System.out.println(detail.toString());
-        for (int i = 0; i < detailMeta.getFieldCount(); i++) {
+        for (int i = 0; i < table.getFieldCount(); i++) {
             try {
-                company.setField(detailMeta.getName(i), detail.getString(detailMeta.getName(i)));
+                company.setField(table.getName(i), detail.getString(table.getName(i)));
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
@@ -81,7 +87,8 @@ public class JcoClient {
     }
 
     // BAPI_COMPANY_GETLIST : import parameter 값 없이 모든 리스트 import
-    public static Company_Info__c getCompanyList() throws JCoException {
+    public static Map<String, Object> getCompanyList() throws JCoException {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
         JCoDestination destination = JCoDestinationManager.getDestination(ABAP_AS_POOLED);
         JCoFunction function = destination.getRepository().getFunction("BAPI_COMPANY_GETLIST");
         if (function == null)
@@ -92,20 +99,27 @@ public class JcoClient {
             System.out.println(e.toString());
             return null;
         }
-        JCoStructure detail = function.getExportParameterList().getStructure("COMPANY_DETAIL");
-        JCoMetaData detailMeta = detail.getMetaData();
-        Company_List__c companyList = new Company_List__c();
-        System.out.println(detail.toString());
-        for (int i = 0; i < detailMeta.getFieldCount(); i++) {
-            try {
-                companyList.setField(detailMeta.getName(i), detail.getString(detailMeta.getName(i)));
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
-        }
-        return companyList;
-    }
 
+        // JCoTable table = function.getExportParameterList().getTable("COMPANY_LIST");
+        // JCoMetaData tableMeta = table.getMetaData();
+        // Company_List__c companyList = new Company_List__c();
+
+        // Map<String, Map<String, String>> exportParamList = new HashMap<>();
+        // for(int i = 0; i < function.getExportParameterList().getFieldCount(); i++;){
+        //     JCoStructure structure = function.getExportParameterList().getStructure(arg0)
+        // }
+
+        List<String> tableParamList = new ArrayList<>();
+        try{
+            for(int i = 0; i < function.getTableParameterList().getFieldCount(); i++){
+                tableParamList.add(function.getTableParameterList().getTable(i).getMetaData().toString());
+            }
+        }catch(Exception e){
+
+        }
+        resultMap.put("table", tableParamList);
+        return resultMap;
+    }
     public static void main(String[] args) {
         Gson gson = new Gson();
         try {
