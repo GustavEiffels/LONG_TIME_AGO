@@ -1,0 +1,27 @@
+#  Server Port 설정 
+server:
+  port: 8000
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+
+# spring:
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Proto20221109?serverTimezone=Asia/Seoul
+    username: singsiuk
+    password: ssw0304
+
+
+# //mybatis 설정 
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/**.xml
+  type-aliases-packgage: com.reboot.exerc
