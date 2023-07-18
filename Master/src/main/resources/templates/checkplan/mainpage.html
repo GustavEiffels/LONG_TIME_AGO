@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>mainpage</title>
+</head>
+<body style="text-align: center">
+
+<h1> Hello welcome to our Website Let's make a Plan</h1>
+<form th:action="@{/checkplan/login}" method="post" modelAttribute="dto">
+<div>
+    <label for="account"> please Insert Your ID or Email</label>
+    <input type="text" id="account" name="account"  placeholder="Please insert Your Email" /></br>
+    <span th:text="${accountError}"></span>
+
+</div>
+
+
+
+<div>
+    <label for="pw"> please Insert Your pw</label>
+    <input type="password" id="pw" name="pw"  placeholder="insert password" /></br>
+    <!--/*@thymesVar id="valid_pw" type="aj"*/-->
+    <span th:text="${valid_pw}"></span>
+    <span th:text="${passwordError}"></span>
+</div>
+
+    <button type="submit"> login </button>
+    </form>
+
+
+
+
+
+<p> If you wanna Sign Up click here</p>
+<input type="button" onclick="location.href='/checkplan/join';" value="Join Us!!">
+
+<p> If you wanna Finding Your Email or Id</p>
+<input type="button" onclick="location.href='/find/emailPage';" value="Find">
+
+</body>
+</html>
