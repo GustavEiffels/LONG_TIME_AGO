@@ -1,0 +1,178 @@
+[
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/xml_file_path.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/xml/file_path.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/menu_board_main_menu.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/menu/board_main_menu.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xhdpi_board.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xhdpi/board.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/menu_board_write_menu.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/menu/board_write_menu.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_board_round.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxxhdpi/board_round.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/drawable_board.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/drawable/board.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_fragment_board_write.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_write.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_fragment_login.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_login.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_activity_board_main.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/activity_board_main.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/generated/res/pngs/debug/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-hdpi_board_round.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-hdpi/board_round.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-mdpi_board.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-mdpi/board.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_board.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxxhdpi/board.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_fragment_board_read.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_read.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_fragment_board_main.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_main.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_fragment_board_modify.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_board_modify.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-anydpi-v26_board.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-anydpi-v26/board.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_activity_main.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/drawable_splash.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/drawable/splash.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_board_round.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxhdpi/board_round.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/drawable_board_front.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/drawable/board_front.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/menu_board_read_menu.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/menu/board_read_menu.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xhdpi_board_round.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xhdpi/board_round.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-hdpi_board.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-hdpi/board.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/menu_board_modify_menu.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/menu/board_modify_menu.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-anydpi-v26_board_round.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-anydpi-v26/board_round.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_fragment_join.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_join.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_fragment_nick.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/fragment_nick.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-mdpi_board_round.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-mdpi/board_round.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/mipmap-xxhdpi_board.png.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/mipmap-xxhdpi/board.png"
+    },
+    {
+        "merged": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/build/intermediates/merged_res/debug/layout_board_main_recyclerview.xml.flat",
+        "source": "/Users/mac/Desktop/Desktop-SungMak/board4_3/app/src/main/res/layout/board_main_recyclerview.xml"
+    }
+]
