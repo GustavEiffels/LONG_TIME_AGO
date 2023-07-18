@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ByNick</title>
+</head>
+<body style="text-align: center">
+        <h3>Please Insert Your Nick!!</h3>
+        <form th:action="@{/find/result/byNick}" method="post">
+            <div>
+                <label for="nick">Nick Name!!!</label>
+                <input type="text" id="nick" name="nick"  placeholder="Please insert Your Nick" /></br>
+                <span th:text="${exceptionMessage}"></span>
+                <!--/*@thymesVar id="valid_nick" type=""*/-->
+                <span th:text="${valid_nick}"></span>
+            </div>
+            <li class="buttons">
+                <input type="submit" value="Find!"/>
+            </li>
+        </form>
+        <input type="button" onclick="location.href='/checkplan/mainpage';" value="Go to Main page">
+</body>
+</html>
