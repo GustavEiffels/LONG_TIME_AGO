@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BoardWriteFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/board_write_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+           <TextView
+               android:text="Board Type"
+               android:textStyle="bold"
+               android:textAppearance="@style/TextAppearance.AppCompat.Large"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+
+            <Spinner
+                android:id="@+id/board_write_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:text="title"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/board_write_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <ImageView
+                android:id="@+id/board_write_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@android:mipmap/sym_def_app_icon" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:text="Contents" />
+
+            <EditText
+                android:id="@+id/board_write_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

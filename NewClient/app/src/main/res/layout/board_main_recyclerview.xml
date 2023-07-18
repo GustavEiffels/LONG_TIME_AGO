@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/board_main_item_subject"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:singleLine="true"
+            android:focusableInTouchMode="true"
+            android:textSize="38sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/board_main_item_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="nick"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/board_main_item_write_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="writed date"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp">
+    </androidx.legacy.widget.Space>
+
+    <TextView
+        android:background="#669900"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
+
+    <ImageView
+        android:id="@+id/main_imageView"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:layout_height="300dp"/>
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
+    <TextView
+        android:id="@+id/show_context"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        android:text="Show contents ..."
+        android:textColor="#669900" />
+
+    <androidx.legacy.widget.Space
+            android:id="@+id/space2"
+            android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
+
+
+    <TextView
+        android:id="@+id/contents_content_text"
+        android:visibility="gone"
+        android:text="content"
+        android:textStyle="italic"
+        android:textSize="15sp"
+        android:maxLines="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:id="@+id/space1"
+            android:visibility="gone"
+        android:layout_height="20dp">
+    </androidx.legacy.widget.Space>
+
+
+    <TextView
+            android:id="@+id/close_context"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="false"
+            android:textColor="#669900"
+            android:text="close" />
+
+
+
+
+
+
+</LinearLayout>
