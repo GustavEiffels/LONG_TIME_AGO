@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/skyblue"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:id="@+id/sana01"
+                android:src="@drawable/sana01"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana02"
+                android:id="@+id/sana02"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana03"
+                android:id="@+id/sana03"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana04"
+                android:id="@+id/sana04"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana05"
+                android:id="@+id/sana05"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana06"
+                android:id="@+id/sana06"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana07"
+                android:id="@+id/sana07"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana08"
+                android:id="@+id/sana08"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:src="@drawable/sana09"
+                android:id="@+id/sana09"
+                android:scaleType="fitXY"
+                android:layout_width="140dp"
+                android:layout_height="230dp">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</LinearLayout>
