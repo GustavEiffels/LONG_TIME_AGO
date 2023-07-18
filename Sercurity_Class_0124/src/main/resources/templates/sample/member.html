@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>only member</title>
+</head>
+<body>
+    <h1> only member who login our page </h1>
+
+
+<h2>권한의 존재 여부를 출력</h2>
+
+<div sec:authorize="hasRole('USER')">Has USER Role</div>
+    <div sec:authorize="hasRole('MANAGER')">Has MANAGER Role</div>
+    <div sec:authorize="hasRole('ADMIN')">Has ADMIN Role</div>
+
+<h3>로그인 여부 확인</h3>
+<div sec:authorize="isAuthenticated()">
+    로그인 한 유저만 확인 가능
+</div>
+
+<h3>유저의 아이디</h3>
+<div sec:authentication="name"></div>
+
+<a href="/logout">LogOut</a>
+
+</body>
+</html>
