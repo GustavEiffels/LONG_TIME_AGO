@@ -1,0 +1,147 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(148, 80, 224);
+}
+  body{
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+ }
+ .box{
+    background-color: rgb(148, 80, 224);
+    border-radius: 10px;
+    width: 400px;
+    height: 300px;
+}
+.timerBox{
+    width: 400px;
+    justify-content: center;
+    text-align: center;
+}
+.timerBox .time{
+    font-size: 80pt;
+    color: grey;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.timerBox .timeMil{
+    font-size: 40pt;
+    color: grey;
+    font-family: sans-serif;
+}
+
+.btnBox{
+    margin: 10px auto;
+    text-align: center;
+}
+.btnBox .fa{
+    margin: 0px 5px;
+    font-size: 30pt;
+    color: grey;
+    cursor: pointer;
+}
+
+
+.box .styled-table {
+    padding-top: 1em;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    width: 100%;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .box .styled-table thead th {
+    border-radius: 5px;
+    background-color: #c24bc2; 
+    text-align: center;
+    color: white;
+    padding: 10px;
+  }
+
+
+  .box .styled-table thead th:hover {
+    background-color: #e72a53; 
+  }
+  
+
+  
+  .box .styled-table tbody td {
+    border-style: 1px solid rgb(148, 80, 224);
+    padding: 10px;
+    color: white;
+  }
+  
+  .box .styled-table tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+  
+  .box .styled-table tbody tr:hover {
+    background-color: yellow;
+  }
+
+
+  .box .styled-table tfoot td {
+    border-style: 1px solid rgb(148, 80, 224);
+    padding: 10px;
+    color: white;
+  }
+  
+  .box .styled-table tfoot tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+  
+  .box .styled-table tfoot tr:hover {
+    background-color: yellow;
+  }
+
+
+  .tfootBorder{
+    border-style: solid none none none;
+    border-color: azure;
+  }
+
+  .dataTableBtn{
+    color: white;
+    background-color: #c24bc2;
+    width: 60px;
+    height: 28px;
+    margin: auto;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 4px 6px   rgba(53, 47, 47, 0.199);
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+
+
+  .dataTableBtn:hover{
+    color: black;
+    background-color: gray;
+    box-shadow: 0px 0px   rgba(243, 241, 241, 0.3);
+  }
+
+  .totalTime
+  {
+    font-size: 5px;
+  }
+
+  .todayTime{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    color: white;
+  }
+

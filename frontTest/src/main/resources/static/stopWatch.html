@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="./css/stopWatch.css">
+
+<meta charset="UTF-8">
+<title>StopWatch</title>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="./js/stopWatch.js"></script>
+</head>
+<body>
+	<div id='box' class="box">
+
+		<div id='timerBox' class="timerBox">
+			<p>
+				<span id="time" class="time">00:00:00</span><span id="timeMil" class="timeMil">:000</span>
+			</p>
+		</div>
+		
+		<div class="btnBox">
+			<i id="startbtn" onclick="startBtnOperate()" class="fa fa-play"  aria-hidden="true"></i>
+			<i id="pausebtn" onclick="pauseBtn()"        class="fa fa-pause" aria-hidden="true"></i>
+			<i id="stopbtn"  onclick="stopBtn()"         class="fa fa-stop"  aria-hidden="true"></i>
+		</div>
+
+		<span id="todayTime" class="todayTime" style="display: none;"> 오늘 시간</span>
+
+		<div id="dataTable" class="styled-table" style="display: none;">
+			<table id="firstTable">
+				<thead>
+				  <tr>
+					<th>No</th>
+					<th>Title</th>
+					<th>Time</th>
+					<th>Option</th>
+				  </tr>
+				</thead>
+				<tbody>
+	
+				</tbody>
+				<tfoot class="tfootBorder">
+
+				</tfoot>
+			  </table>	
+		</div>
+
+
+		<div>
+			<button label="test" style="margin: 30px" onclick="console.log('pdf test')">test</button>
+		</div>
+
+	</div>
+
+
+		
+	
+</body>
+</html>
