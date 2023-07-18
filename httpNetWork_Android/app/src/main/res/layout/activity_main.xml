@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#112233"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/Http_btn"
+        android:layout_marginTop="300dp"
+        android:textSize="20sp"
+        android:text="Http Networking Button"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"/>
+
+    <TextView
+        android:id="@+id/Http_text"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="Text"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+
+</LinearLayout>
